@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <p>Main content (empty)</p>
-      <button onClick={() => setSidebarOpen(!sidebarOpen)}>Toggle sidebar</button>
+      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full' onClick={() => setSidebarOpen(!sidebarOpen)}>Toggle sidebar</button>
     </div>
   );
 };
