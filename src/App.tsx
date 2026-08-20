@@ -1,10 +1,16 @@
 import "./App.css";
+import React from 'react';
+import AppShell from './app-shell/AppShell';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
+import HomePage from './features/home';
 
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <AppShell header={<Header />} sidebar={<Sidebar />} footer={<Footer />}>
+      <HomePage />
+    </AppShell>
   );
 }
 
