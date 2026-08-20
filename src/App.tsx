@@ -1,16 +1,13 @@
 import "./App.css";
 import React from 'react';
-import AppShell from './app-shell/AppShell';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import Footer from './components/Footer';
-import HomePage from './features/home';
+import { RouterProvider } from '@tanstack/react-router'
+import router from '@/routes/router'
 
 function App() {
   return (
-    <AppShell header={<Header />} sidebar={<Sidebar />} footer={<Footer />}>
-      <HomePage />
-    </AppShell>
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </React.Suspense>
   );
 }
 
