@@ -10,8 +10,8 @@ const Sidebar: React.FC = () => {
       <div>
         <div>Ping examples:</div>
         <ul style={{ margin: 0, paddingLeft: 16 }}>
-          <li><Link to="/ping/Alice">Ping Alice</Link></li>
-          <li><Link to="/ping/Bob">Ping Bob</Link></li>
+          <li><Link to="/ping/$name" params={{ name: 'Alice' }}>Ping Alice</Link></li>
+          <li><Link to="/ping/$name" params={{ name: 'Bob' }}>Ping Bob</Link></li>
         </ul>
       </div>
     </nav>

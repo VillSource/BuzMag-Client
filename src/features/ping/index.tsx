@@ -2,8 +2,7 @@ import React from 'react'
 import { useParams } from '@tanstack/react-router'
 
 const PingPage: React.FC = () => {
-  const params = useParams({}) as any
-  const name = params?.name ?? 'unknown'
+  const { name } = useParams({ from: '/ping/$name' })
 
   return (
     <div>
