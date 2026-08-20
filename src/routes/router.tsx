@@ -17,7 +17,9 @@ const AppLayoutRoute = createRoute({
   id: 'app',
   component: () => (
     <AppShell header={<Header />} sidebar={<Sidebar />} footer={<Footer />}>
-      <Outlet />
+      <React.Suspense fallback={<div style={{ minHeight: 200 }}>Loading page...</div>}>
+        <Outlet />
+      </React.Suspense>
     </AppShell>
   ),
 })

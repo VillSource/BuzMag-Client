@@ -7,8 +7,6 @@ import { router } from './routes/router'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <RouterProvider router={router} />
-    </React.Suspense>
+    <RouterProvider router={router} />
   </StrictMode>,
 )
