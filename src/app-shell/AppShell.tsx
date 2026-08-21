@@ -48,29 +48,37 @@ export const AppShell: FC<AppShellProps> = ({
     <AppShellContext.Provider
       value={{ sidebarOpen, setSidebarOpen, menuOpen, setMenuOpen, setTopbar }}
     >
-      <SidebarProvider open={false}>
+      <SidebarProvider className="h-svh w-full overflow-hidden" open={false}>
         {sidebar}
-        <div className="flex min-h-0 min-w-0 flex-1 bg-muted">
-          <div className="flex h-full min-w-0 flex-1 flex-col overflow-hidden rounded-lg border-2 bg-background text-foreground">
-            <header className="h-12 shrink-0 border-b p-2 bg-background text-foreground flex items-center">
+        <div className="flex h-full min-h-0 min-w-0 w-full flex-1 bg-muted">
+          <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-lg border-2 bg-background text-foreground">
+            <header className="flex h-12 shrink-0 items-center border-b bg-background p-2 text-foreground">
               {header}
             </header>
-            <div className="flex min-h-0 min-w-0 flex-1">
-              <ScrollArea className="h-full w-full">
-                <div className="relative flex min-h-full min-w-0 flex-1 flex-row">
-                  <SidebarProvider open={menuOpen} onOpenChange={setMenuOpen}>
-                    <Sidebar2 />
-                    <SidebarProvider open={sidebarOpen} onOpenChange={setSidebarOpen} >
-                      <SidebarInset className="relative flex min-h-full min-w-0 flex-1 flex-col">
-                        {topbar && <div className="p-4 pb-0">{topbar}</div>}
+            <div className="relative flex min-h-0 min-w-0 flex-1 flex-row">
+              <SidebarProvider
+                className="flex min-h-0 min-w-0 flex-1"
+                open={menuOpen}
+                onOpenChange={setMenuOpen}
+              >
+                <Sidebar2 />
+                <SidebarProvider
+                  className="flex min-h-0 min-w-0 flex-1"
+                  open={sidebarOpen}
+                  onOpenChange={setSidebarOpen}
+                >
+                  <SidebarInset className="relative flex min-h-0 min-w-0 flex-1 flex-col">
+                    {topbar && <div className="shrink-0 p-4 pb-0">{topbar}</div>}
+                    <ScrollArea className="min-h-0 min-w-0 flex-1">
+                      <div className="flex min-h-full min-w-0 flex-col">
                         <main className="flex-1 p-4">{children}</main>
-                        <footer>{footer}</footer>
-                      </SidebarInset>
-                      <SidebarR />
-                    </SidebarProvider>
-                  </SidebarProvider>
-                </div>
-              </ScrollArea>
+                        <footer className="shrink-0">{footer}</footer>
+                      </div>
+                    </ScrollArea>
+                  </SidebarInset>
+                  <SidebarR />
+                </SidebarProvider>
+              </SidebarProvider>
             </div>
           </div>
         </div>
