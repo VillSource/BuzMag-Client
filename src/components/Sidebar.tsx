@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { useAppShell } from "@/app-shell/AppShell";
+import type { ReactNode } from "react";
 
 const Sidebar = () => {
   const { menuOpen, setMenuOpen } = useAppShell();
@@ -96,7 +97,7 @@ export const Sidebar2 = () => {
   );
 };
 
-export const SidebarR = () => {
+export const SidebarR = ({ client }: { client?: ReactNode }) => {
   return (
     <>
       <ShadcnSidebar
@@ -104,14 +105,15 @@ export const SidebarR = () => {
         className="absolute inset-y-0 right-0 z-10 border-l"
         side="right"
       >
-        <SidebarHeader className="h12 my-2  border-b">
-          Sidebar Right
+        <SidebarHeader className="h12 my-2 border-b">
+          name of the right bar
         </SidebarHeader>
-        <SidebarContent>{/* Sub Navigation Items */}</SidebarContent>
+        <SidebarContent className="">{client}</SidebarContent>
       </ShadcnSidebar>
     </>
   );
 };
+        
 
 type RialIconMenu = {
   icon: React.ReactNode;

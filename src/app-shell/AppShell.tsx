@@ -15,6 +15,7 @@ type AppShellContextType = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   setTopbar: (node?: ReactNode) => void;
+  setRightbar: (node?: ReactNode) => void;
 };
 
 const AppShellContext = createContext<AppShellContextType | undefined>(
@@ -43,14 +44,22 @@ export const AppShell: FC<AppShellProps> = ({
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [topbar, setTopbar] = useState<ReactNode>();
+  const [rightbar, setRightbar] = useState<ReactNode>();
 
   return (
     <AppShellContext.Provider
-      value={{ sidebarOpen, setSidebarOpen, menuOpen, setMenuOpen, setTopbar }}
+      value={{
+        sidebarOpen,
+        setSidebarOpen,
+        menuOpen,
+        setMenuOpen,
+        setTopbar,
+        setRightbar,
+      }}
     >
       <SidebarProvider className="h-svh w-full overflow-hidden" open={false}>
         {sidebar}
-        <div className="flex h-full min-h-0 min-w-0 w-full flex-1 bg-muted">
+        <div className="flex h-full min-h-0 min-w-0 w-full flex-1 bg-red-900">
           <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-lg border-2 bg-background text-foreground">
             <header className="flex h-12 shrink-0 items-center border-b bg-background p-2 text-foreground">
               {header}
@@ -67,16 +76,20 @@ export const AppShell: FC<AppShellProps> = ({
                   open={sidebarOpen}
                   onOpenChange={setSidebarOpen}
                 >
-                  <SidebarInset className="relative flex min-h-0 min-w-0 flex-1 flex-col">
-                    {topbar && <div className="shrink-0 p-4 pb-0">{topbar}</div>}
-                    <ScrollArea className="min-h-0 min-w-0 flex-1">
+                  <SidebarInset className="relative flex min-h-0 bg-background min-w-0 flex-1 flex-col">
+                    {topbar && (
+                      <div className="shrink-0 p-4 pb-0">{topbar}</div>
+                    )}
+                    <ScrollArea className="min-h-0 min-w-0 flex-1 bg-background">
                       <div className="flex min-h-full min-w-0 flex-col">
-                        <main className="flex-1 p-4">{children}</main>
+                        <main className="flex-1 p-4 bg-background">
+                          {children}
+                        </main>
                         <footer className="shrink-0">{footer}</footer>
                       </div>
                     </ScrollArea>
                   </SidebarInset>
-                  <SidebarR />
+                  <SidebarR client={rightbar} />
                 </SidebarProvider>
               </SidebarProvider>
             </div>
