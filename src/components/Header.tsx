@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
   DropdownMenu,
@@ -39,8 +39,18 @@ const Header: React.FC = () => {
 };
 
 export function BellNotificationButton() {
+    const { setRightbar, setSidebarOpen, sidebarOpen } = useAppShell();
+
+  useEffect(() => {
+    console.log("Sidebar state changed:", sidebarOpen);
+  }, [sidebarOpen]);
+
+  const handleActionClick = useCallback(() => {
+    setRightbar?.(<div style={{ padding: 8 }}>Notification content</div>);
+    setSidebarOpen((open) => !open);
+  }, []);
   return (
-    <Button variant="ghost" className="group/noti relative inline-block">
+    <Button variant="ghost" className="group/noti relative inline-block" onClick={handleActionClick}>
       <Bell className="h-5 w-5 transition-all group-hover/noti:rotate-45 group-hover/noti:scale-120"/>
       <span className="absolute top-1 right-1 flex h-2 w-2">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75"></span>
@@ -53,10 +63,15 @@ export function BellNotificationButton() {
 
 const Action = () => {
   const { setRightbar, setSidebarOpen, sidebarOpen } = useAppShell();
-  const handleActionClick = useCallback(() => {
-    setRightbar?.(<div style={{ padding: 8 }}>Rightbar actions (example)</div>);
-    setSidebarOpen(!sidebarOpen);
+
+  useEffect(() => {
+    console.log("Sidebar state changed:", sidebarOpen);
   }, [sidebarOpen]);
+
+  const handleActionClick = useCallback(() => {
+    setRightbar?.(<div style={{ padding: 8 }}>Action content</div>);
+    setSidebarOpen((open) => !open);
+  }, [setRightbar, setSidebarOpen, ]);
   return (
     <>
       <ButtonGroup>

@@ -11,9 +11,9 @@ import { Sidebar2, SidebarR } from "@/components/Sidebar";
 
 type AppShellContextType = {
   menuOpen: boolean;
-  setMenuOpen: (open: boolean) => void;
+  setMenuOpen: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
   sidebarOpen: boolean;
-  setSidebarOpen: (open: boolean) => void;
+  setSidebarOpen: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
   setTopbar: (node?: ReactNode) => void;
   setRightbar: (node?: ReactNode) => void;
 };
@@ -41,7 +41,7 @@ export const AppShell: FC<AppShellProps> = ({
   footer,
   children,
 }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [topbar, setTopbar] = useState<ReactNode>();
   const [rightbar, setRightbar] = useState<ReactNode>();
@@ -59,7 +59,7 @@ export const AppShell: FC<AppShellProps> = ({
     >
       <SidebarProvider className="h-svh w-full overflow-hidden" open={false}>
         {sidebar}
-        <div className="flex h-full min-h-0 min-w-0 w-full flex-1 bg-red-900">
+        <div className="flex h-full min-h-0 min-w-0 w-full flex-1 bg-muted">
           <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-lg border-2 bg-background text-foreground">
             <header className="flex h-12 shrink-0 items-center border-b bg-background p-2 text-foreground">
               {header}
