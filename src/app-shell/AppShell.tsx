@@ -8,12 +8,15 @@ import {
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sidebar2, SidebarR } from "@/components/Sidebar";
+import { BottomSheet } from "@/components/motion/bottom-sheet";
 
 type AppShellContextType = {
   menuOpen: boolean;
   setMenuOpen: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
+  openSheet: boolean;
+  setopenSheet: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
   setTopbar: (node?: ReactNode) => void;
   setRightbar: (node?: ReactNode) => void;
 };
@@ -45,6 +48,7 @@ export const AppShell: FC<AppShellProps> = ({
   const [menuOpen, setMenuOpen] = useState(false);
   const [topbar, setTopbar] = useState<ReactNode>();
   const [rightbar, setRightbar] = useState<ReactNode>();
+  const [openSheet, setopenSheet] = useState(false);
 
   return (
     <AppShellContext.Provider
@@ -55,6 +59,8 @@ export const AppShell: FC<AppShellProps> = ({
         setMenuOpen,
         setTopbar,
         setRightbar,
+        openSheet,
+        setopenSheet,
       }}
     >
       <SidebarProvider className="h-svh w-full overflow-hidden" open={false}>
@@ -96,6 +102,34 @@ export const AppShell: FC<AppShellProps> = ({
           </div>
         </div>
       </SidebarProvider>
+
+
+
+      <BottomSheet
+        open={openSheet}
+        onOpenChange={setopenSheet}
+        snapPoints={[0.4, 0.85]}
+        title="Quick actions"
+        description="Drag the handle, fling, or swipe down to dismiss."
+      >
+        <ul className="divide-y divide-border">
+          {[
+            "Share",
+            "Duplicate",
+            "Move to folder",
+            "Rename",
+            "Archive",
+            "Delete",
+          ].map((item) => (
+            <li key={item} className="py-3 text-sm text-foreground">
+              {item}
+            </li>
+          ))}
+        </ul>
+        <div className="py-12 text-center text-xs text-muted-foreground">
+          Fling up to expand, fling down to dismiss.
+        </div>
+      </BottomSheet>
     </AppShellContext.Provider>
   );
 };

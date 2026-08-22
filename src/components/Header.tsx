@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
   DropdownMenu,
@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   AlertTriangleIcon,
-  Badge,
   Bell,
   CheckIcon,
   ChevronDownIcon,
@@ -22,6 +21,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAppShell } from "@/app-shell/AppShell";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Header: React.FC = () => {
   return (
@@ -30,8 +30,8 @@ const Header: React.FC = () => {
         <div className="">BuzMag</div>
         <div className="">search</div>
         <div className="flex items-center space-x-2 ">
-          {Action()}
-          {BellNotificationButton()}
+          <Action />
+          <BellNotificationButton />
         </div>
       </div>
     </>
@@ -39,19 +39,19 @@ const Header: React.FC = () => {
 };
 
 export function BellNotificationButton() {
-    const { setRightbar, setSidebarOpen, sidebarOpen } = useAppShell();
-
-  useEffect(() => {
-    console.log("Sidebar state changed:", sidebarOpen);
-  }, [sidebarOpen]);
+  const { setRightbar, setSidebarOpen } = useAppShell();
 
   const handleActionClick = useCallback(() => {
     setRightbar?.(<div style={{ padding: 8 }}>Notification content</div>);
     setSidebarOpen((open) => !open);
-  }, []);
+  }, [setRightbar, setSidebarOpen]);
   return (
-    <Button variant="ghost" className="group/noti relative inline-block" onClick={handleActionClick}>
-      <Bell className="h-5 w-5 transition-all group-hover/noti:rotate-45 group-hover/noti:scale-120"/>
+    <Button
+      variant="ghost"
+      className="group/noti relative inline-block"
+      onClick={handleActionClick}
+    >
+      <Bell className="h-5 w-5 transition-all group-hover/noti:rotate-45 group-hover/noti:scale-120" />
       <span className="absolute top-1 right-1 flex h-2 w-2">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75"></span>
         <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive"></span>
@@ -60,18 +60,18 @@ export function BellNotificationButton() {
   );
 }
 
-
 const Action = () => {
-  const { setRightbar, setSidebarOpen, sidebarOpen } = useAppShell();
-
-  useEffect(() => {
-    console.log("Sidebar state changed:", sidebarOpen);
-  }, [sidebarOpen]);
+  const isMobile = useIsMobile();
+  const { setRightbar, setSidebarOpen, setopenSheet } = useAppShell();
 
   const handleActionClick = useCallback(() => {
+    if (isMobile) {
+      setopenSheet((open) => !open);
+    } else {
+      setSidebarOpen((open) => !open);
+    }
     setRightbar?.(<div style={{ padding: 8 }}>Action content</div>);
-    setSidebarOpen((open) => !open);
-  }, [setRightbar, setSidebarOpen, ]);
+  }, [setRightbar, setSidebarOpen, isMobile, setopenSheet]);
   return (
     <>
       <ButtonGroup>
