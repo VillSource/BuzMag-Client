@@ -67,10 +67,16 @@ export const AppShell: FC<AppShellProps> = ({
         setopenSheet,
       }}
     >
-      <SidebarProvider className="h-svh w-full overflow-hidden" open={false}>
+      <SidebarProvider
+        className={cn(
+          "w-full",
+          isMobile ? "min-h-svh" : "h-svh overflow-hidden",
+        )}
+        open={false}
+      >
         {sidebar}
-        <div className="flex h-full min-h-0 min-w-0 w-full flex-1 bg-muted">
-          <div className= {cn("flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background text-foreground", isMobile ? "border-0" : "border-border border-2  rounded-lg")}>
+        <div className="flex min-h-svh min-w-0 w-full flex-1 bg-muted">
+          <div className= {cn("flex min-h-svh min-w-0 flex-1 flex-col overflow-hidden bg-background text-foreground", isMobile ? "border-0" : "border-border border-2  rounded-lg")}>
             <header className="flex h-12 shrink-0 items-center border-b bg-background p-2 text-foreground">
               {header}
             </header>
@@ -90,14 +96,23 @@ export const AppShell: FC<AppShellProps> = ({
                     {topbar && (
                       <div className="shrink-0 p-4 pb-0">{topbar}</div>
                     )}
-                    <ScrollArea className="min-h-0 min-w-0 flex-1 bg-background">
-                      <div className="flex min-h-full min-w-0 flex-col">
+                    {isMobile ? (
+                      <div className="min-w-0 flex-1 bg-background">
                         <main className="flex-1 p-4 bg-background">
                           {children}
                         </main>
                         <footer className="shrink-0">{footer}</footer>
                       </div>
-                    </ScrollArea>
+                    ) : (
+                      <ScrollArea className="min-h-0 min-w-0 flex-1 bg-background">
+                        <div className="flex min-h-full min-w-0 flex-col">
+                          <main className="flex-1 p-4 bg-background">
+                            {children}
+                          </main>
+                          <footer className="shrink-0">{footer}</footer>
+                        </div>
+                      </ScrollArea>
+                    )}
                   </SidebarInset>
                   <SidebarR client={rightbar} />
                 </SidebarProvider>
