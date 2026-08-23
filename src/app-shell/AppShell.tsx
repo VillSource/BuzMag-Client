@@ -78,8 +78,13 @@ export const AppShell: FC<AppShellProps> = ({
       >
         {sidebar}
         <div className="flex min-h-svh min-w-0 w-full flex-1 bg-muted">
-          <div className= {cn("flex min-h-svh min-w-0 flex-1 flex-col overflow-hidden bg-background text-foreground", isMobile ? "border-0" : "border-border border-2  rounded-lg")}>
-            <header className="flex h-12 shrink-0 items-center border-b bg-background p-2 text-foreground">
+          <div className= {cn("flex min-h-svh min-w-0 flex-1 flex-col bg-background text-foreground", isMobile ? "border-0 overflow-visible" : "border-border border-2 rounded-lg overflow-hidden")}>
+            <header
+              className={cn(
+                "flex h-12 shrink-0 items-center border-b bg-background p-2 text-foreground",
+                isMobile && "sticky top-0 z-40",
+              )}
+            >
               {header}
             </header>
             <div className="relative flex min-h-0 min-w-0 flex-1 flex-row">
