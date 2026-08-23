@@ -1,8 +1,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
-  useRef,
   useState,
   type ReactNode,
   type FC,
@@ -12,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import RailIconMenu from "@/app-shell/RailIconMenu";
 import { BottomSheet } from "@/components/motion/bottom-sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import { cn } from "@/lib/utils";
 
 type AppShellContextType = {
@@ -87,15 +86,17 @@ export const AppShell: FC<AppShellProps> = ({
                 open={menuOpen}
                 onOpenChange={setMenuOpen}
               >
-                <SideMenuBar />
+                {!isMobile && <SideMenuBar />}
                 <SidebarProvider
                   className="flex min-h-0 min-w-0 flex-1"
                   open={sidebarOpen}
                   onOpenChange={setSidebarOpen}
                 >
                   <SidebarInset className="relative flex min-h-0 bg-background min-w-0 flex-1 flex-col">
-                    {topbar && (
-                      <div className="shrink-0 p-4 pb-0">{topbar}</div>
+                    {isMobile && (
+                      <div className="sticky inset-x-0 top-12 z-30 bg-background p-0 pb-0">
+                        <TabMenu />
+                      </div>
                     )}
                     {isMobile ? (
                       <div className="min-w-0 flex-1 bg-background">
@@ -193,8 +194,10 @@ import ActionBar from "./Header";
 import Footer from "./Footer";
 import { SideMenuBar } from "./SideMenuBar";
 import { ContextPanel } from "./ContextPanel";
+import { TabMenu } from "./TabMenu";
 
 const  DockPreview = () => {
+  const { direction } = useScrollDirection({ direction: "both" });
   const ITEMS = [
     { id: "dashboard", icon: Home, label: "Dashboard" },
     { id: "mail", icon: Inbox, label: "Mail" },
@@ -202,20 +205,7 @@ const  DockPreview = () => {
     { id: "search", icon: Search, label: "search" },
   ];
   const [active, setActive] = useState("dashboard");
-  const [visible, setVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      setVisible(currentScrollY <= 0 || currentScrollY < lastScrollY.current);
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const visible = direction !== "down";
 
   return (
     <div
