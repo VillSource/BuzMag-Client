@@ -120,6 +120,37 @@ export const AppShell: FC<AppShellProps> = ({
             "Rename",
             "Archive",
             "Delete",
+
+            "Share",
+            "Duplicate",
+            "Move to folder",
+            "Rename",
+            "Archive",
+            "Delete",
+            "Share",
+            "Duplicate",
+            "Move to folder",
+            "Rename",
+            "Archive",
+            "Delete",
+            "Share",
+            "Duplicate",
+            "Move to folder",
+            "Rename",
+            "Archive",
+            "Delete",
+            "Share",
+            "Duplicate",
+            "Move to folder",
+            "Rename",
+            "Archive",
+            "Delete",
+            "Share",
+            "Duplicate",
+            "Move to folder",
+            "Rename",
+            "Archive",
+            "Delete",
           ].map((item) => (
             <li key={item} className="py-3 text-sm text-foreground">
               {item}
@@ -133,5 +164,7 @@ export const AppShell: FC<AppShellProps> = ({
     </AppShellContext.Provider>
   );
 };
+
+
 
 export default AppShell;
