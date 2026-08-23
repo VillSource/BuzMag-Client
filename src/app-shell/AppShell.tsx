@@ -134,7 +134,8 @@ export const AppShell: FC<AppShellProps> = ({
       <BottomSheet
         open={openSheet}
         onOpenChange={setopenSheet}
-        snapPoints={[0.4, 0.85]}
+        // snapPoints={[0.4, 0.85]}
+        snapPoints={[0.8, 0.85]}
         title="Quick actions"
         description="Drag the handle, fling, or swipe down to dismiss."
       >
@@ -193,18 +194,17 @@ export const AppShell: FC<AppShellProps> = ({
 };
 
 
-import { Calendar, Home, Mail, Music, Settings, Sparkles } from "lucide-react";
+import { Calendar, ClockFading, Component, Hamburger, Home, Inbox, LayoutDashboard, LayoutGrid, Mail, Menu, Music, Search, Settings, Sparkles } from "lucide-react";
 import { Dock, DockItem, DockSeparator } from "@/components/motion/dock";
 
 const  DockPreview = () => {
-const ITEMS = [
-  { id: "home", icon: Home, label: "Home" },
-  { id: "mail", icon: Mail, label: "Mail" },
-  { id: "calendar", icon: Calendar, label: "Calendar" },
-  { id: "music", icon: Music, label: "Music" },
-  { id: "discover", icon: Sparkles, label: "Discover" },
-];
-  const [active, setActive] = useState("home");
+  const ITEMS = [
+    { id: "dashboard", icon: Home, label: "Dashboard" },
+    { id: "mail", icon: Inbox, label: "Mail" },
+    { id: "discover", icon: LayoutGrid, label: "Discover" },
+    { id: "search", icon: Search, label: "search" },
+  ];
+  const [active, setActive] = useState("dashboard");
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -240,11 +240,18 @@ const ITEMS = [
         ))}
         <DockSeparator />
         <DockItem
+          aria-label="Recent"
+          active={active === "recent"}
+          onClick={() => setActive("recent")}
+        >
+          <ClockFading className="h-5 w-5" />
+        </DockItem>
+        <DockItem
           aria-label="Settings"
           active={active === "settings"}
           onClick={() => setActive("settings")}
         >
-          <Settings className="h-5 w-5" />
+          <Menu className="h-5 w-5" />
         </DockItem>
       </Dock>
     </div>

@@ -11,16 +11,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import {
   Inbox,
   LayoutDashboard,
@@ -31,6 +21,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { useAppShell } from "@/app-shell/AppShell";
 import type { ReactNode } from "react";
+import { AvatarMenu } from "@/features/profile/AvatarMenu";
 
 const Sidebar = () => {
   const { menuOpen, setMenuOpen } = useAppShell();
@@ -75,7 +66,7 @@ const Sidebar = () => {
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="bg-muted text-foreground">
-          {ProfileDropdown()}
+          <AvatarMenu/>
         </SidebarFooter>
       </ShadcnSidebar>
     </>
@@ -147,36 +138,6 @@ const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to }) => {
         </TooltipContent>
       </Tooltip>
     </SidebarMenuItem>
-  );
-};
-
-const ProfileDropdown = () => {
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </Button>
-          }
-        />
-        <DropdownMenuContent className="w-32">
-          <DropdownMenuGroup>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem variant="destructive">Log out</DropdownMenuItem>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
   );
 };
 

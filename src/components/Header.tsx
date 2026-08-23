@@ -36,6 +36,7 @@ import {
   ComboboxItem,
   ComboboxList,
 } from "@/components/ui/combobox";
+import { AvatarMenu } from "@/features/profile/AvatarMenu";
 
 const Header: React.FC = () => {
   const isMobile = useIsMobile();
@@ -52,6 +53,7 @@ const Header: React.FC = () => {
           )}
           <Action />
           <BellNotificationButton />
+          {isMobile && <AvatarMenu/>}
         </div>
       </div>
     </>
