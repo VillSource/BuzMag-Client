@@ -1,0 +1,14 @@
+allowBuilds:
+  es5-ext: false
+minimumReleaseAgeExclude:
+  - '@kubb/adapter-oas@5.0.1'
+  - '@kubb/ast@5.0.1'
+  - '@kubb/cli@5.0.1'
+  - '@kubb/core@5.0.1'
+  - '@kubb/kit@5.0.1'
+  - '@kubb/mcp@5.0.1'
+  - '@kubb/parser-md@5.0.1'
+  - '@kubb/parser-ts@5.0.1'
+  - '@kubb/plugin-barrel@5.0.1'
+  - '@kubb/renderer-jsx@5.0.1'
+  - kubb@5.0.1
