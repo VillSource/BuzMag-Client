@@ -1,6 +1,8 @@
 import {
   createContext,
   useContext,
+  useEffect,
+  useRef,
   useState,
   type ReactNode,
   type FC,
@@ -198,9 +200,28 @@ const ITEMS = [
   { id: "discover", icon: Sparkles, label: "Discover" },
 ];
   const [active, setActive] = useState("home");
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      setVisible(currentScrollY <= 0 || currentScrollY < lastScrollY.current);
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="fixed bottom-4 flex w-full justify-center">
+    <div
+      className={cn(
+        "fixed bottom-4 flex w-full justify-center transition-transform duration-200",
+        visible ? "translate-y-0" : "translate-y-[calc(100%+1rem)]",
+      )}
+    >
       <Dock>
         {ITEMS.map(({ id, icon: Icon, label }) => (
           <DockItem
