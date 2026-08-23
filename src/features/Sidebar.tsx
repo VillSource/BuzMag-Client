@@ -18,7 +18,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import { useAppShell } from "@/app-shell/AppShell";
 import type { ReactNode } from "react";
 import { AvatarMenu } from "@/features/profile/AvatarMenu";

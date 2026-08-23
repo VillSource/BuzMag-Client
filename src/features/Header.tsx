@@ -22,9 +22,9 @@ import {
   UserRoundXIcon,
   VolumeOffIcon,
 } from "lucide-react";
-import { Button } from "./ui/button";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
-import { Separator } from "./ui/separator";
+import { Button } from "../components/ui/button";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "../components/ui/input-group";
+import { Separator } from "../components/ui/separator";
 import { useAppShell } from "@/app-shell/AppShell";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";

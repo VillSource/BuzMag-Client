@@ -9,7 +9,7 @@ import {
 } from "react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sidebar2, SidebarR } from "@/components/Sidebar";
+import { Sidebar2, SidebarR } from "@/features/Sidebar";
 import { BottomSheet } from "@/components/motion/bottom-sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
