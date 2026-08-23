@@ -54,7 +54,7 @@ export const AppShell: FC<AppShellProps> = ({
 
   const isMobile = useIsMobile();
 
-  return (
+  return <>
     <AppShellContext.Provider
       value={{
         sidebarOpen,
@@ -166,8 +166,49 @@ export const AppShell: FC<AppShellProps> = ({
         </div>
       </BottomSheet>
     </AppShellContext.Provider>
-  );
+    {isMobile && <DockPreview />}
+  </>;
 };
+
+
+import { Calendar, Home, Mail, Music, Settings, Sparkles } from "lucide-react";
+import { Dock, DockItem, DockSeparator } from "@/components/motion/dock";
+
+const  DockPreview = () => {
+const ITEMS = [
+  { id: "home", icon: Home, label: "Home" },
+  { id: "mail", icon: Mail, label: "Mail" },
+  { id: "calendar", icon: Calendar, label: "Calendar" },
+  { id: "music", icon: Music, label: "Music" },
+  { id: "discover", icon: Sparkles, label: "Discover" },
+];
+  const [active, setActive] = useState("home");
+
+  return (
+    <div className="fixed bottom-4 flex w-full justify-center">
+      <Dock>
+        {ITEMS.map(({ id, icon: Icon, label }) => (
+          <DockItem
+            key={id}
+            aria-label={label}
+            active={active === id}
+            onClick={() => setActive(id)}
+          >
+            <Icon className="h-5 w-5" />
+          </DockItem>
+        ))}
+        <DockSeparator />
+        <DockItem
+          aria-label="Settings"
+          active={active === "settings"}
+          onClick={() => setActive("settings")}
+        >
+          <Settings className="h-5 w-5" />
+        </DockItem>
+      </Dock>
+    </div>
+  );
+}
 
 
 
