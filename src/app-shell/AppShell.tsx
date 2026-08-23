@@ -9,6 +9,8 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sidebar2, SidebarR } from "@/components/Sidebar";
 import { BottomSheet } from "@/components/motion/bottom-sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 type AppShellContextType = {
   menuOpen: boolean;
@@ -50,6 +52,8 @@ export const AppShell: FC<AppShellProps> = ({
   const [rightbar, setRightbar] = useState<ReactNode>();
   const [openSheet, setopenSheet] = useState(false);
 
+  const isMobile = useIsMobile();
+
   return (
     <AppShellContext.Provider
       value={{
@@ -66,7 +70,7 @@ export const AppShell: FC<AppShellProps> = ({
       <SidebarProvider className="h-svh w-full overflow-hidden" open={false}>
         {sidebar}
         <div className="flex h-full min-h-0 min-w-0 w-full flex-1 bg-muted">
-          <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-lg border-2 bg-background text-foreground">
+          <div className= {cn("flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background text-foreground", isMobile ? "border-0" : "border-border border-2  rounded-lg")}>
             <header className="flex h-12 shrink-0 items-center border-b bg-background p-2 text-foreground">
               {header}
             </header>
