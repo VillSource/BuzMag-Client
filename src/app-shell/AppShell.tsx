@@ -9,7 +9,7 @@ import {
 } from "react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sidebar2, SidebarR } from "@/features/Sidebar";
+import RailIconMenu from "@/app-shell/RailIconMenu";
 import { BottomSheet } from "@/components/motion/bottom-sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -36,16 +36,10 @@ export const useAppShell = () => {
 };
 
 type AppShellProps = {
-  header?: ReactNode;
-  sidebar?: ReactNode;
-  footer?: ReactNode;
   children?: ReactNode;
 };
 
 export const AppShell: FC<AppShellProps> = ({
-  header,
-  sidebar,
-  footer,
   children,
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -76,7 +70,7 @@ export const AppShell: FC<AppShellProps> = ({
         )}
         open={false}
       >
-        {sidebar}
+        <RailIconMenu />
         <div className="flex min-h-svh min-w-0 w-full flex-1 bg-muted">
           <div className= {cn("flex min-h-svh min-w-0 flex-1 flex-col bg-background text-foreground", isMobile ? "border-0 overflow-visible" : "border-border border-2 rounded-lg overflow-hidden")}>
             <header
@@ -85,7 +79,7 @@ export const AppShell: FC<AppShellProps> = ({
                 isMobile && "sticky top-0 z-40",
               )}
             >
-              {header}
+              <ActionBar/>
             </header>
             <div className="relative flex min-h-0 min-w-0 flex-1 flex-row">
               <SidebarProvider
@@ -93,7 +87,7 @@ export const AppShell: FC<AppShellProps> = ({
                 open={menuOpen}
                 onOpenChange={setMenuOpen}
               >
-                <Sidebar2 />
+                <SideMenuBar />
                 <SidebarProvider
                   className="flex min-h-0 min-w-0 flex-1"
                   open={sidebarOpen}
@@ -108,7 +102,7 @@ export const AppShell: FC<AppShellProps> = ({
                         <main className="flex-1 p-4 bg-background">
                           {children}
                         </main>
-                        <footer className="shrink-0">{footer}</footer>
+                        <footer className="shrink-0"><Footer/></footer>
                       </div>
                     ) : (
                       <ScrollArea className="min-h-0 min-w-0 flex-1 bg-background">
@@ -116,12 +110,12 @@ export const AppShell: FC<AppShellProps> = ({
                           <main className="flex-1 p-4 bg-background">
                             {children}
                           </main>
-                          <footer className="shrink-0">{footer}</footer>
+                          <footer className="shrink-0"><Footer/></footer>
                         </div>
                       </ScrollArea>
                     )}
                   </SidebarInset>
-                  <SidebarR client={rightbar} />
+                  < ContextPanel client={rightbar} />
                 </SidebarProvider>
               </SidebarProvider>
             </div>
@@ -134,7 +128,6 @@ export const AppShell: FC<AppShellProps> = ({
       <BottomSheet
         open={openSheet}
         onOpenChange={setopenSheet}
-        // snapPoints={[0.4, 0.85]}
         snapPoints={[0.8, 0.85]}
         title="Quick actions"
         description="Drag the handle, fling, or swipe down to dismiss."
@@ -196,6 +189,10 @@ export const AppShell: FC<AppShellProps> = ({
 
 import { Calendar, ClockFading, Component, Hamburger, Home, Inbox, LayoutDashboard, LayoutGrid, Mail, Menu, Music, Search, Settings, Sparkles } from "lucide-react";
 import { Dock, DockItem, DockSeparator } from "@/components/motion/dock";
+import ActionBar from "./Header";
+import Footer from "./Footer";
+import { SideMenuBar } from "./SideMenuBar";
+import { ContextPanel } from "./ContextPanel";
 
 const  DockPreview = () => {
   const ITEMS = [

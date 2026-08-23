@@ -38,7 +38,7 @@ import {
 } from "@/components/ui/combobox";
 import { AvatarMenu } from "@/features/profile/AvatarMenu";
 
-const Header: React.FC = () => {
+const ActionBar: React.FC = () => {
   const isMobile = useIsMobile();
   return (
     <>
@@ -233,4 +233,4 @@ const Action = () => {
   );
 };
 
-export default Header;
+export default ActionBar;
