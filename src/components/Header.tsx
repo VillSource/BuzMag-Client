@@ -14,20 +14,28 @@ import {
   Building2Icon,
   CheckIcon,
   ChevronDownIcon,
-  ChevronsUpDownIcon,
   CopyIcon,
   PlusIcon,
+  SearchIcon,
   ShareIcon,
   TrashIcon,
   UserRoundXIcon,
   VolumeOffIcon,
 } from "lucide-react";
 import { Button } from "./ui/button";
-import { InputGroupAddon } from "./ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { Separator } from "./ui/separator";
 import { useAppShell } from "@/app-shell/AppShell";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox";
+import { cn } from "@/lib/utils";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
 
 const Header: React.FC = () => {
   const isMobile = useIsMobile();
@@ -35,8 +43,13 @@ const Header: React.FC = () => {
     <>
       <div className="flex-1 flex-row flex items-center justify-between">
         {isMobile ? <BrandIcon /> : <BrandNav />}
-        <div className="">search</div>
+        {!isMobile && <InputGroupInlineStart />}
         <div className="flex items-center space-x-2 ">
+          {isMobile && (
+              <Button type="button" variant="secondary" size="default" aria-label="Search">
+              <SearchIcon data-icon="inline-start" />
+            </Button>
+          )}
           <Action />
           <BellNotificationButton />
         </div>
@@ -56,62 +69,68 @@ const BrandNav = () => {
   return (
     <div className="flex items-center gap-3">
       <Combobox items={organizations} defaultValue="Acme Inc">
-      <ComboboxInput
-        className="h-8 w-auto border-0 bg-transparent shadow-none"
-        placeholder="Organization"
-        readOnly
-        aria-label="Select organization"
-      >
-        <InputGroupAddon align="inline-start">
-          <span className="flex size-5 items-center justify-center rounded-full bg-linear-to-br from-violet-500 to-fuchsia-600 text-white">
-            <Building2Icon aria-hidden="true" className="size-3" />
-          </span>
-        </InputGroupAddon>
-      </ComboboxInput>
-      <ComboboxContent>
-        <div className="px-3 pb-1 pt-2 text-sm font-medium text-muted-foreground">
-          Organizations
-        </div>
-        <ComboboxEmpty className="px-3">No organizations found.</ComboboxEmpty>
-        <ComboboxList className="p-2">
-          {(item) => (
-            <ComboboxItem key={item} value={item} className="min-h-16 py-2">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-violet-500 to-fuchsia-600 text-white">
-                <Building2Icon aria-hidden="true" />
-              </span>
-              <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="truncate text-sm font-medium">{item}</span>
-                <span className="text-sm text-muted-foreground">
-                  {organizationPlans[item]}
+        <ComboboxInput
+          className="h-8 w-auto border-0 bg-transparent shadow-none"
+          placeholder="Organization"
+          readOnly
+          aria-label="Select organization"
+        >
+          <InputGroupAddon align="inline-start">
+            <span className="flex size-5 items-center justify-center rounded-full bg-linear-to-br from-violet-500 to-fuchsia-600 text-white">
+              <Building2Icon aria-hidden="true" className="size-3" />
+            </span>
+          </InputGroupAddon>
+        </ComboboxInput>
+        <ComboboxContent>
+          <div className="px-3 pb-1 pt-2 text-sm font-medium text-muted-foreground">
+            Organizations
+          </div>
+          <ComboboxEmpty className="px-3">
+            No organizations found.
+          </ComboboxEmpty>
+          <ComboboxList className="p-2">
+            {(item) => (
+              <ComboboxItem key={item} value={item} className="min-h-16 py-2">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-violet-500 to-fuchsia-600 text-white">
+                  <Building2Icon aria-hidden="true" />
                 </span>
-              </span>
-            </ComboboxItem>
-          )}
-        </ComboboxList>
-        <Separator />
-        <Button type="button" variant="ghost" className="h-12 w-full justify-start rounded-none px-4">
-          <PlusIcon data-icon="inline-start" />
-          Create Organization
-        </Button>
-      </ComboboxContent>
+                <span className="flex min-w-0 flex-col gap-0.5">
+                  <span className="truncate text-sm font-medium">{item}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {organizationPlans[item]}
+                  </span>
+                </span>
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+          <Separator />
+          <Button
+            type="button"
+            variant="ghost"
+            className="h-12 w-full justify-start rounded-none px-4"
+          >
+            <PlusIcon data-icon="inline-start" />
+            Create Organization
+          </Button>
+        </ComboboxContent>
       </Combobox>
-      <span aria-hidden="true" className="text-lg text-muted-foreground">
-        /
-      </span>
-      <Button type="button" variant="ghost" size="sm" className="gap-1.5 px-2">
-        Storefront
-        <ChevronsUpDownIcon />
-      </Button>
-      <span aria-hidden="true" className="text-lg text-muted-foreground">
-        /
-      </span>
-      <Button type="button" variant="ghost" size="sm" className="gap-1.5 px-2">
-        Production
-        <ChevronsUpDownIcon />
-      </Button>
     </div>
   );
 };
+
+export function InputGroupInlineStart() {
+  return (
+    <InputGroup className={cn("min-w-3 w-full max-w-sm")}>
+      <InputGroupInput
+        id="inline-start-input"
+        placeholder="Search..."
+      />
+      <InputGroupAddon align="inline-start">
+        <SearchIcon className="text-muted-foreground" />
+      </InputGroupAddon>
+    </InputGroup>
+  );
+}
 
 const BrandIcon = () => {
   return (
