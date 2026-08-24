@@ -487,6 +487,6 @@ export function useDockMenu() {
       { icon: <TrendingUp  className="w-5 h-5"/>, lable: "Sales", path: "/sales" },
       { icon: <Megaphone  className="w-5 h-5"/>, lable: "Marketing", path: "/marketing" },
     ]);
-  });
+  },[]);
   return menu;
 }
