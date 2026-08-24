@@ -10,12 +10,30 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { useAppShell } from "./AppShell";
 
 export const TabMenu = () => {
-  const [activeTab, setActiveTab] = useState("Reports");
+  const [activeTab, setActiveTab] = useState<string|undefined>();
   const [hasTabsLeft, setHasTabsLeft] = useState(false);
   const [hasTabsRight, setHasTabsRight] = useState(false);
   const tabsListRef = useRef<HTMLDivElement>(null);
+
+  const { selectedPrime, selectedSec } = useAppShell();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (selectedSec) {
+      setActiveTab(selectedSec.path);
+    } else {
+      setActiveTab(undefined);
+    }
+  }, [selectedSec]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    navigate({ to: value });
+  };
 
   const updateTabScrollState = () => {
     const element = tabsListRef.current;
@@ -24,7 +42,9 @@ export const TabMenu = () => {
     }
 
     setHasTabsLeft(element.scrollLeft > 0);
-    setHasTabsRight(element.scrollLeft + element.clientWidth < element.scrollWidth - 1);
+    setHasTabsRight(
+      element.scrollLeft + element.clientWidth < element.scrollWidth - 1,
+    );
   };
 
   useEffect(() => {
@@ -44,7 +64,7 @@ export const TabMenu = () => {
   }, [activeTab]);
 
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} variant="underline">
+    <Tabs value={activeTab} onValueChange={handleTabChange} variant="underline">
       <div className="relative">
         <div
           ref={tabsListRef}
@@ -52,20 +72,17 @@ export const TabMenu = () => {
           className="border-border border-b no-scrollbar h-12 w-full max-w-full overflow-x-scroll transition-transform duration-200"
         >
           <TabsList className="w-max border-b-0">
-          <TabsTrigger value="all" className="py-1">
-            All
-          </TabsTrigger>
-          <TabsTrigger value="open" className="py-1">
-            Open
-          </TabsTrigger>
-          {HRMenuItems.map((item) => (
-            <TabItem
-              key={item.label}
-              icon={item.icon}
-              label={item.label}
-              to={item.to}
-            />
-          ))}
+            {selectedPrime?.menu &&
+              selectedPrime.menu
+                .flatMap((item) => item.menu)
+                .map((item) => (
+                  <TabItem
+                    key={item.lable}
+                    icon={item.icon}
+                    label={item.lable}
+                    to={item.path}
+                  />
+                ))}
           </TabsList>
         </div>
         {hasTabsLeft && (
@@ -95,9 +112,9 @@ const HRMenuItems: MenuItemData[] = [
   { icon: <Sliders />, label: "HR Settings", to: "/hr/settings" },
 ];
 
-const TabItem: React.FC<MenuItemData> = ({ label }) => {
+const TabItem: React.FC<MenuItemData> = ({ label, to }) => {
   return (
-    <TabsTrigger value={label} className="py-1">
+    <TabsTrigger value={to} className="py-1">
       <span>{label}</span>
     </TabsTrigger>
   );
