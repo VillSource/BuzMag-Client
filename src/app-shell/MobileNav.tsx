@@ -1,8 +1,14 @@
-import { ClockFading, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Dock, DockItem, DockSeparator } from "@/components/motion/dock";
-import { useDockMenu } from "./use-menu";
+import { useDockMenu, type PrimaryMenuType } from "./use-menu";
 import { useScrollDirection } from "@/hooks/use-scroll-direction";
-import { useEffect, useState } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { useAppShell } from "./AppShell";
@@ -16,7 +22,6 @@ export const MobileNav = () => {
   const [active, setActive] = useState<string | undefined>();
   const visible = direction !== "down";
 
-  // Auto-sync active state with the current selectedPrime
   useEffect(() => {
     setActive(selectedPrime?.lable ?? undefined);
   }, [selectedPrime]);
@@ -45,17 +50,30 @@ export const MobileNav = () => {
           </DockItem>
         ))}
         <DockSeparator />
-        <DockItem
-          aria-label="Recent"
-          active={active === "recent"}
-          onClick={() => navigate({to:'/ping/$name', params:{name: 'eiei'}})}
-        >
-          <ClockFading className="h-5 w-5" />
-        </DockItem>
+        {!!selectedPrime &&
+          ITEMS.findIndex((i) => i.lable == selectedPrime.lable) < 0 && (
+            <DockItem
+              key={selectedPrime.lable}
+              aria-label={selectedPrime?.lable}
+              active={active === selectedPrime?.lable}
+              onClick={() => handleItemClick(selectedPrime)}
+            >
+              {isValidElement(selectedPrime.icon)
+                ? cloneElement(
+                    selectedPrime.icon as React.ReactElement<{
+                      className?: string;
+                    }>,
+                    {
+                      className: "h-5 w-5",
+                    },
+                  )
+                : selectedPrime.icon}
+            </DockItem>
+          )}
         <DockItem
           aria-label="Settings"
           active={active === "settings"}
-          onClick={() => navigate({to:'/'})}
+          onClick={() => navigate({ to: "/" })}
         >
           <Menu className="h-5 w-5" />
         </DockItem>
