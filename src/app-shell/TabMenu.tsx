@@ -1,15 +1,5 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/motion/tabs";
 import { useEffect, useRef, useState } from "react";
-import {
-  Award,
-  CalendarOff,
-  Clock,
-  DollarSign,
-  FileText,
-  Sliders,
-  UserPlus,
-  Users,
-} from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { useAppShell } from "./AppShell";
 
@@ -101,17 +91,6 @@ type MenuItemData = {
   label: string;
   to: string;
 };
-const HRMenuItems: MenuItemData[] = [
-  { icon: <Users />, label: "Employees", to: "/hr/employees" },
-  { icon: <UserPlus />, label: "Onboarding", to: "/hr/onboarding" },
-  { icon: <Clock />, label: "Attendance", to: "/hr/attendance" },
-  { icon: <CalendarOff />, label: "Leave Requests", to: "/hr/leaves" },
-  { icon: <DollarSign />, label: "Payroll", to: "/hr/payroll" },
-  { icon: <Award />, label: "Performance", to: "/hr/reviews" },
-  { icon: <FileText />, label: "Reports", to: "/hr/reports" },
-  { icon: <Sliders />, label: "HR Settings", to: "/hr/settings" },
-];
-
 const TabItem: React.FC<MenuItemData> = ({ label, to }) => {
   return (
     <TabsTrigger value={to} className="py-1">
