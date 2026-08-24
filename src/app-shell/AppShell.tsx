@@ -133,7 +133,7 @@ export const AppShell: FC<AppShellProps> = ({
                       </div>
                     )}
                     {isMobile ? (
-                      <div className="min-w-0 flex-1 bg-background">
+                      <div className="min-w-0 flex-1 flex flex-col bg-background">
                         <main className="flex-1 p-4 bg-background">
                           {children}
                         </main>
