@@ -40,7 +40,10 @@ jobs:
         run: pnpm run generate
 
       - name: Build project
-        run: pnpm vite build --base=/BuzMag-Client/
+        run: pnpm vite build --base=/${{ github.event.repository.name }}/
+
+      - name: Copy index.html to 404.html
+        run: cp dist/index.html dist/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
