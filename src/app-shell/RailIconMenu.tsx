@@ -41,6 +41,8 @@ import {
 } from "../components/ui/tooltip";
 import { useAppShell } from "@/app-shell/AppShell";
 import { AvatarMenu } from "@/features/profile/AvatarMenu";
+import { useCallback } from "react";
+import type { PrimaryMenuType } from "./use-menu";
 
 const RailIconMenu = () => {
   const { menuOpen, setMenuOpen, appMenu } = useAppShell();
@@ -81,6 +83,7 @@ const RailIconMenu = () => {
                       icon={item.icon}
                       label={item.lable}
                       to={item.path}
+                      module={item}
                     />
                   ))}
                 </SidebarMenu>
@@ -101,16 +104,22 @@ type RialIconMenu = {
   icon: React.ReactNode;
   label: string;
   to: string;
+  module: PrimaryMenuType
 };
 
-const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to }) => {
-  const { setMenuOpen } = useAppShell();
+const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to, module }) => {
+  const { setMenuOpen, setSelectedPrime } = useAppShell();
+  const clickModule = useCallback(()=>{
+    setSelectedPrime(module);
+    setMenuOpen(!!module.menu && module.menu.length > 0);
+  }, [module])
+
   return (
     <SidebarMenuItem>
       <Tooltip>
         <TooltipTrigger>
           <SidebarMenuButton
-            onClick={()=>setMenuOpen(true)}
+            onClick={clickModule}
             className="group/rail hover:bg-primary/10 transform transition-colors duration-300 ease-in-out"
             render={ <Link to={to} />}
           >

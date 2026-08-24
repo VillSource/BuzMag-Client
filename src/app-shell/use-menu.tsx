@@ -1,3 +1,4 @@
+import { useLocation } from "@tanstack/react-router";
 import {
   Award,
   BarChart,

@@ -32,6 +32,10 @@ type AppShellContextType = {
   setSheetContent: Dispatch<SetStateAction<ReactNode>>;
 
   appMenu: PrimaryMenuGroupType[]
+  selectedPrime: PrimaryMenuType|undefined
+  setSelectedPrime : Dispatch<SetStateAction<PrimaryMenuType | undefined>>
+  selectedSec: SecondaryMenuType|undefined
+  setselectedSec : Dispatch<SetStateAction<SecondaryMenuType | undefined>>
 };
 
 const AppShellContext = createContext<AppShellContextType | undefined>(
@@ -56,6 +60,8 @@ export const AppShell: FC<AppShellProps> = ({
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetContent, setSheetContent] = useState<ReactNode>();
   const [panelContent, setPanelContent] = useState<ReactNode>();
+  const [selectedPrime, setSelectedPrime] = useState<PrimaryMenuType>();
+  const [selectedSec, setselectedSec] = useState<SecondaryMenuType>();
 
   const isMobile = useIsMobile();
   const appMenu = useAppMenu();
@@ -69,19 +75,23 @@ export const AppShell: FC<AppShellProps> = ({
         sheetContent,
         panelContent,
         appMenu,
+        selectedPrime,
+        selectedSec,
         setPanelOpen,
         setMenuOpen,
         setSheetOpen,
         setSheetContent,
-        setPanelContent
-      }}
+        setPanelContent,
+        setSelectedPrime,
+        setselectedSec,
+        }}
     >
       <SidebarProvider
         className={cn(
           "w-full",
           isMobile ? "min-h-svh" : "h-svh overflow-hidden",
         )}
-        open={true}
+        open={false}
       >
         <RailIconMenu />
         <div className="flex min-h-svh min-w-0 w-full flex-1 bg-muted">
@@ -209,7 +219,7 @@ import Footer from "./Footer";
 import { SideMenuBar } from "./SideMenuBar";
 import { ContextPanel } from "./ContextPanel";
 import { TabMenu } from "./TabMenu";
-import { useAppMenu, type PrimaryMenuGroupType } from "./use-menu";
+import { useAppMenu, type PrimaryMenuGroupType, type PrimaryMenuType, type SecondaryMenuType } from "./use-menu";
 
 const  DockPreview = () => {
   const { direction } = useScrollDirection({ direction: "both" });
