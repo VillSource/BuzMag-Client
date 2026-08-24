@@ -45,8 +45,11 @@ import { AvatarMenu } from "@/features/profile/AvatarMenu";
 import { useCallback } from "react";
 import type { PrimaryMenuType } from "./use-menu";
 
+import { Fragment } from "react";
+import { cn } from "@/lib/utils";
+
 const RailIconMenu = () => {
-  const { menuOpen, setMenuOpen, appMenu } = useAppShell();
+  const { menuOpen, setMenuOpen, appMenu, selectedPrime } = useAppShell();
 
   return (
     <>
@@ -73,25 +76,28 @@ const RailIconMenu = () => {
 
         <SidebarContent className="overflow-y-auto! bg-muted text-foreground">
 
-          {appMenu.map((group => <>
-            <SidebarGroup key={group.lable}>
-              <SidebarGroupLabel>{group.lable}</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {group.menu.map((item) => (
-                    <RialIconMenuItem
-                      key={item.lable}
-                      icon={item.icon}
-                      label={item.lable}
-                      to={item.path}
-                      module={item}
-                    />
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-            <SidebarSeparator/>
-          </>))}
+          {appMenu.map((group) => (
+            <Fragment key={group.lable}>
+              <SidebarGroup>
+                <SidebarGroupLabel>{group.lable}</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {group.menu.map((item) => (
+                      <MenuItem
+                        key={item.lable}
+                        icon={item.icon}
+                        label={item.lable}
+                        to={item.path}
+                        module={item}
+                        isActive={selectedPrime?.path === item.path}
+                      />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+              <SidebarSeparator/>
+            </Fragment>
+          ))}
         </SidebarContent>
 
         <SidebarFooter className="bg-muted text-foreground">
@@ -106,26 +112,15 @@ type RialIconMenu = {
   icon: React.ReactNode;
   label: string;
   to: string;
-  module: PrimaryMenuType
+  module: PrimaryMenuType;
+  isActive?: boolean;
 };
 
-const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to, module }) => {
-  const { setMenuOpen } = useAppShell();
-  const clickModule = useCallback(()=>{
-    setMenuOpen(!!module.menu && module.menu.length > 0);
-  }, [module])
-
+const MenuItem: React.FC<RialIconMenu> = ({ icon, label, to, isActive }) => {
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton
-        tooltip={label}
-        onClick={clickModule}
-        className="group/rail hover:bg-primary/10 transform transition-colors duration-300 ease-in-out"
-        render={ <Link to={to} />}
-      >
-        <span className="group-hover/rail:-translate-y-1 group-hover/rail:scale-110 group-hover/rail:rotate-2 transition-transform duration-100 ease-in-out">
-          {icon}
-        </span>
+      <SidebarMenuButton isActive={isActive} render={<Link to={to} />} tooltip={label}>
+        <span className={cn(isActive?"text-primary":undefined)}>{icon}</span>
         <span>{label}</span>
       </SidebarMenuButton>
     </SidebarMenuItem>

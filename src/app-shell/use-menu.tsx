@@ -140,9 +140,9 @@ export function useAppMenu() {
       {
         lable: "Recent",
         menu: [
-          { icon: <LayoutDashboard />, lable: "Dashboard", path: "/dashboard" },
-          { icon: <Inbox />, lable: "Chat", path: "/chat" },
-          { icon: <PackageOpen />, lable: "My files", path: "/my-files" },
+          { icon: <LayoutDashboard />, lable: "Dashboard2", path: "/dashboard2" },
+          { icon: <Inbox />, lable: "Chat2", path: "/chat2" },
+          { icon: <PackageOpen />, lable: "My files2", path: "/my-files2" },
         ],
       },
     ]);

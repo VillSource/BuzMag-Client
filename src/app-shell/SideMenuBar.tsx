@@ -29,7 +29,7 @@ import {
 import { useAppShell } from "./AppShell";
 
 export const SideMenuBar = () => {
-  const { selectedPrime } = useAppShell();
+  const { selectedPrime, selectedSec } = useAppShell();
   return (
     <>
       <ShadcnSidebar
@@ -53,6 +53,7 @@ export const SideMenuBar = () => {
                         icon={item.icon}
                         label={item.lable}
                         to={item.path}
+                        isActive={selectedSec?.path === item.path}
                       />
                     ))}
                   </SidebarMenu>
@@ -74,12 +75,13 @@ type MenuItemData = {
   icon: React.ReactNode;
   label: string;
   to: string;
+  isActive?: boolean;
 };
 
-const MenuItem: React.FC<MenuItemData> = ({ icon, label, to }) => {
+const MenuItem: React.FC<MenuItemData> = ({ icon, label, to, isActive }) => {
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton render={<Link to={to} />}>
+      <SidebarMenuButton isActive={isActive} render={<Link to={to} />}>
         <span>{icon}</span>
         <span>{label}</span>
       </SidebarMenuButton>
