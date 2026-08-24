@@ -10,11 +10,279 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppointmentsRouteImport } from './routes/appointments'
+import { Route as ChatRouteImport } from './routes/chat'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as FieldServiceRouteImport } from './routes/field-service'
+import { Route as FinanceRouteImport } from './routes/finance'
+import { Route as HelpdeskRouteImport } from './routes/helpdesk'
+import { Route as HrRouteImport } from './routes/hr'
+import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as MarketingRouteImport } from './routes/marketing'
+import { Route as MyFilesRouteImport } from './routes/my-files'
+import { Route as PlanningRouteImport } from './routes/planning'
+import { Route as ProductivityRouteImport } from './routes/productivity'
+import { Route as ProjectRouteImport } from './routes/project'
+import { Route as SalesRouteImport } from './routes/sales'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as TimesheetsRouteImport } from './routes/timesheets'
+import { Route as CrmPipelineRouteImport } from './routes/crm.pipeline'
+import { Route as FinanceIndexRouteImport } from './routes/finance.index'
+import { Route as FinanceBankRouteImport } from './routes/finance_.bank'
+import { Route as FinanceExpensesRouteImport } from './routes/finance_.expenses'
+import { Route as FinanceInvoicingRouteImport } from './routes/finance_.invoicing'
+import { Route as FinancePaymentsRouteImport } from './routes/finance_.payments'
+import { Route as FinanceReportsRouteImport } from './routes/finance_.reports'
+import { Route as HrIndexRouteImport } from './routes/hr.index'
+import { Route as HrAppraisalsRouteImport } from './routes/hr_.appraisals'
+import { Route as HrAttendancesRouteImport } from './routes/hr_.attendances'
+import { Route as HrEmployeesRouteImport } from './routes/hr_.employees'
+import { Route as HrPayrollRouteImport } from './routes/hr_.payroll'
+import { Route as HrRecruitmentRouteImport } from './routes/hr_.recruitment'
+import { Route as HrTimeOffRouteImport } from './routes/hr_.time-off'
+import { Route as InventoryIndexRouteImport } from './routes/inventory.index'
+import { Route as InventoryPurchaseRouteImport } from './routes/inventory_.purchase'
+import { Route as InventoryStockRouteImport } from './routes/inventory_.stock'
+import { Route as InventoryTransfersRouteImport } from './routes/inventory_.transfers'
+import { Route as ManufacturingMaintenanceRouteImport } from './routes/manufacturing.maintenance'
+import { Route as ManufacturingOrdersRouteImport } from './routes/manufacturing.orders'
+import { Route as ManufacturingQualityRouteImport } from './routes/manufacturing.quality'
+import { Route as MarketingIndexRouteImport } from './routes/marketing.index'
+import { Route as MarketingAutomationRouteImport } from './routes/marketing_.automation'
+import { Route as MarketingEmailRouteImport } from './routes/marketing_.email'
+import { Route as MarketingEventsRouteImport } from './routes/marketing_.events'
+import { Route as MarketingSocialRouteImport } from './routes/marketing_.social'
+import { Route as MarketingSurveysRouteImport } from './routes/marketing_.surveys'
 import { Route as PingNameRouteImport } from './routes/ping.$name'
+import { Route as ProductivityIndexRouteImport } from './routes/productivity.index'
+import { Route as ProductivityApprovalsRouteImport } from './routes/productivity_.approvals'
+import { Route as ProductivityDocumentsRouteImport } from './routes/productivity_.documents'
+import { Route as ProductivityTodoRouteImport } from './routes/productivity_.todo'
+import { Route as SalesCustomersRouteImport } from './routes/sales_.customers'
+import { Route as SalesEcommerceRouteImport } from './routes/sales_.ecommerce'
+import { Route as SalesOrdersRouteImport } from './routes/sales_.orders'
+import { Route as SalesPosRouteImport } from './routes/sales_.pos'
+import { Route as SalesQuotationsRouteImport } from './routes/sales_.quotations'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppointmentsRoute = AppointmentsRouteImport.update({
+  id: '/appointments',
+  path: '/appointments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FieldServiceRoute = FieldServiceRouteImport.update({
+  id: '/field-service',
+  path: '/field-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceRoute = FinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpdeskRoute = HelpdeskRouteImport.update({
+  id: '/helpdesk',
+  path: '/helpdesk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrRoute = HrRouteImport.update({
+  id: '/hr',
+  path: '/hr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventoryRoute = InventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingRoute = MarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyFilesRoute = MyFilesRouteImport.update({
+  id: '/my-files',
+  path: '/my-files',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanningRoute = PlanningRouteImport.update({
+  id: '/planning',
+  path: '/planning',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductivityRoute = ProductivityRouteImport.update({
+  id: '/productivity',
+  path: '/productivity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectRoute = ProjectRouteImport.update({
+  id: '/project',
+  path: '/project',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesRoute = SalesRouteImport.update({
+  id: '/sales',
+  path: '/sales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimesheetsRoute = TimesheetsRouteImport.update({
+  id: '/timesheets',
+  path: '/timesheets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CrmPipelineRoute = CrmPipelineRouteImport.update({
+  id: '/crm/pipeline',
+  path: '/crm/pipeline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceIndexRoute = FinanceIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FinanceRoute,
+} as any)
+const FinanceBankRoute = FinanceBankRouteImport.update({
+  id: '/finance_/bank',
+  path: '/finance/bank',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceExpensesRoute = FinanceExpensesRouteImport.update({
+  id: '/finance_/expenses',
+  path: '/finance/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceInvoicingRoute = FinanceInvoicingRouteImport.update({
+  id: '/finance_/invoicing',
+  path: '/finance/invoicing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinancePaymentsRoute = FinancePaymentsRouteImport.update({
+  id: '/finance_/payments',
+  path: '/finance/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceReportsRoute = FinanceReportsRouteImport.update({
+  id: '/finance_/reports',
+  path: '/finance/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrIndexRoute = HrIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HrRoute,
+} as any)
+const HrAppraisalsRoute = HrAppraisalsRouteImport.update({
+  id: '/hr_/appraisals',
+  path: '/hr/appraisals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrAttendancesRoute = HrAttendancesRouteImport.update({
+  id: '/hr_/attendances',
+  path: '/hr/attendances',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrEmployeesRoute = HrEmployeesRouteImport.update({
+  id: '/hr_/employees',
+  path: '/hr/employees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrPayrollRoute = HrPayrollRouteImport.update({
+  id: '/hr_/payroll',
+  path: '/hr/payroll',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrRecruitmentRoute = HrRecruitmentRouteImport.update({
+  id: '/hr_/recruitment',
+  path: '/hr/recruitment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrTimeOffRoute = HrTimeOffRouteImport.update({
+  id: '/hr_/time-off',
+  path: '/hr/time-off',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventoryIndexRoute = InventoryIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InventoryRoute,
+} as any)
+const InventoryPurchaseRoute = InventoryPurchaseRouteImport.update({
+  id: '/inventory_/purchase',
+  path: '/inventory/purchase',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventoryStockRoute = InventoryStockRouteImport.update({
+  id: '/inventory_/stock',
+  path: '/inventory/stock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventoryTransfersRoute = InventoryTransfersRouteImport.update({
+  id: '/inventory_/transfers',
+  path: '/inventory/transfers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManufacturingMaintenanceRoute =
+  ManufacturingMaintenanceRouteImport.update({
+    id: '/manufacturing/maintenance',
+    path: '/manufacturing/maintenance',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ManufacturingOrdersRoute = ManufacturingOrdersRouteImport.update({
+  id: '/manufacturing/orders',
+  path: '/manufacturing/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManufacturingQualityRoute = ManufacturingQualityRouteImport.update({
+  id: '/manufacturing/quality',
+  path: '/manufacturing/quality',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingIndexRoute = MarketingIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MarketingRoute,
+} as any)
+const MarketingAutomationRoute = MarketingAutomationRouteImport.update({
+  id: '/marketing_/automation',
+  path: '/marketing/automation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingEmailRoute = MarketingEmailRouteImport.update({
+  id: '/marketing_/email',
+  path: '/marketing/email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingEventsRoute = MarketingEventsRouteImport.update({
+  id: '/marketing_/events',
+  path: '/marketing/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingSocialRoute = MarketingSocialRouteImport.update({
+  id: '/marketing_/social',
+  path: '/marketing/social',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingSurveysRoute = MarketingSurveysRouteImport.update({
+  id: '/marketing_/surveys',
+  path: '/marketing/surveys',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PingNameRoute = PingNameRouteImport.update({
@@ -22,31 +290,432 @@ const PingNameRoute = PingNameRouteImport.update({
   path: '/ping/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductivityIndexRoute = ProductivityIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProductivityRoute,
+} as any)
+const ProductivityApprovalsRoute = ProductivityApprovalsRouteImport.update({
+  id: '/productivity_/approvals',
+  path: '/productivity/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductivityDocumentsRoute = ProductivityDocumentsRouteImport.update({
+  id: '/productivity_/documents',
+  path: '/productivity/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductivityTodoRoute = ProductivityTodoRouteImport.update({
+  id: '/productivity_/todo',
+  path: '/productivity/todo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesCustomersRoute = SalesCustomersRouteImport.update({
+  id: '/sales_/customers',
+  path: '/sales/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesEcommerceRoute = SalesEcommerceRouteImport.update({
+  id: '/sales_/ecommerce',
+  path: '/sales/ecommerce',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesOrdersRoute = SalesOrdersRouteImport.update({
+  id: '/sales_/orders',
+  path: '/sales/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesPosRoute = SalesPosRouteImport.update({
+  id: '/sales_/pos',
+  path: '/sales/pos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesQuotationsRoute = SalesQuotationsRouteImport.update({
+  id: '/sales_/quotations',
+  path: '/sales/quotations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/appointments': typeof AppointmentsRoute
+  '/chat': typeof ChatRoute
+  '/dashboard': typeof DashboardRoute
+  '/field-service': typeof FieldServiceRoute
+  '/finance': typeof FinanceRouteWithChildren
+  '/helpdesk': typeof HelpdeskRoute
+  '/hr': typeof HrRouteWithChildren
+  '/inventory': typeof InventoryRouteWithChildren
+  '/marketing': typeof MarketingRouteWithChildren
+  '/my-files': typeof MyFilesRoute
+  '/planning': typeof PlanningRoute
+  '/productivity': typeof ProductivityRouteWithChildren
+  '/project': typeof ProjectRoute
+  '/sales': typeof SalesRoute
+  '/services': typeof ServicesRoute
+  '/timesheets': typeof TimesheetsRoute
+  '/crm/pipeline': typeof CrmPipelineRoute
+  '/finance/bank': typeof FinanceBankRoute
+  '/finance/expenses': typeof FinanceExpensesRoute
+  '/finance/invoicing': typeof FinanceInvoicingRoute
+  '/finance/payments': typeof FinancePaymentsRoute
+  '/finance/reports': typeof FinanceReportsRoute
+  '/hr/appraisals': typeof HrAppraisalsRoute
+  '/hr/attendances': typeof HrAttendancesRoute
+  '/hr/employees': typeof HrEmployeesRoute
+  '/hr/payroll': typeof HrPayrollRoute
+  '/hr/recruitment': typeof HrRecruitmentRoute
+  '/hr/time-off': typeof HrTimeOffRoute
+  '/inventory/purchase': typeof InventoryPurchaseRoute
+  '/inventory/stock': typeof InventoryStockRoute
+  '/inventory/transfers': typeof InventoryTransfersRoute
+  '/manufacturing/maintenance': typeof ManufacturingMaintenanceRoute
+  '/manufacturing/orders': typeof ManufacturingOrdersRoute
+  '/manufacturing/quality': typeof ManufacturingQualityRoute
+  '/marketing/automation': typeof MarketingAutomationRoute
+  '/marketing/email': typeof MarketingEmailRoute
+  '/marketing/events': typeof MarketingEventsRoute
+  '/marketing/social': typeof MarketingSocialRoute
+  '/marketing/surveys': typeof MarketingSurveysRoute
   '/ping/$name': typeof PingNameRoute
+  '/productivity/approvals': typeof ProductivityApprovalsRoute
+  '/productivity/documents': typeof ProductivityDocumentsRoute
+  '/productivity/todo': typeof ProductivityTodoRoute
+  '/sales/customers': typeof SalesCustomersRoute
+  '/sales/ecommerce': typeof SalesEcommerceRoute
+  '/sales/orders': typeof SalesOrdersRoute
+  '/sales/pos': typeof SalesPosRoute
+  '/sales/quotations': typeof SalesQuotationsRoute
+  '/finance/': typeof FinanceIndexRoute
+  '/hr/': typeof HrIndexRoute
+  '/inventory/': typeof InventoryIndexRoute
+  '/marketing/': typeof MarketingIndexRoute
+  '/productivity/': typeof ProductivityIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/appointments': typeof AppointmentsRoute
+  '/chat': typeof ChatRoute
+  '/dashboard': typeof DashboardRoute
+  '/field-service': typeof FieldServiceRoute
+  '/helpdesk': typeof HelpdeskRoute
+  '/my-files': typeof MyFilesRoute
+  '/planning': typeof PlanningRoute
+  '/project': typeof ProjectRoute
+  '/sales': typeof SalesRoute
+  '/services': typeof ServicesRoute
+  '/timesheets': typeof TimesheetsRoute
+  '/crm/pipeline': typeof CrmPipelineRoute
+  '/finance/bank': typeof FinanceBankRoute
+  '/finance/expenses': typeof FinanceExpensesRoute
+  '/finance/invoicing': typeof FinanceInvoicingRoute
+  '/finance/payments': typeof FinancePaymentsRoute
+  '/finance/reports': typeof FinanceReportsRoute
+  '/hr/appraisals': typeof HrAppraisalsRoute
+  '/hr/attendances': typeof HrAttendancesRoute
+  '/hr/employees': typeof HrEmployeesRoute
+  '/hr/payroll': typeof HrPayrollRoute
+  '/hr/recruitment': typeof HrRecruitmentRoute
+  '/hr/time-off': typeof HrTimeOffRoute
+  '/inventory/purchase': typeof InventoryPurchaseRoute
+  '/inventory/stock': typeof InventoryStockRoute
+  '/inventory/transfers': typeof InventoryTransfersRoute
+  '/manufacturing/maintenance': typeof ManufacturingMaintenanceRoute
+  '/manufacturing/orders': typeof ManufacturingOrdersRoute
+  '/manufacturing/quality': typeof ManufacturingQualityRoute
+  '/marketing/automation': typeof MarketingAutomationRoute
+  '/marketing/email': typeof MarketingEmailRoute
+  '/marketing/events': typeof MarketingEventsRoute
+  '/marketing/social': typeof MarketingSocialRoute
+  '/marketing/surveys': typeof MarketingSurveysRoute
   '/ping/$name': typeof PingNameRoute
+  '/productivity/approvals': typeof ProductivityApprovalsRoute
+  '/productivity/documents': typeof ProductivityDocumentsRoute
+  '/productivity/todo': typeof ProductivityTodoRoute
+  '/sales/customers': typeof SalesCustomersRoute
+  '/sales/ecommerce': typeof SalesEcommerceRoute
+  '/sales/orders': typeof SalesOrdersRoute
+  '/sales/pos': typeof SalesPosRoute
+  '/sales/quotations': typeof SalesQuotationsRoute
+  '/finance': typeof FinanceIndexRoute
+  '/hr': typeof HrIndexRoute
+  '/inventory': typeof InventoryIndexRoute
+  '/marketing': typeof MarketingIndexRoute
+  '/productivity': typeof ProductivityIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/appointments': typeof AppointmentsRoute
+  '/chat': typeof ChatRoute
+  '/dashboard': typeof DashboardRoute
+  '/field-service': typeof FieldServiceRoute
+  '/finance': typeof FinanceRouteWithChildren
+  '/helpdesk': typeof HelpdeskRoute
+  '/hr': typeof HrRouteWithChildren
+  '/inventory': typeof InventoryRouteWithChildren
+  '/marketing': typeof MarketingRouteWithChildren
+  '/my-files': typeof MyFilesRoute
+  '/planning': typeof PlanningRoute
+  '/productivity': typeof ProductivityRouteWithChildren
+  '/project': typeof ProjectRoute
+  '/sales': typeof SalesRoute
+  '/services': typeof ServicesRoute
+  '/timesheets': typeof TimesheetsRoute
+  '/crm/pipeline': typeof CrmPipelineRoute
+  '/finance_/bank': typeof FinanceBankRoute
+  '/finance_/expenses': typeof FinanceExpensesRoute
+  '/finance_/invoicing': typeof FinanceInvoicingRoute
+  '/finance_/payments': typeof FinancePaymentsRoute
+  '/finance_/reports': typeof FinanceReportsRoute
+  '/hr_/appraisals': typeof HrAppraisalsRoute
+  '/hr_/attendances': typeof HrAttendancesRoute
+  '/hr_/employees': typeof HrEmployeesRoute
+  '/hr_/payroll': typeof HrPayrollRoute
+  '/hr_/recruitment': typeof HrRecruitmentRoute
+  '/hr_/time-off': typeof HrTimeOffRoute
+  '/inventory_/purchase': typeof InventoryPurchaseRoute
+  '/inventory_/stock': typeof InventoryStockRoute
+  '/inventory_/transfers': typeof InventoryTransfersRoute
+  '/manufacturing/maintenance': typeof ManufacturingMaintenanceRoute
+  '/manufacturing/orders': typeof ManufacturingOrdersRoute
+  '/manufacturing/quality': typeof ManufacturingQualityRoute
+  '/marketing_/automation': typeof MarketingAutomationRoute
+  '/marketing_/email': typeof MarketingEmailRoute
+  '/marketing_/events': typeof MarketingEventsRoute
+  '/marketing_/social': typeof MarketingSocialRoute
+  '/marketing_/surveys': typeof MarketingSurveysRoute
   '/ping/$name': typeof PingNameRoute
+  '/productivity_/approvals': typeof ProductivityApprovalsRoute
+  '/productivity_/documents': typeof ProductivityDocumentsRoute
+  '/productivity_/todo': typeof ProductivityTodoRoute
+  '/sales_/customers': typeof SalesCustomersRoute
+  '/sales_/ecommerce': typeof SalesEcommerceRoute
+  '/sales_/orders': typeof SalesOrdersRoute
+  '/sales_/pos': typeof SalesPosRoute
+  '/sales_/quotations': typeof SalesQuotationsRoute
+  '/finance/': typeof FinanceIndexRoute
+  '/hr/': typeof HrIndexRoute
+  '/inventory/': typeof InventoryIndexRoute
+  '/marketing/': typeof MarketingIndexRoute
+  '/productivity/': typeof ProductivityIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ping/$name'
+  fullPaths:
+    | '/'
+    | '/appointments'
+    | '/chat'
+    | '/dashboard'
+    | '/field-service'
+    | '/finance'
+    | '/helpdesk'
+    | '/hr'
+    | '/inventory'
+    | '/marketing'
+    | '/my-files'
+    | '/planning'
+    | '/productivity'
+    | '/project'
+    | '/sales'
+    | '/services'
+    | '/timesheets'
+    | '/crm/pipeline'
+    | '/finance/bank'
+    | '/finance/expenses'
+    | '/finance/invoicing'
+    | '/finance/payments'
+    | '/finance/reports'
+    | '/hr/appraisals'
+    | '/hr/attendances'
+    | '/hr/employees'
+    | '/hr/payroll'
+    | '/hr/recruitment'
+    | '/hr/time-off'
+    | '/inventory/purchase'
+    | '/inventory/stock'
+    | '/inventory/transfers'
+    | '/manufacturing/maintenance'
+    | '/manufacturing/orders'
+    | '/manufacturing/quality'
+    | '/marketing/automation'
+    | '/marketing/email'
+    | '/marketing/events'
+    | '/marketing/social'
+    | '/marketing/surveys'
+    | '/ping/$name'
+    | '/productivity/approvals'
+    | '/productivity/documents'
+    | '/productivity/todo'
+    | '/sales/customers'
+    | '/sales/ecommerce'
+    | '/sales/orders'
+    | '/sales/pos'
+    | '/sales/quotations'
+    | '/finance/'
+    | '/hr/'
+    | '/inventory/'
+    | '/marketing/'
+    | '/productivity/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ping/$name'
-  id: '__root__' | '/' | '/ping/$name'
+  to:
+    | '/'
+    | '/appointments'
+    | '/chat'
+    | '/dashboard'
+    | '/field-service'
+    | '/helpdesk'
+    | '/my-files'
+    | '/planning'
+    | '/project'
+    | '/sales'
+    | '/services'
+    | '/timesheets'
+    | '/crm/pipeline'
+    | '/finance/bank'
+    | '/finance/expenses'
+    | '/finance/invoicing'
+    | '/finance/payments'
+    | '/finance/reports'
+    | '/hr/appraisals'
+    | '/hr/attendances'
+    | '/hr/employees'
+    | '/hr/payroll'
+    | '/hr/recruitment'
+    | '/hr/time-off'
+    | '/inventory/purchase'
+    | '/inventory/stock'
+    | '/inventory/transfers'
+    | '/manufacturing/maintenance'
+    | '/manufacturing/orders'
+    | '/manufacturing/quality'
+    | '/marketing/automation'
+    | '/marketing/email'
+    | '/marketing/events'
+    | '/marketing/social'
+    | '/marketing/surveys'
+    | '/ping/$name'
+    | '/productivity/approvals'
+    | '/productivity/documents'
+    | '/productivity/todo'
+    | '/sales/customers'
+    | '/sales/ecommerce'
+    | '/sales/orders'
+    | '/sales/pos'
+    | '/sales/quotations'
+    | '/finance'
+    | '/hr'
+    | '/inventory'
+    | '/marketing'
+    | '/productivity'
+  id:
+    | '__root__'
+    | '/'
+    | '/appointments'
+    | '/chat'
+    | '/dashboard'
+    | '/field-service'
+    | '/finance'
+    | '/helpdesk'
+    | '/hr'
+    | '/inventory'
+    | '/marketing'
+    | '/my-files'
+    | '/planning'
+    | '/productivity'
+    | '/project'
+    | '/sales'
+    | '/services'
+    | '/timesheets'
+    | '/crm/pipeline'
+    | '/finance_/bank'
+    | '/finance_/expenses'
+    | '/finance_/invoicing'
+    | '/finance_/payments'
+    | '/finance_/reports'
+    | '/hr_/appraisals'
+    | '/hr_/attendances'
+    | '/hr_/employees'
+    | '/hr_/payroll'
+    | '/hr_/recruitment'
+    | '/hr_/time-off'
+    | '/inventory_/purchase'
+    | '/inventory_/stock'
+    | '/inventory_/transfers'
+    | '/manufacturing/maintenance'
+    | '/manufacturing/orders'
+    | '/manufacturing/quality'
+    | '/marketing_/automation'
+    | '/marketing_/email'
+    | '/marketing_/events'
+    | '/marketing_/social'
+    | '/marketing_/surveys'
+    | '/ping/$name'
+    | '/productivity_/approvals'
+    | '/productivity_/documents'
+    | '/productivity_/todo'
+    | '/sales_/customers'
+    | '/sales_/ecommerce'
+    | '/sales_/orders'
+    | '/sales_/pos'
+    | '/sales_/quotations'
+    | '/finance/'
+    | '/hr/'
+    | '/inventory/'
+    | '/marketing/'
+    | '/productivity/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppointmentsRoute: typeof AppointmentsRoute
+  ChatRoute: typeof ChatRoute
+  DashboardRoute: typeof DashboardRoute
+  FieldServiceRoute: typeof FieldServiceRoute
+  FinanceRoute: typeof FinanceRouteWithChildren
+  HelpdeskRoute: typeof HelpdeskRoute
+  HrRoute: typeof HrRouteWithChildren
+  InventoryRoute: typeof InventoryRouteWithChildren
+  MarketingRoute: typeof MarketingRouteWithChildren
+  MyFilesRoute: typeof MyFilesRoute
+  PlanningRoute: typeof PlanningRoute
+  ProductivityRoute: typeof ProductivityRouteWithChildren
+  ProjectRoute: typeof ProjectRoute
+  SalesRoute: typeof SalesRoute
+  ServicesRoute: typeof ServicesRoute
+  TimesheetsRoute: typeof TimesheetsRoute
+  CrmPipelineRoute: typeof CrmPipelineRoute
+  FinanceBankRoute: typeof FinanceBankRoute
+  FinanceExpensesRoute: typeof FinanceExpensesRoute
+  FinanceInvoicingRoute: typeof FinanceInvoicingRoute
+  FinancePaymentsRoute: typeof FinancePaymentsRoute
+  FinanceReportsRoute: typeof FinanceReportsRoute
+  HrAppraisalsRoute: typeof HrAppraisalsRoute
+  HrAttendancesRoute: typeof HrAttendancesRoute
+  HrEmployeesRoute: typeof HrEmployeesRoute
+  HrPayrollRoute: typeof HrPayrollRoute
+  HrRecruitmentRoute: typeof HrRecruitmentRoute
+  HrTimeOffRoute: typeof HrTimeOffRoute
+  InventoryPurchaseRoute: typeof InventoryPurchaseRoute
+  InventoryStockRoute: typeof InventoryStockRoute
+  InventoryTransfersRoute: typeof InventoryTransfersRoute
+  ManufacturingMaintenanceRoute: typeof ManufacturingMaintenanceRoute
+  ManufacturingOrdersRoute: typeof ManufacturingOrdersRoute
+  ManufacturingQualityRoute: typeof ManufacturingQualityRoute
+  MarketingAutomationRoute: typeof MarketingAutomationRoute
+  MarketingEmailRoute: typeof MarketingEmailRoute
+  MarketingEventsRoute: typeof MarketingEventsRoute
+  MarketingSocialRoute: typeof MarketingSocialRoute
+  MarketingSurveysRoute: typeof MarketingSurveysRoute
   PingNameRoute: typeof PingNameRoute
+  ProductivityApprovalsRoute: typeof ProductivityApprovalsRoute
+  ProductivityDocumentsRoute: typeof ProductivityDocumentsRoute
+  ProductivityTodoRoute: typeof ProductivityTodoRoute
+  SalesCustomersRoute: typeof SalesCustomersRoute
+  SalesEcommerceRoute: typeof SalesEcommerceRoute
+  SalesOrdersRoute: typeof SalesOrdersRoute
+  SalesPosRoute: typeof SalesPosRoute
+  SalesQuotationsRoute: typeof SalesQuotationsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +727,307 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/appointments': {
+      id: '/appointments'
+      path: '/appointments'
+      fullPath: '/appointments'
+      preLoaderRoute: typeof AppointmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/field-service': {
+      id: '/field-service'
+      path: '/field-service'
+      fullPath: '/field-service'
+      preLoaderRoute: typeof FieldServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance': {
+      id: '/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof FinanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/helpdesk': {
+      id: '/helpdesk'
+      path: '/helpdesk'
+      fullPath: '/helpdesk'
+      preLoaderRoute: typeof HelpdeskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr': {
+      id: '/hr'
+      path: '/hr'
+      fullPath: '/hr'
+      preLoaderRoute: typeof HrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventory': {
+      id: '/inventory'
+      path: '/inventory'
+      fullPath: '/inventory'
+      preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing': {
+      id: '/marketing'
+      path: '/marketing'
+      fullPath: '/marketing'
+      preLoaderRoute: typeof MarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-files': {
+      id: '/my-files'
+      path: '/my-files'
+      fullPath: '/my-files'
+      preLoaderRoute: typeof MyFilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planning': {
+      id: '/planning'
+      path: '/planning'
+      fullPath: '/planning'
+      preLoaderRoute: typeof PlanningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/productivity': {
+      id: '/productivity'
+      path: '/productivity'
+      fullPath: '/productivity'
+      preLoaderRoute: typeof ProductivityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project': {
+      id: '/project'
+      path: '/project'
+      fullPath: '/project'
+      preLoaderRoute: typeof ProjectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales': {
+      id: '/sales'
+      path: '/sales'
+      fullPath: '/sales'
+      preLoaderRoute: typeof SalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timesheets': {
+      id: '/timesheets'
+      path: '/timesheets'
+      fullPath: '/timesheets'
+      preLoaderRoute: typeof TimesheetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crm/pipeline': {
+      id: '/crm/pipeline'
+      path: '/crm/pipeline'
+      fullPath: '/crm/pipeline'
+      preLoaderRoute: typeof CrmPipelineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance/': {
+      id: '/finance/'
+      path: '/'
+      fullPath: '/finance/'
+      preLoaderRoute: typeof FinanceIndexRouteImport
+      parentRoute: typeof FinanceRoute
+    }
+    '/finance_/bank': {
+      id: '/finance_/bank'
+      path: '/finance/bank'
+      fullPath: '/finance/bank'
+      preLoaderRoute: typeof FinanceBankRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance_/expenses': {
+      id: '/finance_/expenses'
+      path: '/finance/expenses'
+      fullPath: '/finance/expenses'
+      preLoaderRoute: typeof FinanceExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance_/invoicing': {
+      id: '/finance_/invoicing'
+      path: '/finance/invoicing'
+      fullPath: '/finance/invoicing'
+      preLoaderRoute: typeof FinanceInvoicingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance_/payments': {
+      id: '/finance_/payments'
+      path: '/finance/payments'
+      fullPath: '/finance/payments'
+      preLoaderRoute: typeof FinancePaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance_/reports': {
+      id: '/finance_/reports'
+      path: '/finance/reports'
+      fullPath: '/finance/reports'
+      preLoaderRoute: typeof FinanceReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr/': {
+      id: '/hr/'
+      path: '/'
+      fullPath: '/hr/'
+      preLoaderRoute: typeof HrIndexRouteImport
+      parentRoute: typeof HrRoute
+    }
+    '/hr_/appraisals': {
+      id: '/hr_/appraisals'
+      path: '/hr/appraisals'
+      fullPath: '/hr/appraisals'
+      preLoaderRoute: typeof HrAppraisalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr_/attendances': {
+      id: '/hr_/attendances'
+      path: '/hr/attendances'
+      fullPath: '/hr/attendances'
+      preLoaderRoute: typeof HrAttendancesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr_/employees': {
+      id: '/hr_/employees'
+      path: '/hr/employees'
+      fullPath: '/hr/employees'
+      preLoaderRoute: typeof HrEmployeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr_/payroll': {
+      id: '/hr_/payroll'
+      path: '/hr/payroll'
+      fullPath: '/hr/payroll'
+      preLoaderRoute: typeof HrPayrollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr_/recruitment': {
+      id: '/hr_/recruitment'
+      path: '/hr/recruitment'
+      fullPath: '/hr/recruitment'
+      preLoaderRoute: typeof HrRecruitmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr_/time-off': {
+      id: '/hr_/time-off'
+      path: '/hr/time-off'
+      fullPath: '/hr/time-off'
+      preLoaderRoute: typeof HrTimeOffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventory/': {
+      id: '/inventory/'
+      path: '/'
+      fullPath: '/inventory/'
+      preLoaderRoute: typeof InventoryIndexRouteImport
+      parentRoute: typeof InventoryRoute
+    }
+    '/inventory_/purchase': {
+      id: '/inventory_/purchase'
+      path: '/inventory/purchase'
+      fullPath: '/inventory/purchase'
+      preLoaderRoute: typeof InventoryPurchaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventory_/stock': {
+      id: '/inventory_/stock'
+      path: '/inventory/stock'
+      fullPath: '/inventory/stock'
+      preLoaderRoute: typeof InventoryStockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventory_/transfers': {
+      id: '/inventory_/transfers'
+      path: '/inventory/transfers'
+      fullPath: '/inventory/transfers'
+      preLoaderRoute: typeof InventoryTransfersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manufacturing/maintenance': {
+      id: '/manufacturing/maintenance'
+      path: '/manufacturing/maintenance'
+      fullPath: '/manufacturing/maintenance'
+      preLoaderRoute: typeof ManufacturingMaintenanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manufacturing/orders': {
+      id: '/manufacturing/orders'
+      path: '/manufacturing/orders'
+      fullPath: '/manufacturing/orders'
+      preLoaderRoute: typeof ManufacturingOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manufacturing/quality': {
+      id: '/manufacturing/quality'
+      path: '/manufacturing/quality'
+      fullPath: '/manufacturing/quality'
+      preLoaderRoute: typeof ManufacturingQualityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing/': {
+      id: '/marketing/'
+      path: '/'
+      fullPath: '/marketing/'
+      preLoaderRoute: typeof MarketingIndexRouteImport
+      parentRoute: typeof MarketingRoute
+    }
+    '/marketing_/automation': {
+      id: '/marketing_/automation'
+      path: '/marketing/automation'
+      fullPath: '/marketing/automation'
+      preLoaderRoute: typeof MarketingAutomationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing_/email': {
+      id: '/marketing_/email'
+      path: '/marketing/email'
+      fullPath: '/marketing/email'
+      preLoaderRoute: typeof MarketingEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing_/events': {
+      id: '/marketing_/events'
+      path: '/marketing/events'
+      fullPath: '/marketing/events'
+      preLoaderRoute: typeof MarketingEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing_/social': {
+      id: '/marketing_/social'
+      path: '/marketing/social'
+      fullPath: '/marketing/social'
+      preLoaderRoute: typeof MarketingSocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing_/surveys': {
+      id: '/marketing_/surveys'
+      path: '/marketing/surveys'
+      fullPath: '/marketing/surveys'
+      preLoaderRoute: typeof MarketingSurveysRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ping/$name': {
       id: '/ping/$name'
       path: '/ping/$name'
@@ -65,12 +1035,179 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PingNameRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/productivity/': {
+      id: '/productivity/'
+      path: '/'
+      fullPath: '/productivity/'
+      preLoaderRoute: typeof ProductivityIndexRouteImport
+      parentRoute: typeof ProductivityRoute
+    }
+    '/productivity_/approvals': {
+      id: '/productivity_/approvals'
+      path: '/productivity/approvals'
+      fullPath: '/productivity/approvals'
+      preLoaderRoute: typeof ProductivityApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/productivity_/documents': {
+      id: '/productivity_/documents'
+      path: '/productivity/documents'
+      fullPath: '/productivity/documents'
+      preLoaderRoute: typeof ProductivityDocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/productivity_/todo': {
+      id: '/productivity_/todo'
+      path: '/productivity/todo'
+      fullPath: '/productivity/todo'
+      preLoaderRoute: typeof ProductivityTodoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales_/customers': {
+      id: '/sales_/customers'
+      path: '/sales/customers'
+      fullPath: '/sales/customers'
+      preLoaderRoute: typeof SalesCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales_/ecommerce': {
+      id: '/sales_/ecommerce'
+      path: '/sales/ecommerce'
+      fullPath: '/sales/ecommerce'
+      preLoaderRoute: typeof SalesEcommerceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales_/orders': {
+      id: '/sales_/orders'
+      path: '/sales/orders'
+      fullPath: '/sales/orders'
+      preLoaderRoute: typeof SalesOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales_/pos': {
+      id: '/sales_/pos'
+      path: '/sales/pos'
+      fullPath: '/sales/pos'
+      preLoaderRoute: typeof SalesPosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales_/quotations': {
+      id: '/sales_/quotations'
+      path: '/sales/quotations'
+      fullPath: '/sales/quotations'
+      preLoaderRoute: typeof SalesQuotationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface FinanceRouteChildren {
+  FinanceIndexRoute: typeof FinanceIndexRoute
+}
+
+const FinanceRouteChildren: FinanceRouteChildren = {
+  FinanceIndexRoute: FinanceIndexRoute,
+}
+
+const FinanceRouteWithChildren =
+  FinanceRoute._addFileChildren(FinanceRouteChildren)
+
+interface HrRouteChildren {
+  HrIndexRoute: typeof HrIndexRoute
+}
+
+const HrRouteChildren: HrRouteChildren = {
+  HrIndexRoute: HrIndexRoute,
+}
+
+const HrRouteWithChildren = HrRoute._addFileChildren(HrRouteChildren)
+
+interface InventoryRouteChildren {
+  InventoryIndexRoute: typeof InventoryIndexRoute
+}
+
+const InventoryRouteChildren: InventoryRouteChildren = {
+  InventoryIndexRoute: InventoryIndexRoute,
+}
+
+const InventoryRouteWithChildren = InventoryRoute._addFileChildren(
+  InventoryRouteChildren,
+)
+
+interface MarketingRouteChildren {
+  MarketingIndexRoute: typeof MarketingIndexRoute
+}
+
+const MarketingRouteChildren: MarketingRouteChildren = {
+  MarketingIndexRoute: MarketingIndexRoute,
+}
+
+const MarketingRouteWithChildren = MarketingRoute._addFileChildren(
+  MarketingRouteChildren,
+)
+
+interface ProductivityRouteChildren {
+  ProductivityIndexRoute: typeof ProductivityIndexRoute
+}
+
+const ProductivityRouteChildren: ProductivityRouteChildren = {
+  ProductivityIndexRoute: ProductivityIndexRoute,
+}
+
+const ProductivityRouteWithChildren = ProductivityRoute._addFileChildren(
+  ProductivityRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppointmentsRoute: AppointmentsRoute,
+  ChatRoute: ChatRoute,
+  DashboardRoute: DashboardRoute,
+  FieldServiceRoute: FieldServiceRoute,
+  FinanceRoute: FinanceRouteWithChildren,
+  HelpdeskRoute: HelpdeskRoute,
+  HrRoute: HrRouteWithChildren,
+  InventoryRoute: InventoryRouteWithChildren,
+  MarketingRoute: MarketingRouteWithChildren,
+  MyFilesRoute: MyFilesRoute,
+  PlanningRoute: PlanningRoute,
+  ProductivityRoute: ProductivityRouteWithChildren,
+  ProjectRoute: ProjectRoute,
+  SalesRoute: SalesRoute,
+  ServicesRoute: ServicesRoute,
+  TimesheetsRoute: TimesheetsRoute,
+  CrmPipelineRoute: CrmPipelineRoute,
+  FinanceBankRoute: FinanceBankRoute,
+  FinanceExpensesRoute: FinanceExpensesRoute,
+  FinanceInvoicingRoute: FinanceInvoicingRoute,
+  FinancePaymentsRoute: FinancePaymentsRoute,
+  FinanceReportsRoute: FinanceReportsRoute,
+  HrAppraisalsRoute: HrAppraisalsRoute,
+  HrAttendancesRoute: HrAttendancesRoute,
+  HrEmployeesRoute: HrEmployeesRoute,
+  HrPayrollRoute: HrPayrollRoute,
+  HrRecruitmentRoute: HrRecruitmentRoute,
+  HrTimeOffRoute: HrTimeOffRoute,
+  InventoryPurchaseRoute: InventoryPurchaseRoute,
+  InventoryStockRoute: InventoryStockRoute,
+  InventoryTransfersRoute: InventoryTransfersRoute,
+  ManufacturingMaintenanceRoute: ManufacturingMaintenanceRoute,
+  ManufacturingOrdersRoute: ManufacturingOrdersRoute,
+  ManufacturingQualityRoute: ManufacturingQualityRoute,
+  MarketingAutomationRoute: MarketingAutomationRoute,
+  MarketingEmailRoute: MarketingEmailRoute,
+  MarketingEventsRoute: MarketingEventsRoute,
+  MarketingSocialRoute: MarketingSocialRoute,
+  MarketingSurveysRoute: MarketingSurveysRoute,
   PingNameRoute: PingNameRoute,
+  ProductivityApprovalsRoute: ProductivityApprovalsRoute,
+  ProductivityDocumentsRoute: ProductivityDocumentsRoute,
+  ProductivityTodoRoute: ProductivityTodoRoute,
+  SalesCustomersRoute: SalesCustomersRoute,
+  SalesEcommerceRoute: SalesEcommerceRoute,
+  SalesOrdersRoute: SalesOrdersRoute,
+  SalesPosRoute: SalesPosRoute,
+  SalesQuotationsRoute: SalesQuotationsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
