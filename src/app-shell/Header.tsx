@@ -145,7 +145,7 @@ const BrandIcon = () => {
 };
 
 export function BellNotificationButton() {
-  const { setRightbar, setSidebarOpen } = useAppShell();
+  const { setPanelContent: setRightbar, setPanelOpen: setSidebarOpen } = useAppShell();
 
   const handleActionClick = useCallback(() => {
     setRightbar?.(<div style={{ padding: 8 }}>Notification content</div>);
@@ -168,7 +168,7 @@ export function BellNotificationButton() {
 
 const Action = () => {
   const isMobile = useIsMobile();
-  const { setRightbar, setSidebarOpen, setopenSheet } = useAppShell();
+  const { setPanelContent: setRightbar, setPanelOpen: setSidebarOpen, setSheetOpen: setopenSheet } = useAppShell();
 
   const handleActionClick = useCallback(() => {
     if (isMobile) {

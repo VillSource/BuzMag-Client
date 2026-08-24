@@ -4,6 +4,8 @@ import {
   useState,
   type ReactNode,
   type FC,
+  type Dispatch,
+  type SetStateAction,
 } from "react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,15 +15,23 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import { cn } from "@/lib/utils";
 
+
+
 type AppShellContextType = {
   menuOpen: boolean;
-  setMenuOpen: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
-  sidebarOpen: boolean;
-  setSidebarOpen: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
-  openSheet: boolean;
-  setopenSheet: (open: boolean | ((prevOpen: boolean) => boolean)) => void;
-  setTopbar: (node?: ReactNode) => void;
-  setRightbar: (node?: ReactNode) => void;
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+
+  panelOpen: boolean;
+  setPanelOpen: Dispatch<SetStateAction<boolean>>;
+  panelContent: ReactNode;
+  setPanelContent: Dispatch<SetStateAction<ReactNode>>;
+
+  sheetOpen: boolean;
+  setSheetOpen: Dispatch<SetStateAction<boolean>>;
+  sheetContent: ReactNode;
+  setSheetContent: Dispatch<SetStateAction<ReactNode>>;
+
+  appMenu: PrimaryMenuGroupType[]
 };
 
 const AppShellContext = createContext<AppShellContextType | undefined>(
@@ -41,25 +51,29 @@ type AppShellProps = {
 export const AppShell: FC<AppShellProps> = ({
   children,
 }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [topbar, setTopbar] = useState<ReactNode>();
-  const [rightbar, setRightbar] = useState<ReactNode>();
-  const [openSheet, setopenSheet] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetContent, setSheetContent] = useState<ReactNode>();
+  const [panelContent, setPanelContent] = useState<ReactNode>();
 
   const isMobile = useIsMobile();
+  const appMenu = useAppMenu();
 
   return <>
     <AppShellContext.Provider
       value={{
-        sidebarOpen,
-        setSidebarOpen,
+        panelOpen,
         menuOpen,
+        sheetOpen,
+        sheetContent,
+        panelContent,
+        appMenu,
+        setPanelOpen,
         setMenuOpen,
-        setTopbar,
-        setRightbar,
-        openSheet,
-        setopenSheet,
+        setSheetOpen,
+        setSheetContent,
+        setPanelContent
       }}
     >
       <SidebarProvider
@@ -67,7 +81,7 @@ export const AppShell: FC<AppShellProps> = ({
           "w-full",
           isMobile ? "min-h-svh" : "h-svh overflow-hidden",
         )}
-        open={false}
+        open={true}
       >
         <RailIconMenu />
         <div className="flex min-h-svh min-w-0 w-full flex-1 bg-muted">
@@ -89,8 +103,8 @@ export const AppShell: FC<AppShellProps> = ({
                 {!isMobile && <SideMenuBar />}
                 <SidebarProvider
                   className="flex min-h-0 min-w-0 flex-1"
-                  open={sidebarOpen}
-                  onOpenChange={setSidebarOpen}
+                  open={panelOpen}
+                  onOpenChange={setPanelOpen}
                 >
                   <SidebarInset className="relative flex min-h-0 bg-background min-w-0 flex-1 flex-col">
                     {isMobile && (
@@ -116,7 +130,7 @@ export const AppShell: FC<AppShellProps> = ({
                       </ScrollArea>
                     )}
                   </SidebarInset>
-                  < ContextPanel client={rightbar} />
+                  < ContextPanel client={panelContent} />
                 </SidebarProvider>
               </SidebarProvider>
             </div>
@@ -127,8 +141,8 @@ export const AppShell: FC<AppShellProps> = ({
 
 
       <BottomSheet
-        open={openSheet}
-        onOpenChange={setopenSheet}
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
         snapPoints={[0.8, 0.85]}
         title="Quick actions"
         description="Drag the handle, fling, or swipe down to dismiss."
@@ -182,8 +196,8 @@ export const AppShell: FC<AppShellProps> = ({
           Fling up to expand, fling down to dismiss.
         </div>
       </BottomSheet>
+      {isMobile && <DockPreview />}
     </AppShellContext.Provider>
-    {isMobile && <DockPreview />}
   </>;
 };
 
@@ -195,6 +209,7 @@ import Footer from "./Footer";
 import { SideMenuBar } from "./SideMenuBar";
 import { ContextPanel } from "./ContextPanel";
 import { TabMenu } from "./TabMenu";
+import { useAppMenu, type PrimaryMenuGroupType } from "./use-menu";
 
 const  DockPreview = () => {
   const { direction } = useScrollDirection({ direction: "both" });

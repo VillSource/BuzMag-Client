@@ -43,7 +43,8 @@ import { useAppShell } from "@/app-shell/AppShell";
 import { AvatarMenu } from "@/features/profile/AvatarMenu";
 
 const RailIconMenu = () => {
-  const { menuOpen, setMenuOpen } = useAppShell();
+  const { menuOpen, setMenuOpen, appMenu } = useAppShell();
+
   return (
     <>
       <ShadcnSidebar collapsible="icon" className="border-none">
@@ -68,54 +69,24 @@ const RailIconMenu = () => {
         </SidebarHeader>
 
         <SidebarContent className="overflow-y-auto! bg-muted text-foreground">
-          <SidebarGroup>
-            <SidebarGroupLabel>Common</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {CommonRailItems.map((item) => (
-                  <RialIconMenuItem
-                    key={item.label}
-                    icon={item.icon}
-                    label={item.label}
-                    to={item.to}
-                  />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
 
-
-          <SidebarGroup>
-            <SidebarGroupLabel>Recent</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {RecentRailItems.map((item) => (
-                  <RialIconMenuItem
-                    key={item.label}
-                    icon={item.icon}
-                    label={item.label}
-                    to={item.to}
-                  />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-
-          <SidebarGroup>
-            <SidebarGroupLabel>Modules</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {ModuleRailItems.map((item) => (
-                  <RialIconMenuItem
-                    key={item.label}
-                    icon={item.icon}
-                    label={item.label}
-                    to={item.to}
-                  />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          {appMenu.map((group => (
+            <SidebarGroup key={group.lable}>
+              <SidebarGroupLabel>{group.lable}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {group.menu.map((item) => (
+                    <RialIconMenuItem
+                      key={item.lable}
+                      icon={item.icon}
+                      label={item.lable}
+                      to={item.path}
+                    />
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )))}
         </SidebarContent>
 
         <SidebarFooter className="bg-muted text-foreground">
@@ -132,62 +103,6 @@ type RialIconMenu = {
   to: string;
 };
 
-const CommonRailItems: RialIconMenu[] = [
-  { icon: <LayoutDashboard />, label: "Overview", to: "/" },
-  { icon: <Inbox />, label: "Chat", to: "/ping/Bob" },
-  { icon: <PackageOpen />, label: "My Files", to: "/ping/Alice" },
-];
-
-const RecentRailItems: RialIconMenu[] = [
-  { icon: <ShoppingCart />, label: "Sales & CRM", to: "/sales" },
-  { icon: <Package />, label: "Inventory", to: "/inventory" },
-  { icon: <Receipt />, label: "Accounting & Finance", to: "/finance" },
-  { icon: <Users />, label: "Human Resources", to: "/hr" },
-  { icon: <Settings />, label: "Settings", to: "/settings" },
-];
-
-const ModuleRailItems: RialIconMenu[] = [
-  { icon: <ShoppingCart />, label: "Sales & CRM", to: "/sales" },
-  { icon: <Package />, label: "Inventory", to: "/inventory" },
-  { icon: <Receipt />, label: "Accounting & Finance", to: "/finance" },
-  { icon: <Users />, label: "Human Resources", to: "/hr" },
-  { icon: <Building2 />, label: "Procurement", to: "/procurement" },
-  { icon: <Truck />, label: "Supply Chain", to: "/supply-chain" },
-  { icon: <UserCheck />, label: "Customer Portal", to: "/customers" },
-  { icon: <BarChart3 />, label: "Reports & Analytics", to: "/reports" },
-  { icon: <Settings />, label: "Settings", to: "/settings" },
-  { icon: <Contact />, label: "Contacts", to: "/odoo/contacts" },
-  { icon: <ShoppingBag />, label: "Sales", to: "/odoo/sales" },
-  { icon: <ShoppingCart />, label: "Purchase", to: "/odoo/purchase" },
-  { icon: <Layers />, label: "Inventory", to: "/odoo/inventory" },
-  { icon: <Building />, label: "Manufacturing", to: "/odoo/mrp" },
-  { icon: <Receipt />, label: "Invoicing", to: "/odoo/invoicing" },
-  { icon: <Users />, label: "Employees", to: "/odoo/employees" },
-  { icon: <Briefcase />, label: "Projects", to: "/odoo/projects" },
-  { icon: <Megaphone />, label: "Marketing", to: "/odoo/marketing" },
-  { icon: <Globe />, label: "Website", to: "/odoo/website" },
-  { icon: <ShoppingCart />, label: "Sales & CRM", to: "/sales" },
-  { icon: <Package />, label: "Inventory", to: "/inventory" },
-  { icon: <Receipt />, label: "Accounting & Finance", to: "/finance" },
-  { icon: <Users />, label: "Human Resources", to: "/hr" },
-  { icon: <Building2 />, label: "Procurement", to: "/procurement" },
-  { icon: <Truck />, label: "Supply Chain", to: "/supply-chain" },
-  { icon: <UserCheck />, label: "Customer Portal", to: "/customers" },
-  { icon: <BarChart3 />, label: "Reports & Analytics", to: "/reports" },
-  { icon: <Settings />, label: "Settings", to: "/settings" },
-  { icon: <Contact />, label: "Contacts", to: "/odoo/contacts" },
-  { icon: <ShoppingBag />, label: "Sales", to: "/odoo/sales" },
-  { icon: <ShoppingCart />, label: "Purchase", to: "/odoo/purchase" },
-  { icon: <Layers />, label: "Inventory", to: "/odoo/inventory" },
-  { icon: <Building />, label: "Manufacturing", to: "/odoo/mrp" },
-  { icon: <Receipt />, label: "Invoicing", to: "/odoo/invoicing" },
-  { icon: <Users />, label: "Employees", to: "/odoo/employees" },
-  { icon: <Briefcase />, label: "Projects", to: "/odoo/projects" },
-  { icon: <Megaphone />, label: "Marketing", to: "/odoo/marketing" },
-  { icon: <Globe />, label: "Website", to: "/odoo/website" },
-];
-
-
 const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to }) => {
   const { setMenuOpen } = useAppShell();
   return (
@@ -197,7 +112,7 @@ const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to }) => {
           <SidebarMenuButton
             onClick={()=>setMenuOpen(true)}
             className="group/rail hover:bg-primary/10 transform transition-colors duration-300 ease-in-out"
-            render={<Link to={to} />}
+            render={ <Link to={to} />}
           >
             <span className="group-hover/rail:-translate-y-1 group-hover/rail:scale-110 group-hover/rail:rotate-2 transition-transform duration-100 ease-in-out">
               {icon}
