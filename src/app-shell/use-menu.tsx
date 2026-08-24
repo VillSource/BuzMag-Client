@@ -1,4 +1,3 @@
-import { useLocation } from "@tanstack/react-router";
 import {
   Award,
   BarChart,
@@ -56,6 +55,70 @@ export type SecondaryMenuType = {
   lable: string;
   path: string;
 };
+
+export type MenuMatchResult = {
+  prime: PrimaryMenuType | undefined;
+  sec: SecondaryMenuType | undefined;
+};
+
+type FlatMenuEntry = {
+  prime: PrimaryMenuType;
+  sec?: SecondaryMenuType;
+  path: string;
+};
+
+/**
+ * Flattens the nested menu hierarchy into a single list of entries.
+ */
+function flattenMenu(appMenu: PrimaryMenuGroupType[]): FlatMenuEntry[] {
+  return appMenu.flatMap((group) =>
+    group.menu.flatMap((prime) => {
+      const primaryEntry: FlatMenuEntry = { prime, path: prime.path };
+      const secondaryEntries: FlatMenuEntry[] = (prime.menu ?? []).flatMap((secGroup) =>
+        secGroup.menu.map((sec) => ({ prime, sec, path: sec.path }))
+      );
+      return [primaryEntry, ...secondaryEntries];
+    })
+  );
+}
+
+/**
+ * Finds the matching primary and secondary menu items for a given pathname.
+ */
+export function findMenuByPath(
+  appMenu: PrimaryMenuGroupType[],
+  pathname: string,
+): MenuMatchResult {
+  if (!appMenu.length || !pathname) {
+    return { prime: undefined, sec: undefined };
+  }
+
+  const flatEntries = flattenMenu(appMenu);
+
+  // 1. Exact secondary menu match
+  const exactSec = flatEntries.find((entry) => entry.sec && entry.path === pathname);
+  if (exactSec) {
+    return { prime: exactSec.prime, sec: exactSec.sec };
+  }
+
+  // 2. Exact primary menu match
+  const exactPrime = flatEntries.find((entry) => !entry.sec && entry.path === pathname);
+  if (exactPrime) {
+    return { prime: exactPrime.prime, sec: undefined };
+  }
+
+  // 3. Longest prefix match fallback for dynamic or nested sub-paths
+  const prefixMatches = flatEntries.filter((entry) => pathname.startsWith(entry.path));
+  if (prefixMatches.length === 0) {
+    return { prime: undefined, sec: undefined };
+  }
+
+  const bestMatch = prefixMatches.reduce((best, current) =>
+    current.path.length > best.path.length ? current : best
+  );
+
+  return { prime: bestMatch.prime, sec: bestMatch.sec };
+}
 
 export function useAppMenu() {
   const [commonMenu, setCommonMenu] = useState<PrimaryMenuGroupType[]>([]);

@@ -37,7 +37,7 @@ export const SideMenuBar = () => {
         className="absolute inset-y-0 left-0 z-10 h-full min-h-0 overflow-hidden border-r"
         side="left"
       >
-        <SidebarHeader className="h12 my-2 border-b">
+        <SidebarHeader className="h12 ps-4 border-b">
           {selectedPrime?.lable}
         </SidebarHeader>
         <SidebarContent>

@@ -1,12 +1,14 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
   type FC,
   type Dispatch,
   type SetStateAction,
 } from "react";
+import { useLocation } from "@tanstack/react-router";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import RailIconMenu from "@/app-shell/RailIconMenu";
@@ -65,6 +67,14 @@ export const AppShell: FC<AppShellProps> = ({
 
   const isMobile = useIsMobile();
   const appMenu = useAppMenu();
+  const location = useLocation();
+
+  useEffect(() => {
+    const { prime, sec } = findMenuByPath(appMenu, location.pathname);
+    setSelectedPrime(prime);
+    setselectedSec(sec);
+    setMenuOpen(!!sec || (!!prime?.menu && prime.menu.length > 0))
+  }, [location.pathname, appMenu]);
 
   return <>
     <AppShellContext.Provider
@@ -219,7 +229,7 @@ import Footer from "./Footer";
 import { SideMenuBar } from "./SideMenuBar";
 import { ContextPanel } from "./ContextPanel";
 import { TabMenu } from "./TabMenu";
-import { useAppMenu, type PrimaryMenuGroupType, type PrimaryMenuType, type SecondaryMenuType } from "./use-menu";
+import { findMenuByPath, useAppMenu, type PrimaryMenuGroupType, type PrimaryMenuType, type SecondaryMenuType } from "./use-menu";
 
 const  DockPreview = () => {
   const { direction } = useScrollDirection({ direction: "both" });

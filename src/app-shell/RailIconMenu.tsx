@@ -108,9 +108,8 @@ type RialIconMenu = {
 };
 
 const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to, module }) => {
-  const { setMenuOpen, setSelectedPrime } = useAppShell();
+  const { setMenuOpen } = useAppShell();
   const clickModule = useCallback(()=>{
-    setSelectedPrime(module);
     setMenuOpen(!!module.menu && module.menu.length > 0);
   }, [module])
 
