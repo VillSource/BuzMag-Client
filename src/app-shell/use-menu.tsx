@@ -74,11 +74,12 @@ function flattenMenu(appMenu: PrimaryMenuGroupType[]): FlatMenuEntry[] {
   return appMenu.flatMap((group) =>
     group.menu.flatMap((prime) => {
       const primaryEntry: FlatMenuEntry = { prime, path: prime.path };
-      const secondaryEntries: FlatMenuEntry[] = (prime.menu ?? []).flatMap((secGroup) =>
-        secGroup.menu.map((sec) => ({ prime, sec, path: sec.path }))
+      const secondaryEntries: FlatMenuEntry[] = (prime.menu ?? []).flatMap(
+        (secGroup) =>
+          secGroup.menu.map((sec) => ({ prime, sec, path: sec.path })),
       );
       return [primaryEntry, ...secondaryEntries];
-    })
+    }),
   );
 }
 
@@ -96,25 +97,31 @@ export function findMenuByPath(
   const flatEntries = flattenMenu(appMenu);
 
   // 1. Exact secondary menu match
-  const exactSec = flatEntries.find((entry) => entry.sec && entry.path === pathname);
+  const exactSec = flatEntries.find(
+    (entry) => entry.sec && entry.path === pathname,
+  );
   if (exactSec) {
     return { prime: exactSec.prime, sec: exactSec.sec };
   }
 
   // 2. Exact primary menu match
-  const exactPrime = flatEntries.find((entry) => !entry.sec && entry.path === pathname);
+  const exactPrime = flatEntries.find(
+    (entry) => !entry.sec && entry.path === pathname,
+  );
   if (exactPrime) {
     return { prime: exactPrime.prime, sec: undefined };
   }
 
   // 3. Longest prefix match fallback for dynamic or nested sub-paths
-  const prefixMatches = flatEntries.filter((entry) => pathname.startsWith(entry.path));
+  const prefixMatches = flatEntries.filter((entry) =>
+    pathname.startsWith(entry.path),
+  );
   if (prefixMatches.length === 0) {
     return { prime: undefined, sec: undefined };
   }
 
   const bestMatch = prefixMatches.reduce((best, current) =>
-    current.path.length > best.path.length ? current : best
+    current.path.length > best.path.length ? current : best,
   );
 
   return { prime: bestMatch.prime, sec: bestMatch.sec };
@@ -140,7 +147,11 @@ export function useAppMenu() {
       {
         lable: "Recent",
         menu: [
-          { icon: <LayoutDashboard />, lable: "Dashboard2", path: "/dashboard2" },
+          {
+            icon: <LayoutDashboard />,
+            lable: "Dashboard2",
+            path: "/dashboard2",
+          },
           { icon: <Inbox />, lable: "Chat2", path: "/chat2" },
           { icon: <PackageOpen />, lable: "My files2", path: "/my-files2" },
         ],
@@ -203,7 +214,7 @@ export function useAppMenu() {
           {
             icon: <DollarSign />,
             lable: "Finance",
-            path:"/finance",
+            path: "/finance",
             menu: [
               {
                 lable: "Accounting & Invoicing",
@@ -341,7 +352,7 @@ export function useAppMenu() {
           {
             icon: <Megaphone />,
             lable: "Marketing",
-            path:"/marketing",
+            path: "/marketing",
             menu: [
               {
                 lable: "Outreach & Automation",
@@ -464,5 +475,18 @@ export function useAppMenu() {
     setMenu(odooErpMenuData);
   }, []);
 
-  return [ ...commonMenu, ...recentMenu, ...menu ];
+  return [...commonMenu, ...recentMenu, ...menu];
+}
+
+export function useDockMenu() {
+  const [menu, setMenu] = useState<PrimaryMenuType[]>([]);
+  useEffect(() => {
+    setMenu([
+      { icon: <LayoutDashboard className="w-5 h-5"/>, lable: "Dashboard", path: "/dashboard" },
+      { icon: <Inbox  className="w-5 h-5"/>, lable: "Chat", path: "/chat" },
+      { icon: <TrendingUp  className="w-5 h-5"/>, lable: "Sales", path: "/sales" },
+      { icon: <Megaphone  className="w-5 h-5"/>, lable: "Marketing", path: "/marketing" },
+    ]);
+  });
+  return menu;
 }

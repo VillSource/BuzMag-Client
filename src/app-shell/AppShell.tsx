@@ -16,6 +16,13 @@ import { BottomSheet } from "@/components/motion/bottom-sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import { cn } from "@/lib/utils";
+import { MobileNav } from "./MobileNav";
+import { findMenuByPath, useAppMenu, type PrimaryMenuGroupType, type PrimaryMenuType, type SecondaryMenuType } from "./use-menu";
+import { ContextPanel } from "./ContextPanel";
+import Footer from "./Footer";
+import ActionBar from "./Header";
+import { SideMenuBar } from "./SideMenuBar";
+import { TabMenu } from "./TabMenu";
 
 
 
@@ -212,73 +219,14 @@ export const AppShell: FC<AppShellProps> = ({
             </li>
           ))}
         </ul>
-        <div className="py-12 text-center text-xs text-muted-foreground">
-          Fling up to expand, fling down to dismiss.
-        </div>
       </BottomSheet>
-      {isMobile && <DockPreview />}
+      {isMobile && <MobileNav />}
     </AppShellContext.Provider>
   </>;
 };
 
 
-import { Calendar, ClockFading, Component, Hamburger, Home, Inbox, LayoutDashboard, LayoutGrid, Mail, Menu, Music, Search, Settings, Sparkles } from "lucide-react";
-import { Dock, DockItem, DockSeparator } from "@/components/motion/dock";
-import ActionBar from "./Header";
-import Footer from "./Footer";
-import { SideMenuBar } from "./SideMenuBar";
-import { ContextPanel } from "./ContextPanel";
-import { TabMenu } from "./TabMenu";
-import { findMenuByPath, useAppMenu, type PrimaryMenuGroupType, type PrimaryMenuType, type SecondaryMenuType } from "./use-menu";
 
-const  DockPreview = () => {
-  const { direction } = useScrollDirection({ direction: "both" });
-  const ITEMS = [
-    { id: "dashboard", icon: Home, label: "Dashboard" },
-    { id: "mail", icon: Inbox, label: "Mail" },
-    { id: "discover", icon: LayoutGrid, label: "Discover" },
-    { id: "search", icon: Search, label: "search" },
-  ];
-  const [active, setActive] = useState("dashboard");
-  const visible = direction !== "down";
-
-  return (
-    <div
-      className={cn(
-        "fixed bottom-4 flex w-full justify-center transition-transform duration-200",
-        visible ? "translate-y-0" : "translate-y-[calc(100%+1rem)]",
-      )}
-    >
-      <Dock>
-        {ITEMS.map(({ id, icon: Icon, label }) => (
-          <DockItem
-            key={id}
-            aria-label={label}
-            active={active === id}
-            onClick={() => setActive(id)}
-          >
-            <Icon className="h-5 w-5" />
-          </DockItem>
-        ))}
-        <DockSeparator />
-        <DockItem
-          aria-label="Recent"
-          active={active === "recent"}
-          onClick={() => setActive("recent")}
-        >
-          <ClockFading className="h-5 w-5" />
-        </DockItem>
-        <DockItem
-          aria-label="Settings"
-          active={active === "settings"}
-          onClick={() => setActive("settings")}
-        >
-          <Menu className="h-5 w-5" />
-        </DockItem>
-      </Dock>
-    </div>
-  );
-}
 
 
 
