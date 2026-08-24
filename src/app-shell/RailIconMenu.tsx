@@ -10,6 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import {
   BarChart3,
@@ -72,7 +73,7 @@ const RailIconMenu = () => {
 
         <SidebarContent className="overflow-y-auto! bg-muted text-foreground">
 
-          {appMenu.map((group => (
+          {appMenu.map((group => <>
             <SidebarGroup key={group.lable}>
               <SidebarGroupLabel>{group.lable}</SidebarGroupLabel>
               <SidebarGroupContent>
@@ -89,7 +90,8 @@ const RailIconMenu = () => {
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
-          )))}
+            <SidebarSeparator/>
+          </>))}
         </SidebarContent>
 
         <SidebarFooter className="bg-muted text-foreground">
@@ -115,23 +117,17 @@ const RialIconMenuItem: React.FC<RialIconMenu> = ({ icon, label, to, module }) =
 
   return (
     <SidebarMenuItem>
-      <Tooltip>
-        <TooltipTrigger>
-          <SidebarMenuButton
-            onClick={clickModule}
-            className="group/rail hover:bg-primary/10 transform transition-colors duration-300 ease-in-out"
-            render={ <Link to={to} />}
-          >
-            <span className="group-hover/rail:-translate-y-1 group-hover/rail:scale-110 group-hover/rail:rotate-2 transition-transform duration-100 ease-in-out">
-              {icon}
-            </span>
-            <span>{label}</span>
-          </SidebarMenuButton>
-        </TooltipTrigger>
-        <TooltipContent side="right">
-          <span>{label}</span>
-        </TooltipContent>
-      </Tooltip>
+      <SidebarMenuButton
+        tooltip={label}
+        onClick={clickModule}
+        className="group/rail hover:bg-primary/10 transform transition-colors duration-300 ease-in-out"
+        render={ <Link to={to} />}
+      >
+        <span className="group-hover/rail:-translate-y-1 group-hover/rail:scale-110 group-hover/rail:rotate-2 transition-transform duration-100 ease-in-out">
+          {icon}
+        </span>
+        <span>{label}</span>
+      </SidebarMenuButton>
     </SidebarMenuItem>
   );
 };
