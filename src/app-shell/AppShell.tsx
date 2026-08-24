@@ -127,7 +127,7 @@ export const AppShell: FC<AppShellProps> = ({
                   onOpenChange={setPanelOpen}
                 >
                   <SidebarInset className="relative flex min-h-0 bg-background min-w-0 flex-1 flex-col">
-                    {isMobile && (
+                    {isMobile && !!selectedPrime?.menu && selectedPrime.menu.length > 0 && (
                       <div className="sticky inset-x-0 top-12 z-30 bg-background p-0 pb-0">
                         <TabMenu />
                       </div>
