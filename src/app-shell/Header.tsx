@@ -62,7 +62,7 @@ const ActionBar: React.FC = () => {
   const isMobile = useIsMobile();
   return (
     <>
-      <div className="flex-1 flex-row flex items-center justify-between">
+      <div className="flex-1 min-w-0 flex-row flex items-center justify-between">
         {isMobile ? <BrandIcon /> : <BreadcrumbOutlineDemo />}
         {!isMobile && <InputGroupInlineStart />}
         <div className="flex items-center space-x-2 ">
@@ -157,10 +157,14 @@ export function InputGroupInlineStart() {
 }
 
 const BrandIcon = () => {
+  const {selectedPrime} = useAppShell()
   return (
     <>
-      <div className="transition-all overflow-hidden rounded-sm w-8 h-8 bg-amber-800 flex items-center justify-center text-white">
+      <div className="transition-all shrink-0 overflow-hidden rounded-sm w-8 h-8 bg-amber-800 flex items-center justify-center text-white">
         <span className="">M</span>
+      </div>
+      <div className="flex-1 truncate ms-4">
+        {!!selectedPrime && selectedPrime.lable}
       </div>
     </>
   );
