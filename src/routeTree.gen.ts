@@ -19,6 +19,7 @@ import { Route as HelpdeskRouteImport } from './routes/helpdesk'
 import { Route as HrRouteImport } from './routes/hr'
 import { Route as InventoryRouteImport } from './routes/inventory'
 import { Route as MarketingRouteImport } from './routes/marketing'
+import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as MyFilesRouteImport } from './routes/my-files'
 import { Route as NotificationRouteImport } from './routes/notification'
 import { Route as PlanningRouteImport } from './routes/planning'
@@ -113,6 +114,11 @@ const InventoryRoute = InventoryRouteImport.update({
 const MarketingRoute = MarketingRouteImport.update({
   id: '/marketing',
   path: '/marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModulesRoute = ModulesRouteImport.update({
+  id: '/modules',
+  path: '/modules',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyFilesRoute = MyFilesRouteImport.update({
@@ -353,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/hr': typeof HrRouteWithChildren
   '/inventory': typeof InventoryRouteWithChildren
   '/marketing': typeof MarketingRouteWithChildren
+  '/modules': typeof ModulesRoute
   '/my-files': typeof MyFilesRoute
   '/notification': typeof NotificationRoute
   '/planning': typeof PlanningRoute
@@ -406,6 +413,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/field-service': typeof FieldServiceRoute
   '/helpdesk': typeof HelpdeskRoute
+  '/modules': typeof ModulesRoute
   '/my-files': typeof MyFilesRoute
   '/notification': typeof NotificationRoute
   '/planning': typeof PlanningRoute
@@ -463,6 +471,7 @@ export interface FileRoutesById {
   '/hr': typeof HrRouteWithChildren
   '/inventory': typeof InventoryRouteWithChildren
   '/marketing': typeof MarketingRouteWithChildren
+  '/modules': typeof ModulesRoute
   '/my-files': typeof MyFilesRoute
   '/notification': typeof NotificationRoute
   '/planning': typeof PlanningRoute
@@ -522,6 +531,7 @@ export interface FileRouteTypes {
     | '/hr'
     | '/inventory'
     | '/marketing'
+    | '/modules'
     | '/my-files'
     | '/notification'
     | '/planning'
@@ -575,6 +585,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/field-service'
     | '/helpdesk'
+    | '/modules'
     | '/my-files'
     | '/notification'
     | '/planning'
@@ -631,6 +642,7 @@ export interface FileRouteTypes {
     | '/hr'
     | '/inventory'
     | '/marketing'
+    | '/modules'
     | '/my-files'
     | '/notification'
     | '/planning'
@@ -689,6 +701,7 @@ export interface RootRouteChildren {
   HrRoute: typeof HrRouteWithChildren
   InventoryRoute: typeof InventoryRouteWithChildren
   MarketingRoute: typeof MarketingRouteWithChildren
+  ModulesRoute: typeof ModulesRoute
   MyFilesRoute: typeof MyFilesRoute
   NotificationRoute: typeof NotificationRoute
   PlanningRoute: typeof PlanningRoute
@@ -801,6 +814,13 @@ declare module '@tanstack/react-router' {
       path: '/marketing'
       fullPath: '/marketing'
       preLoaderRoute: typeof MarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modules': {
+      id: '/modules'
+      path: '/modules'
+      fullPath: '/modules'
+      preLoaderRoute: typeof ModulesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-files': {
@@ -1189,6 +1209,7 @@ const rootRouteChildren: RootRouteChildren = {
   HrRoute: HrRouteWithChildren,
   InventoryRoute: InventoryRouteWithChildren,
   MarketingRoute: MarketingRouteWithChildren,
+  ModulesRoute: ModulesRoute,
   MyFilesRoute: MyFilesRoute,
   NotificationRoute: NotificationRoute,
   PlanningRoute: PlanningRoute,

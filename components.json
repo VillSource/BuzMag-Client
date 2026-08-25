@@ -23,6 +23,7 @@
   "menuAccent": "subtle",
   "registries": {
     "@beui": "https://beui.dev/r/{name}.json",
-    "@shadcn-dashboard": "https://shadcndashboard.dev/r/{name}.json"
+    "@shadcn-dashboard": "https://shadcndashboard.dev/r/{name}.json",
+    "@reui": "https://reui.io/r/{style}/{name}.json"
   }
 }

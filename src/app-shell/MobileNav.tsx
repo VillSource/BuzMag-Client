@@ -20,7 +20,7 @@ export const MobileNav = () => {
   const { selectedPrime } = useAppShell();
 
   const [active, setActive] = useState<string | undefined>();
-  const visible = direction !== "down";
+  const visible = direction !== "down" || window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
 
   useEffect(() => {
     setActive(selectedPrime?.lable ?? undefined);
@@ -71,9 +71,9 @@ export const MobileNav = () => {
             </DockItem>
           )}
         <DockItem
-          aria-label="Settings"
-          active={active === "settings"}
-          onClick={() => navigate({ to: "/" })}
+          aria-label="Modules"
+          active={active === "Modules"}
+          onClick={() => navigate({ to: "/modules" })}
         >
           <Menu className="h-5 w-5" />
         </DockItem>

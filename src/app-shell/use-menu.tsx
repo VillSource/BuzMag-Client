@@ -1,6 +1,8 @@
 import {
   Award,
   BarChart,
+  Bell,
+  Box,
   Boxes,
   Building,
   Calendar,
@@ -130,6 +132,7 @@ export function findMenuByPath(
 export function useAppMenu() {
   const [commonMenu, setCommonMenu] = useState<PrimaryMenuGroupType[]>([]);
   const [recentMenu, setRecentMenu] = useState<PrimaryMenuGroupType[]>([]);
+  const [feature, setFeature] = useState<PrimaryMenuGroupType[]>([]);
   const [menu, setMenu] = useState<PrimaryMenuGroupType[]>([]);
 
   useEffect(() => {
@@ -473,9 +476,18 @@ export function useAppMenu() {
       },
     ];
     setMenu(odooErpMenuData);
+
+    setFeature([
+      {
+        lable: "Features",
+        menu: [
+          { icon: <Bell />, lable: "Notification", path: "/notification" },
+        ],
+      },
+    ]);
   }, []);
 
-  return [...commonMenu, ...recentMenu, ...menu];
+  return [...commonMenu, ...recentMenu, ...menu, ...feature];
 }
 
 export function useDockMenu() {
