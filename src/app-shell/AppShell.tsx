@@ -14,7 +14,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import RailIconMenu from "@/app-shell/RailIconMenu";
 import { BottomSheet } from "@/components/motion/bottom-sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import { cn } from "@/lib/utils";
 import { MobileNav } from "./MobileNav";
 import { findMenuByPath, useAppMenu, type PrimaryMenuGroupType, type PrimaryMenuType, type SecondaryMenuType } from "./use-menu";

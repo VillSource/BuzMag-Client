@@ -1,16 +1,51 @@
-import { Sidebar as ShadcnSidebar, SidebarContent, SidebarFooter } from "@/components/ui/sidebar";
+import {
+  Sidebar as ShadcnSidebar,
+  SidebarContent,
+  SidebarFooter,
+} from "@/components/ui/sidebar";
+import { Button } from "@base-ui/react";
+import {
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+  EllipsisVertical,
+} from "lucide-react";
 import type { ReactNode } from "react";
+import { useAppShell } from "./AppShell";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const ContextPanel = ({ client }: { client?: ReactNode }) => {
+  const { setPanelOpen, panelOpen } = useAppShell();
   return (
     <>
       <ShadcnSidebar
         variant="sidebar"
-        className="absolute inset-y-0 right-0 z-10 border-l h-full min-h-0 overflow-hidden"
+        className="absolute group/coll  inset-y-0 right-0 z-10 border-l h-full min-h-0"
         side="right"
       >
         <SidebarContent>{client}</SidebarContent>
-        <SidebarFooter>heell</SidebarFooter>
+        <SidebarFooter>foot</SidebarFooter>
+        {!!panelOpen && (
+          <>
+            <div className="absolute flex items-center justify-center -left-3 w-6 h-full ">
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <ChevronRight
+                      onClick={() => setPanelOpen(false)}
+                      className="cursor-pointer group-hover/coll:border group-hover/coll:w-3 m-auto bg-background border-0 rounded h-10 w-0 transition-all"
+                    />
+                  }
+                ></TooltipTrigger>
+                <TooltipContent side="left">collapse</TooltipContent>
+              </Tooltip>
+            </div>
+          </>
+        )}
       </ShadcnSidebar>
     </>
   );

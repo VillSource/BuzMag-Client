@@ -174,12 +174,7 @@ export function BellNotificationButton() {
 
   const handleActionClick = () => {
     if (isMobile) return navigate({ to: "/notification" });
-    setRightbar?.(
-      <div onClick={() => setSidebarOpen(false)}>
-        {" "}
-        <NotificationPanel />
-      </div>,
-    );
+    setRightbar?.( <div > <NotificationPanel /> </div>);
     setSidebarOpen(true);
   };
   return (
