@@ -36,9 +36,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Generate code
-        run: pnpm run generate
-
       - name: Build project
         run: pnpm vite build --base=/${{ github.event.repository.name }}/
 
