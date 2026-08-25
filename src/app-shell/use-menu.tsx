@@ -482,6 +482,7 @@ export function useAppMenu() {
         lable: "Features",
         menu: [
           { icon: <Bell />, lable: "Notification", path: "/notification" },
+          { icon: <Box />, lable: "Modules", path: "/modules" },
         ],
       },
     ]);
