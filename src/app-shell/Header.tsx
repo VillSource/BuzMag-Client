@@ -26,9 +26,14 @@ import {
   TrashIcon,
   UserRoundXIcon,
   VolumeOffIcon,
+  X,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "../components/ui/input-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../components/ui/input-group";
 import { Separator } from "../components/ui/separator";
 import { useAppShell } from "@/app-shell/AppShell";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -43,8 +48,15 @@ import {
 } from "@/components/ui/combobox";
 import { AvatarMenu } from "@/features/profile/AvatarMenu";
 import { NotificationPanel } from "@/features/notification/Notification";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Link } from "@tanstack/react-router";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 const ActionBar: React.FC = () => {
   const isMobile = useIsMobile();
@@ -55,13 +67,18 @@ const ActionBar: React.FC = () => {
         {!isMobile && <InputGroupInlineStart />}
         <div className="flex items-center space-x-2 ">
           {isMobile && (
-              <Button type="button" variant="secondary" size="default" aria-label="Search">
+            <Button
+              type="button"
+              variant="secondary"
+              size="default"
+              aria-label="Search"
+            >
               <SearchIcon data-icon="inline-start" />
             </Button>
           )}
           <Action />
           <BellNotificationButton />
-          {isMobile && <AvatarMenu/>}
+          {isMobile && <AvatarMenu />}
         </div>
       </div>
     </>
@@ -131,10 +148,7 @@ const BrandNav = () => {
 export function InputGroupInlineStart() {
   return (
     <InputGroup className={cn("min-w-3 ms-auto me-4 w-auto max-w-sm")}>
-      <InputGroupInput
-        id="inline-start-input"
-        placeholder="Search..."
-      />
+      <InputGroupInput id="inline-start-input" placeholder="Search..." />
       <InputGroupAddon align="inline-start">
         <SearchIcon className="text-muted-foreground" />
       </InputGroupAddon>
@@ -153,12 +167,21 @@ const BrandIcon = () => {
 };
 
 export function BellNotificationButton() {
-  const { setPanelContent: setRightbar, setPanelOpen: setSidebarOpen } = useAppShell();
+  const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const { setPanelContent: setRightbar, setPanelOpen: setSidebarOpen } =
+    useAppShell();
 
-  const handleActionClick = useCallback(() => {
-    setRightbar?.(<NotificationPanel/>);
-    setSidebarOpen((open) => !open);
-  }, [setRightbar, setSidebarOpen]);
+  const handleActionClick = () => {
+    if (isMobile) return navigate({ to: "/notification" });
+    setRightbar?.(
+      <div onClick={() => setSidebarOpen(false)}>
+        {" "}
+        <NotificationPanel />
+      </div>,
+    );
+    setSidebarOpen(true);
+  };
   return (
     <Button
       variant="ghost"
@@ -176,15 +199,26 @@ export function BellNotificationButton() {
 
 const Action = () => {
   const isMobile = useIsMobile();
-  const { setPanelContent: setRightbar, setPanelOpen: setSidebarOpen, setSheetOpen: setopenSheet } = useAppShell();
+  const {
+    setPanelContent: setRightbar,
+    setPanelOpen: setSidebarOpen,
+    setSheetOpen: setopenSheet,
+  } = useAppShell();
 
   const handleActionClick = useCallback(() => {
     if (isMobile) {
-      setopenSheet((open) => !open);
+      setopenSheet(true);
     } else {
-      setSidebarOpen((open) => !open);
+      setSidebarOpen(true);
+      setRightbar(
+        <div style={{ padding: 8 }}>
+          Action content{" "}
+          <span>
+            <X onClick={() => setSidebarOpen(false)} />
+          </span>
+        </div>,
+      );
     }
-    setRightbar?.(<div style={{ padding: 8 }}>Action content</div>);
   }, [setRightbar, setSidebarOpen, isMobile, setopenSheet]);
   return (
     <>
@@ -242,51 +276,64 @@ const Action = () => {
 };
 
 const BreadcrumbOutlineDemo = () => {
-  const {selectedPrime, selectedSec} = useAppShell();
-    return (
-        <Breadcrumb>
-            <BreadcrumbList className='h-8 gap-2 rounded-lg border px-3 text-sm'>
-                <div className='bg-muted flex items-center rounded-full px-1.5 py-0.5 mr-1'>
-                    <a href='#'><ChevronLeft size={16} className='text-foreground cursor-pointer'/></a>
-                    <a href='#'><ChevronRight size={16} className='text-foreground/60'/></a>
-                </div>
-                <BreadcrumbItem>
-                    <BreadcrumbLink href='#'>
-                        <img src={"https://images.shadcnspace.com/assets/shadcn-dashboard/logo/white-logo.svg"} width={20} height={20} />
-                        <span className='sr-only'>Home</span>
-                    </BreadcrumbLink>
-                </BreadcrumbItem>
+  const { selectedPrime, selectedSec } = useAppShell();
+  return (
+    <Breadcrumb>
+      <BreadcrumbList className="h-8 gap-2 rounded-lg border px-3 text-sm">
+        <div className="bg-muted flex items-center rounded-full px-1.5 py-0.5 mr-1">
+          <a href="#">
+            <ChevronLeft size={16} className="text-foreground cursor-pointer" />
+          </a>
+          <a href="#">
+            <ChevronRight size={16} className="text-foreground/60" />
+          </a>
+        </div>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">
+            <img
+              src={
+                "https://images.shadcnspace.com/assets/shadcn-dashboard/logo/white-logo.svg"
+              }
+              width={20}
+              height={20}
+            />
+            <span className="sr-only">Home</span>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
 
-{!!selectedPrime && <>
-                <BreadcrumbSeparator>
-                    <DotIcon className='size-4' />
-                </BreadcrumbSeparator>
-                <BreadcrumbItem>
-                <Link to={ !!selectedSec? selectedPrime.path : '#'}>
-                    <BreadcrumbLink className='flex items-center gap-2'>
-                        <Settings className='size-4' />
-                        {/* {selectedPrime.icon} */}
-                        {selectedPrime.lable}
-                    </BreadcrumbLink>
-                </Link>
-                </BreadcrumbItem>
-</>}
-{!!selectedSec && <>
-                <BreadcrumbSeparator>
-                    <DotIcon className='size-4' />
-                </BreadcrumbSeparator>
-                <BreadcrumbItem>
-                    <BreadcrumbPage className='flex items-center gap-2'>
-                        <CircleUserRound className='inline size-4' />
-                        {/* {selectedSec.icon} */}
-                        {selectedSec.lable}
-                    </BreadcrumbPage>
-                </BreadcrumbItem>
-
-</>}
-            </BreadcrumbList>
-        </Breadcrumb>
-    )
-}
+        {!!selectedPrime && (
+          <>
+            <BreadcrumbSeparator>
+              <DotIcon className="size-4" />
+            </BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <Link to={!!selectedSec ? selectedPrime.path : "#"}>
+                <BreadcrumbLink className="flex items-center gap-2">
+                  <Settings className="size-4" />
+                  {/* {selectedPrime.icon} */}
+                  {selectedPrime.lable}
+                </BreadcrumbLink>
+              </Link>
+            </BreadcrumbItem>
+          </>
+        )}
+        {!!selectedSec && (
+          <>
+            <BreadcrumbSeparator>
+              <DotIcon className="size-4" />
+            </BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbPage className="flex items-center gap-2">
+                <CircleUserRound className="inline size-4" />
+                {/* {selectedSec.icon} */}
+                {selectedSec.lable}
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        )}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+};
 
 export default ActionBar;
