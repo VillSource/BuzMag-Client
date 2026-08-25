@@ -59,6 +59,7 @@ import {
 import { Link, useNavigate } from "@tanstack/react-router";
 
 const ActionBar: React.FC = () => {
+  const {appbarSlot} = useAppShell();
   const isMobile = useIsMobile();
   return (
     <>
@@ -76,7 +77,7 @@ const ActionBar: React.FC = () => {
               <SearchIcon data-icon="inline-start" />
             </Button>
           )}
-          <Action />
+          {!!appbarSlot && appbarSlot}
           <BellNotificationButton />
           {isMobile && <AvatarMenu />}
         </div>

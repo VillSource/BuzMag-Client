@@ -39,6 +39,9 @@ type AppShellContextType = {
   sheetContent: ReactNode;
   setSheetContent: Dispatch<SetStateAction<ReactNode>>;
 
+  appbarSlot: ReactNode;
+  setAppbarSlot: Dispatch<SetStateAction<ReactNode>>;
+
   appMenu: PrimaryMenuGroupType[]
   selectedPrime: PrimaryMenuType|undefined
   setSelectedPrime : Dispatch<SetStateAction<PrimaryMenuType | undefined>>
@@ -68,6 +71,7 @@ export const AppShell: FC<AppShellProps> = ({
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetContent, setSheetContent] = useState<ReactNode>();
   const [panelContent, setPanelContent] = useState<ReactNode>();
+  const [appbarSlot, setAppbarSlot] = useState<ReactNode>();
   const [selectedPrime, setSelectedPrime] = useState<PrimaryMenuType>();
   const [selectedSec, setselectedSec] = useState<SecondaryMenuType>();
 
@@ -90,6 +94,7 @@ export const AppShell: FC<AppShellProps> = ({
         sheetOpen,
         sheetContent,
         panelContent,
+        appbarSlot,
         appMenu,
         selectedPrime,
         selectedSec,
@@ -98,6 +103,7 @@ export const AppShell: FC<AppShellProps> = ({
         setSheetOpen,
         setSheetContent,
         setPanelContent,
+        setAppbarSlot,
         setSelectedPrime,
         setselectedSec,
         }}
