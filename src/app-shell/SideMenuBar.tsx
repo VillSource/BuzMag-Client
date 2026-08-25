@@ -13,19 +13,6 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@tanstack/react-router";
-import {
-  LayoutDashboard,
-  Inbox,
-  PackageOpen,
-  Users,
-  Clock,
-  UserPlus,
-  CalendarOff,
-  Award,
-  DollarSign,
-  FileText,
-  Sliders,
-} from "lucide-react";
 import { useAppShell } from "./AppShell";
 
 export const SideMenuBar = () => {

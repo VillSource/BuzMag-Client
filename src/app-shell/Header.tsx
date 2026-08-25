@@ -37,6 +37,7 @@ import {
   ComboboxList,
 } from "@/components/ui/combobox";
 import { AvatarMenu } from "@/features/profile/AvatarMenu";
+import { NotificationPanel } from "@/features/notification/Notification";
 
 const ActionBar: React.FC = () => {
   const isMobile = useIsMobile();
@@ -148,7 +149,7 @@ export function BellNotificationButton() {
   const { setPanelContent: setRightbar, setPanelOpen: setSidebarOpen } = useAppShell();
 
   const handleActionClick = useCallback(() => {
-    setRightbar?.(<div style={{ padding: 8 }}>Notification content</div>);
+    setRightbar?.(<NotificationPanel/>);
     setSidebarOpen((open) => !open);
   }, [setRightbar, setSidebarOpen]);
   return (
