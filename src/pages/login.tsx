@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
 import {
   ArrowRightIcon,
   Building2Icon,
@@ -7,6 +8,9 @@ import {
   MailIcon,
 } from "lucide-react";
 
+import { apiClient } from "@/api/client";
+import { issueJwtTokensMutationOptions } from "@/api/hooks/identity/useIssueJwtTokens";
+import { tokenStore } from "@/features/auth/token-store";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,6 +30,15 @@ function getSavedTenant(): string | null {
   return value && value.trim() ? value.trim() : null;
 }
 
+function mapLoginError(error: unknown): string {
+  const status = (error as { status?: number }).status;
+  if (status === 401) return "Invalid email or password.";
+  if (status === 400) return "The credentials are invalid for this tenant.";
+  if (status === 403) return "You don't have access to this workspace.";
+  if (status === 500) return "Something went wrong on our side. Please try again.";
+  return error instanceof Error ? error.message : "Sign-in failed. Please try again.";
+}
+
 export default function LoginPage() {
   const navigate = useNavigate();
 
@@ -40,7 +53,8 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+
+  const signInMutation = useMutation(issueJwtTokensMutationOptions({ client: apiClient }));
 
   const handleTenantSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,11 +83,22 @@ export default function LoginPage() {
       return;
     }
     setError(null);
-    setLoading(true);
-    // Mock sign-in — replace with real authentication.
-    window.setTimeout(() => {
-      void navigate({ to: "/dashboard" });
-    }, 600);
+    signInMutation.mutate(
+      {
+        headers: { tenant: tenant ?? "root" },
+        body: { email: email.trim(), password },
+      },
+      {
+        onSuccess: (data) => {
+          // Store the JWT pair — refresh token persists, access token lives in state.
+          tokenStore.setTokens(data.accessToken, data.refreshToken);
+          void navigate({ to: "/dashboard" });
+        },
+        onError: (err) => {
+          setError(mapLoginError(err));
+        },
+      },
+    );
   };
 
   return (
@@ -166,8 +191,13 @@ export default function LoginPage() {
                     </p>
                   )}
 
-                  <Button type="submit" size="lg" className="w-full" disabled={loading}>
-                    {loading ? "Signing in…" : "Sign in"}
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full"
+                    disabled={signInMutation.isPending}
+                  >
+                    {signInMutation.isPending ? "Signing in…" : "Sign in"}
                   </Button>
                 </form>
               </CardContent>
