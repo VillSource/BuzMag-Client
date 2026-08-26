@@ -5,6 +5,7 @@ import {
   Box,
   Boxes,
   Building,
+  Building2,
   Calendar,
   CalendarCheck,
   CheckCircle,
@@ -472,6 +473,17 @@ export function useAppMenu() {
               },
             ],
           },
+          {
+            lable: 'Organization',
+            icon: <Building2/>,
+            path: '/organizations',
+            menu: [
+              {lable:'Structure', menu:[
+                {icon:<Building2/>, lable: 'Organization Unit', path: '/organizations/unit'},
+                {icon:<Building2/>, lable: 'Position', path: '/organizations/positions'},
+              ]}
+            ]
+          }
         ],
       },
     ];

@@ -18,6 +18,7 @@ import { Route as FinanceRouteImport } from './routes/finance'
 import { Route as HelpdeskRouteImport } from './routes/helpdesk'
 import { Route as HrRouteImport } from './routes/hr'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as MarketingRouteImport } from './routes/marketing'
 import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as MyFilesRouteImport } from './routes/my-files'
@@ -55,6 +56,9 @@ import { Route as MarketingEmailRouteImport } from './routes/marketing_.email'
 import { Route as MarketingEventsRouteImport } from './routes/marketing_.events'
 import { Route as MarketingSocialRouteImport } from './routes/marketing_.social'
 import { Route as MarketingSurveysRouteImport } from './routes/marketing_.surveys'
+import { Route as OrganizationsIndexRouteImport } from './routes/organizations.index'
+import { Route as OrganizationsPositionsRouteImport } from './routes/organizations_.positions'
+import { Route as OrganizationsUnitRouteImport } from './routes/organizations_.unit'
 import { Route as PingNameRouteImport } from './routes/ping.$name'
 import { Route as ProductivityIndexRouteImport } from './routes/productivity.index'
 import { Route as ProductivityApprovalsRouteImport } from './routes/productivity_.approvals'
@@ -109,6 +113,11 @@ const HrRoute = HrRouteImport.update({
 const InventoryRoute = InventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MarketingRoute = MarketingRouteImport.update({
@@ -297,6 +306,21 @@ const MarketingSurveysRoute = MarketingSurveysRouteImport.update({
   path: '/marketing/surveys',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrganizationsIndexRoute = OrganizationsIndexRouteImport.update({
+  id: '/organizations/',
+  path: '/organizations/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizationsPositionsRoute = OrganizationsPositionsRouteImport.update({
+  id: '/organizations_/positions',
+  path: '/organizations/positions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizationsUnitRoute = OrganizationsUnitRouteImport.update({
+  id: '/organizations_/unit',
+  path: '/organizations/unit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PingNameRoute = PingNameRouteImport.update({
   id: '/ping/$name',
   path: '/ping/$name',
@@ -358,6 +382,7 @@ export interface FileRoutesByFullPath {
   '/helpdesk': typeof HelpdeskRoute
   '/hr': typeof HrRouteWithChildren
   '/inventory': typeof InventoryRouteWithChildren
+  '/login': typeof LoginRoute
   '/marketing': typeof MarketingRouteWithChildren
   '/modules': typeof ModulesRoute
   '/my-files': typeof MyFilesRoute
@@ -391,6 +416,8 @@ export interface FileRoutesByFullPath {
   '/marketing/events': typeof MarketingEventsRoute
   '/marketing/social': typeof MarketingSocialRoute
   '/marketing/surveys': typeof MarketingSurveysRoute
+  '/organizations/positions': typeof OrganizationsPositionsRoute
+  '/organizations/unit': typeof OrganizationsUnitRoute
   '/ping/$name': typeof PingNameRoute
   '/productivity/approvals': typeof ProductivityApprovalsRoute
   '/productivity/documents': typeof ProductivityDocumentsRoute
@@ -404,6 +431,7 @@ export interface FileRoutesByFullPath {
   '/hr/': typeof HrIndexRoute
   '/inventory/': typeof InventoryIndexRoute
   '/marketing/': typeof MarketingIndexRoute
+  '/organizations/': typeof OrganizationsIndexRoute
   '/productivity/': typeof ProductivityIndexRoute
 }
 export interface FileRoutesByTo {
@@ -413,6 +441,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/field-service': typeof FieldServiceRoute
   '/helpdesk': typeof HelpdeskRoute
+  '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/my-files': typeof MyFilesRoute
   '/notification': typeof NotificationRoute
@@ -444,6 +473,8 @@ export interface FileRoutesByTo {
   '/marketing/events': typeof MarketingEventsRoute
   '/marketing/social': typeof MarketingSocialRoute
   '/marketing/surveys': typeof MarketingSurveysRoute
+  '/organizations/positions': typeof OrganizationsPositionsRoute
+  '/organizations/unit': typeof OrganizationsUnitRoute
   '/ping/$name': typeof PingNameRoute
   '/productivity/approvals': typeof ProductivityApprovalsRoute
   '/productivity/documents': typeof ProductivityDocumentsRoute
@@ -457,6 +488,7 @@ export interface FileRoutesByTo {
   '/hr': typeof HrIndexRoute
   '/inventory': typeof InventoryIndexRoute
   '/marketing': typeof MarketingIndexRoute
+  '/organizations': typeof OrganizationsIndexRoute
   '/productivity': typeof ProductivityIndexRoute
 }
 export interface FileRoutesById {
@@ -470,6 +502,7 @@ export interface FileRoutesById {
   '/helpdesk': typeof HelpdeskRoute
   '/hr': typeof HrRouteWithChildren
   '/inventory': typeof InventoryRouteWithChildren
+  '/login': typeof LoginRoute
   '/marketing': typeof MarketingRouteWithChildren
   '/modules': typeof ModulesRoute
   '/my-files': typeof MyFilesRoute
@@ -503,6 +536,8 @@ export interface FileRoutesById {
   '/marketing_/events': typeof MarketingEventsRoute
   '/marketing_/social': typeof MarketingSocialRoute
   '/marketing_/surveys': typeof MarketingSurveysRoute
+  '/organizations_/positions': typeof OrganizationsPositionsRoute
+  '/organizations_/unit': typeof OrganizationsUnitRoute
   '/ping/$name': typeof PingNameRoute
   '/productivity_/approvals': typeof ProductivityApprovalsRoute
   '/productivity_/documents': typeof ProductivityDocumentsRoute
@@ -516,6 +551,7 @@ export interface FileRoutesById {
   '/hr/': typeof HrIndexRoute
   '/inventory/': typeof InventoryIndexRoute
   '/marketing/': typeof MarketingIndexRoute
+  '/organizations/': typeof OrganizationsIndexRoute
   '/productivity/': typeof ProductivityIndexRoute
 }
 export interface FileRouteTypes {
@@ -530,6 +566,7 @@ export interface FileRouteTypes {
     | '/helpdesk'
     | '/hr'
     | '/inventory'
+    | '/login'
     | '/marketing'
     | '/modules'
     | '/my-files'
@@ -563,6 +600,8 @@ export interface FileRouteTypes {
     | '/marketing/events'
     | '/marketing/social'
     | '/marketing/surveys'
+    | '/organizations/positions'
+    | '/organizations/unit'
     | '/ping/$name'
     | '/productivity/approvals'
     | '/productivity/documents'
@@ -576,6 +615,7 @@ export interface FileRouteTypes {
     | '/hr/'
     | '/inventory/'
     | '/marketing/'
+    | '/organizations/'
     | '/productivity/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -585,6 +625,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/field-service'
     | '/helpdesk'
+    | '/login'
     | '/modules'
     | '/my-files'
     | '/notification'
@@ -616,6 +657,8 @@ export interface FileRouteTypes {
     | '/marketing/events'
     | '/marketing/social'
     | '/marketing/surveys'
+    | '/organizations/positions'
+    | '/organizations/unit'
     | '/ping/$name'
     | '/productivity/approvals'
     | '/productivity/documents'
@@ -629,6 +672,7 @@ export interface FileRouteTypes {
     | '/hr'
     | '/inventory'
     | '/marketing'
+    | '/organizations'
     | '/productivity'
   id:
     | '__root__'
@@ -641,6 +685,7 @@ export interface FileRouteTypes {
     | '/helpdesk'
     | '/hr'
     | '/inventory'
+    | '/login'
     | '/marketing'
     | '/modules'
     | '/my-files'
@@ -674,6 +719,8 @@ export interface FileRouteTypes {
     | '/marketing_/events'
     | '/marketing_/social'
     | '/marketing_/surveys'
+    | '/organizations_/positions'
+    | '/organizations_/unit'
     | '/ping/$name'
     | '/productivity_/approvals'
     | '/productivity_/documents'
@@ -687,6 +734,7 @@ export interface FileRouteTypes {
     | '/hr/'
     | '/inventory/'
     | '/marketing/'
+    | '/organizations/'
     | '/productivity/'
   fileRoutesById: FileRoutesById
 }
@@ -700,6 +748,7 @@ export interface RootRouteChildren {
   HelpdeskRoute: typeof HelpdeskRoute
   HrRoute: typeof HrRouteWithChildren
   InventoryRoute: typeof InventoryRouteWithChildren
+  LoginRoute: typeof LoginRoute
   MarketingRoute: typeof MarketingRouteWithChildren
   ModulesRoute: typeof ModulesRoute
   MyFilesRoute: typeof MyFilesRoute
@@ -733,6 +782,8 @@ export interface RootRouteChildren {
   MarketingEventsRoute: typeof MarketingEventsRoute
   MarketingSocialRoute: typeof MarketingSocialRoute
   MarketingSurveysRoute: typeof MarketingSurveysRoute
+  OrganizationsPositionsRoute: typeof OrganizationsPositionsRoute
+  OrganizationsUnitRoute: typeof OrganizationsUnitRoute
   PingNameRoute: typeof PingNameRoute
   ProductivityApprovalsRoute: typeof ProductivityApprovalsRoute
   ProductivityDocumentsRoute: typeof ProductivityDocumentsRoute
@@ -742,6 +793,7 @@ export interface RootRouteChildren {
   SalesOrdersRoute: typeof SalesOrdersRoute
   SalesPosRoute: typeof SalesPosRoute
   SalesQuotationsRoute: typeof SalesQuotationsRoute
+  OrganizationsIndexRoute: typeof OrganizationsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -807,6 +859,13 @@ declare module '@tanstack/react-router' {
       path: '/inventory'
       fullPath: '/inventory'
       preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/marketing': {
@@ -1068,6 +1127,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingSurveysRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/organizations/': {
+      id: '/organizations/'
+      path: '/organizations'
+      fullPath: '/organizations/'
+      preLoaderRoute: typeof OrganizationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organizations_/positions': {
+      id: '/organizations_/positions'
+      path: '/organizations/positions'
+      fullPath: '/organizations/positions'
+      preLoaderRoute: typeof OrganizationsPositionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organizations_/unit': {
+      id: '/organizations_/unit'
+      path: '/organizations/unit'
+      fullPath: '/organizations/unit'
+      preLoaderRoute: typeof OrganizationsUnitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ping/$name': {
       id: '/ping/$name'
       path: '/ping/$name'
@@ -1208,6 +1288,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelpdeskRoute: HelpdeskRoute,
   HrRoute: HrRouteWithChildren,
   InventoryRoute: InventoryRouteWithChildren,
+  LoginRoute: LoginRoute,
   MarketingRoute: MarketingRouteWithChildren,
   ModulesRoute: ModulesRoute,
   MyFilesRoute: MyFilesRoute,
@@ -1241,6 +1322,8 @@ const rootRouteChildren: RootRouteChildren = {
   MarketingEventsRoute: MarketingEventsRoute,
   MarketingSocialRoute: MarketingSocialRoute,
   MarketingSurveysRoute: MarketingSurveysRoute,
+  OrganizationsPositionsRoute: OrganizationsPositionsRoute,
+  OrganizationsUnitRoute: OrganizationsUnitRoute,
   PingNameRoute: PingNameRoute,
   ProductivityApprovalsRoute: ProductivityApprovalsRoute,
   ProductivityDocumentsRoute: ProductivityDocumentsRoute,
@@ -1250,6 +1333,7 @@ const rootRouteChildren: RootRouteChildren = {
   SalesOrdersRoute: SalesOrdersRoute,
   SalesPosRoute: SalesPosRoute,
   SalesQuotationsRoute: SalesQuotationsRoute,
+  OrganizationsIndexRoute: OrganizationsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

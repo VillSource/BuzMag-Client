@@ -7,12 +7,6 @@
       "skillPath": "skills/caveman/SKILL.md",
       "computedHash": "48646eeec87b27067502d8bd450484faf08af588df783706b1571ee72f2d918c"
     },
-    "migrate-radix-to-base": {
-      "source": "shadcn/ui",
-      "sourceType": "github",
-      "skillPath": "skills/migrate-radix-to-base/SKILL.md",
-      "computedHash": "4fdc31bf287f674ba6bf91a648120f7b34cd7ef370f998f2cc116fed067789c5"
-    },
     "shadcn": {
       "source": "shadcn/ui",
       "sourceType": "github",
