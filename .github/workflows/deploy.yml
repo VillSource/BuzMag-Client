@@ -37,9 +37,7 @@ jobs:
         run: pnpm install
 
       - name: Build project
-        env:
-          VITE_BASE_URL: https://api.buzmag.villsource.com/
-        run: pnpm vite build --base=/${{ github.event.repository.name }}/
+        run: VITE_BASE_URL=https://api.buzmag.villsource.com/ pnpm vite build --base=/${{ github.event.repository.name }}/
 
       - name: Copy index.html to 404.html
         run: cp dist/index.html dist/404.html
