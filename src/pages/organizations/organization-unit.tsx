@@ -60,6 +60,7 @@ import {
 } from "@/components/ui/command";
 import { apiClient } from "@/client";
 import { Kbd } from "@/components/ui/kbd";
+import AppbarSlotContext from "@/app-shell/use-appbarSlot";
 
 // Schema สำหรับอัปเดต (ของเดิม)
 export type FormValues = {
@@ -120,7 +121,6 @@ export function OrganizationUnitPage() {
     openOverlay(<OrganizationDeleteContainer data={item} key={`delete-${item.referenceId}`} />);
   };
 
-  // 🌟 ฟังก์ชันสำหรับ Add Top Level (ไม่มี Parent)
   const handleAddTopLevel = () => {
     openOverlay(
       <OrganizationCreateContainer 
@@ -151,10 +151,12 @@ export function OrganizationUnitPage() {
       <div className="flex items-center justify-between mb-6 px-4">
         <h2 className="text-2xl font-bold tracking-tight">Organization Units</h2>
         <div className="flex gap-2">
-          <Button onClick={handleAddTopLevel} >
-            <Plus className="h-4 w-4 mr-2" />
-            Add Unit 
-          </Button>
+          <AppbarSlotContext>
+            <Button onClick={handleAddTopLevel} >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Unit 
+            </Button>
+          </AppbarSlotContext>
           <Button variant="outline" onClick={() => refetch()}>
             <RefreshCcw className="h-4 w-4" />
           </Button>
