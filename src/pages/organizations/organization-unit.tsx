@@ -59,6 +59,7 @@ import {
   CommandList, // <-- ต้องใส่เพื่อรองรับการเลื่อนใน shadcn เวอร์ชั่นใหม่
 } from "@/components/ui/command";
 import { apiClient } from "@/client";
+import { Kbd } from "@/components/ui/kbd";
 
 // Schema สำหรับอัปเดต (ของเดิม)
 export type FormValues = {
@@ -150,10 +151,9 @@ export function OrganizationUnitPage() {
       <div className="flex items-center justify-between mb-6 px-4">
         <h2 className="text-2xl font-bold tracking-tight">Organization Units</h2>
         <div className="flex gap-2">
-          {/* 🌟 ปุ่มเพิ่ม OU ด้านบนสุด */}
-          <Button onClick={handleAddTopLevel}>
+          <Button onClick={handleAddTopLevel} >
             <Plus className="h-4 w-4 mr-2" />
-            Add Unit
+            Add Unit 
           </Button>
           <Button variant="outline" onClick={() => refetch()}>
             <RefreshCcw className="h-4 w-4" />
@@ -621,13 +621,6 @@ function DetailPanel({
     },
   });
 
-  useEffect(() => {
-    reset({
-      name: data.name || "",
-      code: data.code || "",
-      description: data.description || "",
-    });
-  }, [data, reset]);
 
   return (
     <>
