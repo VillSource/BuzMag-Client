@@ -8,7 +8,7 @@ import {
   MailIcon,
 } from "lucide-react";
 
-import { apiClient } from "@/api/client";
+import { apiClient } from "@/client";
 import { issueJwtTokensMutationOptions } from "@/api/hooks/identity/useIssueJwtTokens";
 import { tokenStore } from "@/features/auth/token-store";
 import { Button } from "@/components/ui/button";

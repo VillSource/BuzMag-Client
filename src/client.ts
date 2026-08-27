@@ -6,9 +6,9 @@ import {
 } from "@/api/.kubb/client";
 
 import { tokenStore } from "@/features/auth/token-store";
-import { API_BASE_URL } from "./config";
+import { API_BASE_URL } from "@/config";
 
-export { API_BASE_URL } from "./config";
+export { API_BASE_URL } from "@/config";
 
 /** Operations that must never trigger a refresh-retry (credentials exchange). */
 const AUTH_PATHS = ["/api/v1/identity/token/issue", "/api/v1/identity/token/refresh"];

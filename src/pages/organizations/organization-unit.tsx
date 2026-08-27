@@ -58,6 +58,7 @@ import {
   CommandItem,
   CommandList, // <-- ต้องใส่เพื่อรองรับการเลื่อนใน shadcn เวอร์ชั่นใหม่
 } from "@/components/ui/command";
+import { apiClient } from "@/client";
 
 // Schema สำหรับอัปเดต (ของเดิม)
 export type FormValues = {
@@ -81,7 +82,7 @@ export type CreateOrganizationUnitCommand = {
 
 export function OrganizationUnitPage() {
   const { data, isLoading, isError, refetch } = useQuery(
-    getAllDefaultOrganizationUnitQueryOptions(),
+    getAllDefaultOrganizationUnitQueryOptions({client:apiClient}),
   );
 
   const { setPanelContent, setPanelOpen, setSheetContent, setSheetOpen } = useAppShell();
@@ -185,7 +186,7 @@ function OrganizationCreateContainer({
 }) {
   const { setPanelOpen, setSheetOpen } = useAppShell();
   const queryClient = useQueryClient();
-  const mutation = useMutation(createOrganizationUnitMutationOptions());
+  const mutation = useMutation(createOrganizationUnitMutationOptions({client:apiClient}));
 
   const handleSave = (formData: CreateOrganizationUnitCommand) => {
     mutation.mutate(
@@ -228,7 +229,7 @@ function OrganizationCreateContainer({
 function OrganizationDetailContainer({ data, isEditable }: { data: OrganizationUnitDto; isEditable: boolean }) {
   const { setPanelOpen, setSheetOpen } = useAppShell();
   const queryClient = useQueryClient();
-  const mutation = useMutation(updateOrganizationUnitMutationOptions());
+  const mutation = useMutation(updateOrganizationUnitMutationOptions({client:apiClient}));
 
   const handleSave = (formData: FormValues) => {
     mutation.mutate({ body: formData, path: { organizationUnitId: data.referenceId! } }, {
@@ -247,7 +248,7 @@ function OrganizationDetailContainer({ data, isEditable }: { data: OrganizationU
 function OrganizationDeleteContainer({ data }: { data: OrganizationUnitDto }) {
   const { setPanelOpen, setSheetOpen } = useAppShell();
   const queryClient = useQueryClient();
-  const mutation = useMutation(deleteOrganizationUnitMutationOptions());
+  const mutation = useMutation(deleteOrganizationUnitMutationOptions({client:apiClient}));
 
   const handleConfirm = () => {
     mutation.mutate({ path: { organizationUnitId: data.referenceId! } }, {

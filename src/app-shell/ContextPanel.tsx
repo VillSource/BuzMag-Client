@@ -1,14 +1,8 @@
 import {
   Sidebar as ShadcnSidebar,
-  SidebarContent,
-  SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Button } from "@base-ui/react";
 import {
-  ChevronLast,
-  ChevronLeft,
   ChevronRight,
-  EllipsisVertical,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useAppShell } from "./AppShell";

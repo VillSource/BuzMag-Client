@@ -47,8 +47,8 @@ type AppShellContextType = {
 
   sheetOpen: boolean;
   setSheetOpen: Dispatch<SetStateAction<boolean>>;
-  sheetContent: SheetContent;
-  setSheetContent: Dispatch<SetStateAction<SheetContent>>;
+  sheetContent: SheetContent|undefined;
+  setSheetContent: Dispatch<SetStateAction<SheetContent|undefined>>;
 
   appbarSlot: ReactNode;
   setAppbarSlot: Dispatch<SetStateAction<ReactNode>>;

@@ -2,7 +2,7 @@ import { useSyncExternalStore } from "react";
 
 import { client as baseClient } from "@/api/.kubb/client";
 import { refreshJwtTokens } from "@/api/clients/refreshJwtTokens";
-import { API_BASE_URL } from "@/api/config";
+import { API_BASE_URL } from "@/config";
 
 /**
  * Token store for JWT authentication.
