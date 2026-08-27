@@ -27,8 +27,7 @@ export const ContextPanel = ({ client }: { client?: ReactNode }) => {
         className="absolute group/coll  inset-y-0 right-0 z-10 border-l h-full min-h-0"
         side="right"
       >
-        <SidebarContent>{client}</SidebarContent>
-        <SidebarFooter>foot</SidebarFooter>
+        {client}
         {!!panelOpen && (
           <>
             <div className="absolute flex items-center justify-center -left-3 w-6 h-full ">
