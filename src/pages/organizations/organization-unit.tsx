@@ -153,8 +153,8 @@ export function OrganizationUnitPage() {
         <div className="flex gap-2">
           <AppbarSlotContext>
             <Button onClick={handleAddTopLevel} >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Unit 
+                <Plus className="h-4 w-4 " />
+                Add 
             </Button>
           </AppbarSlotContext>
           <Button variant="outline" onClick={() => refetch()}>
