@@ -5,7 +5,6 @@ import {
 import type { OrganizationUnitDto } from "@/api/types/OrganizationUnitDto";
 import { updateOrganizationUnitMutationOptions } from "@/api/hooks/organizations/useUpdateOrganizationUnit";
 import { deleteOrganizationUnitMutationOptions } from "@/api/hooks/organizations/useDeleteOrganizationUnit";
-// TODO: นำเข้า Hook สำหรับ Create ให้ถูกต้องตาม path ของคุณ
 import { createOrganizationUnitMutationOptions } from "@/api/hooks/organizations/useCreateOrganizationUnit";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, Fragment, useEffect, useMemo } from "react";
@@ -19,9 +18,9 @@ import {
   RefreshCcw,
   Trash2,
   Pen,
-  Plus, // เพิ่มไอคอน Plus
-  Check, // ไอคอนสำหรับ Combobox
-  ChevronsUpDown, // ไอคอนสำหรับ Combobox
+  Plus, 
+  Check,
+  ChevronsUpDown,
 } from "lucide-react";
 import {
   Table,
@@ -44,7 +43,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// นำเข้า Component สำหรับสร้าง Searchable Select (Combobox)
 import {
   Popover,
   PopoverContent,
@@ -56,20 +54,17 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList, // <-- ต้องใส่เพื่อรองรับการเลื่อนใน shadcn เวอร์ชั่นใหม่
+  CommandList, 
 } from "@/components/ui/command";
 import { apiClient } from "@/client";
-import { Kbd } from "@/components/ui/kbd";
 import AppbarSlotContext from "@/app-shell/use-appbarSlot";
 
-// Schema สำหรับอัปเดต (ของเดิม)
 export type FormValues = {
   name: string;
   code: string;
   description: string;
 };
 
-// Schema สำหรับสร้างใหม่ (ตามที่คุณกำหนด)
 export type CreateOrganizationUnitCommand = {
   code: string;
   name: string;
@@ -97,7 +92,6 @@ export function OrganizationUnitPage() {
     };
   }, [setPanelContent, setPanelOpen]);
 
-  // Helper สำหรับเปิด Panel/Sheet
   const openOverlay = (content: React.ReactNode, title: string = "") => {
     if (isMobile) {
       setSheetContent({
@@ -130,7 +124,6 @@ export function OrganizationUnitPage() {
     );
   };
 
-  // 🌟 ฟังก์ชันสำหรับ Add Child (ล็อก Parent ID)
   const handleRowAddChild = (item: OrganizationUnitDto) => {
     openOverlay(
       <OrganizationCreateContainer 
@@ -169,14 +162,13 @@ export function OrganizationUnitPage() {
           isLoading={isLoading}
           onRowEdit={handleRowEdit}
           onRowDelete={handleRowDelete}
-          onRowAddChild={handleRowAddChild} // ส่ง Prop ลงไป
+          onRowAddChild={handleRowAddChild} 
         />
       </div>
     </div>
   );
 }
 
-// 🌟 Container ใหม่สำหรับการสร้าง
 function OrganizationCreateContainer({
   allUnits,
   initialParentId = null,
@@ -195,7 +187,7 @@ function OrganizationCreateContainer({
       {
         body: {
           ...formData,
-          organizationId: null, // บังคับให้เป็น null เสมอตาม Schema
+          organizationId: null, 
         },
       },
       {
@@ -227,7 +219,6 @@ function OrganizationCreateContainer({
   );
 }
 
-// ... [ส่วนของ OrganizationDetailContainer และ OrganizationDeleteContainer คงเดิมไม่เปลี่ยนแปลง] ...
 function OrganizationDetailContainer({ data, isEditable }: { data: OrganizationUnitDto; isEditable: boolean }) {
   const { setPanelOpen, setSheetOpen } = useAppShell();
   const queryClient = useQueryClient();
@@ -350,11 +341,10 @@ function OrgUnitTableRow({
           </div>
         </TableCell>
         <TableCell className="font-mono text-xs">{item.code || "-"}</TableCell>
-        <TableCell className="max-w-[250px] truncate text-muted-foreground" title={item.description || ""}>{item.description || "-"}</TableCell>
+        <TableCell className="max-w-62.5 truncate text-muted-foreground" title={item.description || ""}>{item.description || "-"}</TableCell>
         <TableCell className="whitespace-nowrap">{item.referenceId ? item.referenceId : "-"}</TableCell>
         
         <TableCell className="text-center">
-          {/* 🌟 ปุ่มเพิ่ม Child ประจำแถว */}
           <Button 
             variant="ghost" 
             size="icon" 
@@ -391,7 +381,6 @@ function OrgUnitTableRow({
   );
 }
 
-// 🌟 ฟังก์ชันช่วยในการคลี่ Tree เป็น Array แบนๆ เพื่อใส่ใน Combobox
 function flattenOrgUnits(units: OrganizationUnitDto[], parentPath = ""): { value: string; label: string }[] {
   let result: { value: string; label: string }[] = [];
   units.forEach((u) => {
@@ -406,7 +395,6 @@ function flattenOrgUnits(units: OrganizationUnitDto[], parentPath = ""): { value
   return result;
 }
 
-// 🌟 Panel สำหรับการสร้างข้อมูลใหม่
 function CreatePanel({
   allUnits,
   initialParentId,
@@ -424,7 +412,6 @@ function CreatePanel({
 }) {
   const [openCombobox, setOpenCombobox] = useState(false);
 
-  // แปลงข้อมูล Tree ให้กลายเป็น List สำหรับค้นหา
   const parentOptions = useMemo(() => flattenOrgUnits(allUnits), [allUnits]);
 
   const { register, handleSubmit, setValue, watch } = useForm<CreateOrganizationUnitCommand>({
@@ -457,7 +444,6 @@ function CreatePanel({
             <Input id="code" placeholder="e.g. OU-ENG" disabled={isSaving} required {...register("code")} />
           </div>
 
-          {/* 🌟 Searchable Parent Field */}
           <div className="space-y-2 flex flex-col">
             <Label>Parent Unit</Label>
             <Popover open={openCombobox} onOpenChange={setOpenCombobox}>
@@ -466,7 +452,7 @@ function CreatePanel({
                   variant="outline"
                   role="combobox"
                   aria-expanded={openCombobox}
-                  disabled={lockParent || isSaving} // ล็อกฟิลด์ถ้าเป็นการกด + จากตาราง
+                  disabled={lockParent || isSaving} 
                   className="w-full justify-between font-normal text-left truncate"
                 >
                   {watchParentId
@@ -475,13 +461,12 @@ function CreatePanel({
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[300px] p-0" align="start">
+              <PopoverContent className="w-75 p-0" align="start">
                 <Command>
                   <CommandInput placeholder="Search organization unit..." />
                   <CommandList>
                     <CommandEmpty>No unit found.</CommandEmpty>
                     <CommandGroup>
-                      {/* Option สำหรับเคลียร์ค่า (เป็น Top Level) */}
                       <CommandItem
                         value=""
                         onSelect={() => {
@@ -492,11 +477,10 @@ function CreatePanel({
                         <Check className={`mr-2 h-4 w-4 ${!watchParentId ? "opacity-100" : "opacity-0"}`} />
                         None (Top Level)
                       </CommandItem>
-                      {/* รายชื่อแผนกทั้งหมดแบบมี Breadcrumbs */}
                       {parentOptions.map((option) => (
                         <CommandItem
                           key={option.value}
-                          value={option.label} // Command component ใช้ value ในการค้นหา (ดังนั้นใช้ label จะทำให้ค้นหาจากชื่อได้)
+                          value={option.label} 
                           onSelect={() => {
                             setValue("parentId", option.value);
                             setOpenCombobox(false);
@@ -534,7 +518,6 @@ function CreatePanel({
   );
 }
 
-// 6. Delete Confirmation Panel View (Dumb)
 function DeleteConfirmationPanel({
   data,
   isDeleting,
@@ -601,7 +584,6 @@ function DeleteConfirmationPanel({
   );
 }
 
-// 7. Detail Panel View (Dumb)
 function DetailPanel({
   data,
   isEditable,
@@ -615,7 +597,7 @@ function DetailPanel({
   onSave: (data: FormValues) => void;
   onCancel: () => void;
 }) {
-  const { register, handleSubmit, reset } = useForm<FormValues>({
+  const { register, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       name: data.name || "",
       code: data.code || "",
@@ -626,7 +608,6 @@ function DetailPanel({
 
   return (
     <>
-      {/* ... [ส่วนโค้ด DetailPanel เดิมแบบครบถ้วน ไม่มีการเปลี่ยนแปลง] ... */}
       <SidebarHeader className="font-semibold text-lg border-b pb-4">
         Organization Unit {isEditable ? "Edit" : "Detail"}
       </SidebarHeader>
