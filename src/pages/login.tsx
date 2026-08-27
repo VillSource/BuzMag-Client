@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import {
   ArrowRightIcon,
@@ -40,6 +40,7 @@ function mapLoginError(error: unknown): string {
 }
 
 export default function LoginPage() {
+  const { redirect } = useSearch({ from: '/login' })
   const navigate = useNavigate();
 
   // Persisted tenant — if set, we skip the tenant step on future visits.
@@ -92,7 +93,7 @@ export default function LoginPage() {
         onSuccess: (data) => {
           // Store the JWT pair — refresh token persists, access token lives in state.
           tokenStore.setTokens(data.accessToken, data.refreshToken);
-          void navigate({ to: "/dashboard" });
+          void navigate({ to: redirect });
         },
         onError: (err) => {
           setError(mapLoginError(err));

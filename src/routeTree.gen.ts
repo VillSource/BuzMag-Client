@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AppointmentsRouteImport } from './routes/appointments'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -56,9 +57,6 @@ import { Route as MarketingEmailRouteImport } from './routes/marketing_.email'
 import { Route as MarketingEventsRouteImport } from './routes/marketing_.events'
 import { Route as MarketingSocialRouteImport } from './routes/marketing_.social'
 import { Route as MarketingSurveysRouteImport } from './routes/marketing_.surveys'
-import { Route as OrganizationsIndexRouteImport } from './routes/organizations.index'
-import { Route as OrganizationsPositionsRouteImport } from './routes/organizations_.positions'
-import { Route as OrganizationsUnitRouteImport } from './routes/organizations_.unit'
 import { Route as PingNameRouteImport } from './routes/ping.$name'
 import { Route as ProductivityIndexRouteImport } from './routes/productivity.index'
 import { Route as ProductivityApprovalsRouteImport } from './routes/productivity_.approvals'
@@ -69,10 +67,17 @@ import { Route as SalesEcommerceRouteImport } from './routes/sales_.ecommerce'
 import { Route as SalesOrdersRouteImport } from './routes/sales_.orders'
 import { Route as SalesPosRouteImport } from './routes/sales_.pos'
 import { Route as SalesQuotationsRouteImport } from './routes/sales_.quotations'
+import { Route as AuthenticatedOrganizationsIndexRouteImport } from './routes/_authenticated/organizations.index'
+import { Route as AuthenticatedOrganizationsPositionsRouteImport } from './routes/_authenticated/organizations_.positions'
+import { Route as AuthenticatedOrganizationsUnitRouteImport } from './routes/_authenticated/organizations_.unit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppointmentsRoute = AppointmentsRouteImport.update({
@@ -306,21 +311,6 @@ const MarketingSurveysRoute = MarketingSurveysRouteImport.update({
   path: '/marketing/surveys',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OrganizationsIndexRoute = OrganizationsIndexRouteImport.update({
-  id: '/organizations/',
-  path: '/organizations/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrganizationsPositionsRoute = OrganizationsPositionsRouteImport.update({
-  id: '/organizations_/positions',
-  path: '/organizations/positions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrganizationsUnitRoute = OrganizationsUnitRouteImport.update({
-  id: '/organizations_/unit',
-  path: '/organizations/unit',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PingNameRoute = PingNameRouteImport.update({
   id: '/ping/$name',
   path: '/ping/$name',
@@ -371,6 +361,24 @@ const SalesQuotationsRoute = SalesQuotationsRouteImport.update({
   path: '/sales/quotations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedOrganizationsIndexRoute =
+  AuthenticatedOrganizationsIndexRouteImport.update({
+    id: '/organizations/',
+    path: '/organizations/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedOrganizationsPositionsRoute =
+  AuthenticatedOrganizationsPositionsRouteImport.update({
+    id: '/organizations_/positions',
+    path: '/organizations/positions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedOrganizationsUnitRoute =
+  AuthenticatedOrganizationsUnitRouteImport.update({
+    id: '/organizations_/unit',
+    path: '/organizations/unit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -416,8 +424,6 @@ export interface FileRoutesByFullPath {
   '/marketing/events': typeof MarketingEventsRoute
   '/marketing/social': typeof MarketingSocialRoute
   '/marketing/surveys': typeof MarketingSurveysRoute
-  '/organizations/positions': typeof OrganizationsPositionsRoute
-  '/organizations/unit': typeof OrganizationsUnitRoute
   '/ping/$name': typeof PingNameRoute
   '/productivity/approvals': typeof ProductivityApprovalsRoute
   '/productivity/documents': typeof ProductivityDocumentsRoute
@@ -431,8 +437,10 @@ export interface FileRoutesByFullPath {
   '/hr/': typeof HrIndexRoute
   '/inventory/': typeof InventoryIndexRoute
   '/marketing/': typeof MarketingIndexRoute
-  '/organizations/': typeof OrganizationsIndexRoute
   '/productivity/': typeof ProductivityIndexRoute
+  '/organizations/positions': typeof AuthenticatedOrganizationsPositionsRoute
+  '/organizations/unit': typeof AuthenticatedOrganizationsUnitRoute
+  '/organizations/': typeof AuthenticatedOrganizationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -473,8 +481,6 @@ export interface FileRoutesByTo {
   '/marketing/events': typeof MarketingEventsRoute
   '/marketing/social': typeof MarketingSocialRoute
   '/marketing/surveys': typeof MarketingSurveysRoute
-  '/organizations/positions': typeof OrganizationsPositionsRoute
-  '/organizations/unit': typeof OrganizationsUnitRoute
   '/ping/$name': typeof PingNameRoute
   '/productivity/approvals': typeof ProductivityApprovalsRoute
   '/productivity/documents': typeof ProductivityDocumentsRoute
@@ -488,12 +494,15 @@ export interface FileRoutesByTo {
   '/hr': typeof HrIndexRoute
   '/inventory': typeof InventoryIndexRoute
   '/marketing': typeof MarketingIndexRoute
-  '/organizations': typeof OrganizationsIndexRoute
   '/productivity': typeof ProductivityIndexRoute
+  '/organizations/positions': typeof AuthenticatedOrganizationsPositionsRoute
+  '/organizations/unit': typeof AuthenticatedOrganizationsUnitRoute
+  '/organizations': typeof AuthenticatedOrganizationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/appointments': typeof AppointmentsRoute
   '/chat': typeof ChatRoute
   '/dashboard': typeof DashboardRoute
@@ -536,8 +545,6 @@ export interface FileRoutesById {
   '/marketing_/events': typeof MarketingEventsRoute
   '/marketing_/social': typeof MarketingSocialRoute
   '/marketing_/surveys': typeof MarketingSurveysRoute
-  '/organizations_/positions': typeof OrganizationsPositionsRoute
-  '/organizations_/unit': typeof OrganizationsUnitRoute
   '/ping/$name': typeof PingNameRoute
   '/productivity_/approvals': typeof ProductivityApprovalsRoute
   '/productivity_/documents': typeof ProductivityDocumentsRoute
@@ -551,8 +558,10 @@ export interface FileRoutesById {
   '/hr/': typeof HrIndexRoute
   '/inventory/': typeof InventoryIndexRoute
   '/marketing/': typeof MarketingIndexRoute
-  '/organizations/': typeof OrganizationsIndexRoute
   '/productivity/': typeof ProductivityIndexRoute
+  '/_authenticated/organizations_/positions': typeof AuthenticatedOrganizationsPositionsRoute
+  '/_authenticated/organizations_/unit': typeof AuthenticatedOrganizationsUnitRoute
+  '/_authenticated/organizations/': typeof AuthenticatedOrganizationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -600,8 +609,6 @@ export interface FileRouteTypes {
     | '/marketing/events'
     | '/marketing/social'
     | '/marketing/surveys'
-    | '/organizations/positions'
-    | '/organizations/unit'
     | '/ping/$name'
     | '/productivity/approvals'
     | '/productivity/documents'
@@ -615,8 +622,10 @@ export interface FileRouteTypes {
     | '/hr/'
     | '/inventory/'
     | '/marketing/'
-    | '/organizations/'
     | '/productivity/'
+    | '/organizations/positions'
+    | '/organizations/unit'
+    | '/organizations/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -657,8 +666,6 @@ export interface FileRouteTypes {
     | '/marketing/events'
     | '/marketing/social'
     | '/marketing/surveys'
-    | '/organizations/positions'
-    | '/organizations/unit'
     | '/ping/$name'
     | '/productivity/approvals'
     | '/productivity/documents'
@@ -672,11 +679,14 @@ export interface FileRouteTypes {
     | '/hr'
     | '/inventory'
     | '/marketing'
-    | '/organizations'
     | '/productivity'
+    | '/organizations/positions'
+    | '/organizations/unit'
+    | '/organizations'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/appointments'
     | '/chat'
     | '/dashboard'
@@ -719,8 +729,6 @@ export interface FileRouteTypes {
     | '/marketing_/events'
     | '/marketing_/social'
     | '/marketing_/surveys'
-    | '/organizations_/positions'
-    | '/organizations_/unit'
     | '/ping/$name'
     | '/productivity_/approvals'
     | '/productivity_/documents'
@@ -734,12 +742,15 @@ export interface FileRouteTypes {
     | '/hr/'
     | '/inventory/'
     | '/marketing/'
-    | '/organizations/'
     | '/productivity/'
+    | '/_authenticated/organizations_/positions'
+    | '/_authenticated/organizations_/unit'
+    | '/_authenticated/organizations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AppointmentsRoute: typeof AppointmentsRoute
   ChatRoute: typeof ChatRoute
   DashboardRoute: typeof DashboardRoute
@@ -782,8 +793,6 @@ export interface RootRouteChildren {
   MarketingEventsRoute: typeof MarketingEventsRoute
   MarketingSocialRoute: typeof MarketingSocialRoute
   MarketingSurveysRoute: typeof MarketingSurveysRoute
-  OrganizationsPositionsRoute: typeof OrganizationsPositionsRoute
-  OrganizationsUnitRoute: typeof OrganizationsUnitRoute
   PingNameRoute: typeof PingNameRoute
   ProductivityApprovalsRoute: typeof ProductivityApprovalsRoute
   ProductivityDocumentsRoute: typeof ProductivityDocumentsRoute
@@ -793,7 +802,6 @@ export interface RootRouteChildren {
   SalesOrdersRoute: typeof SalesOrdersRoute
   SalesPosRoute: typeof SalesPosRoute
   SalesQuotationsRoute: typeof SalesQuotationsRoute
-  OrganizationsIndexRoute: typeof OrganizationsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -803,6 +811,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/appointments': {
@@ -1127,27 +1142,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingSurveysRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/organizations/': {
-      id: '/organizations/'
-      path: '/organizations'
-      fullPath: '/organizations/'
-      preLoaderRoute: typeof OrganizationsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/organizations_/positions': {
-      id: '/organizations_/positions'
-      path: '/organizations/positions'
-      fullPath: '/organizations/positions'
-      preLoaderRoute: typeof OrganizationsPositionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/organizations_/unit': {
-      id: '/organizations_/unit'
-      path: '/organizations/unit'
-      fullPath: '/organizations/unit'
-      preLoaderRoute: typeof OrganizationsUnitRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/ping/$name': {
       id: '/ping/$name'
       path: '/ping/$name'
@@ -1218,8 +1212,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SalesQuotationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/organizations/': {
+      id: '/_authenticated/organizations/'
+      path: '/organizations'
+      fullPath: '/organizations/'
+      preLoaderRoute: typeof AuthenticatedOrganizationsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/organizations_/positions': {
+      id: '/_authenticated/organizations_/positions'
+      path: '/organizations/positions'
+      fullPath: '/organizations/positions'
+      preLoaderRoute: typeof AuthenticatedOrganizationsPositionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/organizations_/unit': {
+      id: '/_authenticated/organizations_/unit'
+      path: '/organizations/unit'
+      fullPath: '/organizations/unit'
+      preLoaderRoute: typeof AuthenticatedOrganizationsUnitRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedOrganizationsPositionsRoute: typeof AuthenticatedOrganizationsPositionsRoute
+  AuthenticatedOrganizationsUnitRoute: typeof AuthenticatedOrganizationsUnitRoute
+  AuthenticatedOrganizationsIndexRoute: typeof AuthenticatedOrganizationsIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedOrganizationsPositionsRoute:
+    AuthenticatedOrganizationsPositionsRoute,
+  AuthenticatedOrganizationsUnitRoute: AuthenticatedOrganizationsUnitRoute,
+  AuthenticatedOrganizationsIndexRoute: AuthenticatedOrganizationsIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
 
 interface FinanceRouteChildren {
   FinanceIndexRoute: typeof FinanceIndexRoute
@@ -1280,6 +1312,7 @@ const ProductivityRouteWithChildren = ProductivityRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AppointmentsRoute: AppointmentsRoute,
   ChatRoute: ChatRoute,
   DashboardRoute: DashboardRoute,
@@ -1322,8 +1355,6 @@ const rootRouteChildren: RootRouteChildren = {
   MarketingEventsRoute: MarketingEventsRoute,
   MarketingSocialRoute: MarketingSocialRoute,
   MarketingSurveysRoute: MarketingSurveysRoute,
-  OrganizationsPositionsRoute: OrganizationsPositionsRoute,
-  OrganizationsUnitRoute: OrganizationsUnitRoute,
   PingNameRoute: PingNameRoute,
   ProductivityApprovalsRoute: ProductivityApprovalsRoute,
   ProductivityDocumentsRoute: ProductivityDocumentsRoute,
@@ -1333,7 +1364,6 @@ const rootRouteChildren: RootRouteChildren = {
   SalesOrdersRoute: SalesOrdersRoute,
   SalesPosRoute: SalesPosRoute,
   SalesQuotationsRoute: SalesQuotationsRoute,
-  OrganizationsIndexRoute: OrganizationsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
