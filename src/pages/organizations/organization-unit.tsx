@@ -21,6 +21,7 @@ import {
   Plus,
   Check,
   ChevronsUpDown,
+  MoreVertical,
 } from "lucide-react";
 import {
   Table,
@@ -60,6 +61,7 @@ import { apiClient } from "@/client";
 import AppbarSlotContext from "@/app-shell/use-appbarSlot";
 import { Kbd } from "@/components/ui/kbd";
 import { useHotkeys } from "react-hotkeys-hook";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export type FormValues = {
   name: string;
@@ -172,7 +174,16 @@ export function OrganizationUnitPage() {
         </div>
       </div>
 
-      <div className="md:px-4">
+      <div className="sm:hidden px-2">
+        <OrganizationList
+          data={data || []}
+          isLoading={isLoading}
+          onRowEdit={handleRowEdit}
+          onRowDelete={handleRowDelete}
+          onRowAddChild={handleRowAddChild}
+        />
+      </div>
+      <div className="hidden sm:block">
         <OrganizationTable
           data={data || []}
           isLoading={isLoading}
@@ -498,20 +509,185 @@ function OrgUnitTableRow({
   );
 }
 
+export function OrganizationList({
+  data,
+  isLoading,
+  onRowEdit,
+  onRowDelete,
+  onRowAddChild,
+}: {
+  data: OrganizationUnitDto[];
+  isLoading: boolean;
+  onRowEdit: (item: OrganizationUnitDto) => void;
+  onRowDelete: (item: OrganizationUnitDto) => void;
+  onRowAddChild: (item: OrganizationUnitDto) => void;
+}) {
+  return (
+    <>
+      {isLoading ? (
+        <div className="space-y-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-3 w-3/4" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : !data || data.length === 0 ? (
+        <div className="rounded-lg border bg-card p-8 text-center text-muted-foreground shadow-sm">
+          No organization units found.
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {data.map((item) => (
+            <OrgUnitListCardMobile
+              key={item.referenceId || item.code || item.name}
+              item={item}
+              onRowEditing={onRowEdit}
+              onRowDelete={onRowDelete}
+              onRowAddChild={onRowAddChild}
+            />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
+function OrgUnitListCardMobile({
+  item,
+  depth = 0,
+  onRowEditing,
+  onRowDelete,
+  onRowAddChild,
+}: {
+  item: OrganizationUnitDto;
+  depth?: number;
+  onRowEditing: (item: OrganizationUnitDto) => void;
+  onRowDelete: (item: OrganizationUnitDto) => void;
+  onRowAddChild: (item: OrganizationUnitDto) => void;
+}) {
+  const [isOpen, setIsOpen] = useState(true);
+  const hasChildren = item.children && item.children.length > 0;
+
+  return (
+    <Fragment>
+      <div
+        className={`flex items-start justify-between rounded-lg border bg-card p-3 shadow-sm relative ${
+          depth === 0 ? "border-l-4 border-l-primary" : "border-l-2 border-l-border mt-1"
+        }`}
+        style={{ marginLeft: `${depth * 1}rem` }}
+      >
+        {/* Left Side: Toggle + Icon + Text Data */}
+        <div className="flex items-start gap-2 overflow-hidden w-full pr-2">
+          
+          {/* Expand/Collapse Toggle */}
+          <div className="mt-0.5 shrink-0">
+            {hasChildren ? (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-5 w-5 p-0 hover:bg-muted"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+              </Button>
+            ) : (
+              <div className="h-5 w-5 shrink-0" /> // Invisible spacer to maintain alignment
+            )}
+          </div>
+
+          {/* Node Icon */}
+          <div className="mt-1 shrink-0">
+            {depth === 0 ? (
+              <Building2 className="h-4 w-4 text-primary" />
+            ) : hasChildren ? (
+              <Folder className="h-4 w-4 text-blue-500" />
+            ) : (
+              <File className="h-4 w-4 text-muted-foreground" />
+            )}
+          </div>
+
+          {/* Text Information (Name, Code, Description) */}
+          <div className="flex flex-col overflow-hidden">
+            <span
+              onClick={() => onRowEditing(item)}
+              className="font-medium text-sm truncate cursor-pointer hover:underline"
+            >
+              {item.name || "-"} {item.code && <span className="text-muted-foreground font-normal">({item.code})</span>}
+            </span>
+            
+            {item.description && (
+              <span className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                {item.description}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Right Side: Action Menu (Dropdown) */}
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 -mr-1 text-muted-foreground hover:text-foreground">
+              <MoreVertical className="h-4 w-4" />
+              <span className="sr-only">Open menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuItem onClick={() => onRowAddChild(item)}>
+              <Plus className="mr-2 h-4 w-4 text-green-600 dark:text-green-500" />
+              <span>Add Child</span>
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem onClick={() => onRowEditing(item)}>
+              <Pen className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-500" />
+              <span>Edit</span>
+            </DropdownMenuItem>
+            
+            <DropdownMenuSeparator />
+            
+            <DropdownMenuItem 
+              onClick={() => onRowDelete(item)} 
+              className="text-destructive focus:text-destructive focus:bg-destructive/10"
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              <span>Delete</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* Recursive Children Rendering */}
+      {isOpen &&
+        hasChildren &&
+        item.children!.map((child) => (
+          <OrgUnitListCardMobile
+            key={child.referenceId || child.code || child.name}
+            item={child}
+            depth={depth + 1}
+            onRowEditing={onRowEditing}
+            onRowDelete={onRowDelete}
+            onRowAddChild={onRowAddChild}
+          />
+        ))}
+    </Fragment>
+  );
+}
+
 function flattenOrgUnits(
-  units: OrganizationUnitDto[],
-  parentPath = "",
+  units: OrganizationUnitDto[]
 ): { value: string; label: string }[] {
   let result: { value: string; label: string }[] = [];
   units.forEach((u) => {
-    const currentLabel = parentPath
-      ? `${parentPath} > ${u.name}`
-      : u.name || "Unknown";
+    const currentLabel = u.name || "Unknown";
     if (u.referenceId) {
       result.push({ value: u.referenceId, label: currentLabel });
     }
     if (u.children && u.children.length > 0) {
-      result = result.concat(flattenOrgUnits(u.children, currentLabel));
+      result = result.concat(flattenOrgUnits(u.children));
     }
   });
   return result;
