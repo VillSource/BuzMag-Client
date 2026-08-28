@@ -4,16 +4,29 @@ import {
 import {
   ChevronRight,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useHotkeys } from "react-hotkeys-hook"
 import { useAppShell } from "./AppShell";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import type { ReactNode } from "react";
+import { Kbd } from "@/components/ui/kbd";
 
 export const ContextPanel = ({ client }: { client?: ReactNode }) => {
   const { setPanelOpen, panelOpen } = useAppShell();
+
+  useHotkeys('esc', () => {
+    setPanelOpen(false);
+  }, { enableOnFormTags: true }) 
+
+  // anti shotkey from original component to prevent toggle on ctl+b
+  useHotkeys('ctrl+b, meta+b', (e) => {
+    e.preventDefault() 
+    setPanelOpen(open => !open);
+  }, { enableOnFormTags: true })
+  
   return (
     <>
       <ShadcnSidebar
@@ -34,7 +47,7 @@ export const ContextPanel = ({ client }: { client?: ReactNode }) => {
                     />
                   }
                 ></TooltipTrigger>
-                <TooltipContent side="left">collapse</TooltipContent>
+                <TooltipContent side="left">collapse <Kbd>esc</Kbd></TooltipContent>
               </Tooltip>
             </div>
           </>

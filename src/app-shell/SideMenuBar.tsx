@@ -6,7 +6,6 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -20,6 +19,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Kbd } from "@/components/ui/kbd";
 
 export const SideMenuBar = () => {
   const { selectedPrime, selectedSec, setMenuOpen, menuOpen } = useAppShell();
@@ -66,7 +66,7 @@ export const SideMenuBar = () => {
                   />
                 }
               ></TooltipTrigger>
-              <TooltipContent side="right">collapse</TooltipContent>
+              <TooltipContent side="right">collapse <Kbd>ctl+b</Kbd></TooltipContent>
             </Tooltip>
           </div>
         ) : (

@@ -18,7 +18,7 @@ import {
   RefreshCcw,
   Trash2,
   Pen,
-  Plus, 
+  Plus,
   Check,
   ChevronsUpDown,
 } from "lucide-react";
@@ -54,10 +54,12 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList, 
+  CommandList,
 } from "@/components/ui/command";
 import { apiClient } from "@/client";
 import AppbarSlotContext from "@/app-shell/use-appbarSlot";
+import { Kbd } from "@/components/ui/kbd";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export type FormValues = {
   name: string;
@@ -79,10 +81,11 @@ export type CreateOrganizationUnitCommand = {
 
 export function OrganizationUnitPage() {
   const { data, isLoading, isError, refetch } = useQuery(
-    getAllDefaultOrganizationUnitQueryOptions({client:apiClient}),
+    getAllDefaultOrganizationUnitQueryOptions({ client: apiClient }),
   );
 
-  const { setPanelContent, setPanelOpen, setSheetContent, setSheetOpen } = useAppShell();
+  const { setPanelContent, setPanelOpen, setSheetContent, setSheetOpen } =
+    useAppShell();
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -108,30 +111,41 @@ export function OrganizationUnitPage() {
   };
 
   const handleRowEdit = (item: OrganizationUnitDto) => {
-    openOverlay(<OrganizationDetailContainer data={item} isEditable={true} key={`edit-${item.referenceId}`} />);
+    openOverlay(
+      <OrganizationDetailContainer
+        data={item}
+        isEditable={true}
+        key={`edit-${item.referenceId}`}
+      />,
+    );
   };
 
   const handleRowDelete = (item: OrganizationUnitDto) => {
-    openOverlay(<OrganizationDeleteContainer data={item} key={`delete-${item.referenceId}`} />);
+    openOverlay(
+      <OrganizationDeleteContainer
+        data={item}
+        key={`delete-${item.referenceId}`}
+      />,
+    );
   };
 
   const handleAddTopLevel = () => {
     openOverlay(
-      <OrganizationCreateContainer 
-        allUnits={data || []} 
-        key={`create-top-level-${Date.now()}`} 
-      />
+      <OrganizationCreateContainer
+        allUnits={data || []}
+        key={`create-top-level-${Date.now()}`}
+      />,
     );
   };
 
   const handleRowAddChild = (item: OrganizationUnitDto) => {
     openOverlay(
-      <OrganizationCreateContainer 
-        allUnits={data || []} 
-        initialParentId={item.referenceId} 
-        lockParent={true} 
-        key={`create-child-${item.referenceId}`} 
-      />
+      <OrganizationCreateContainer
+        allUnits={data || []}
+        initialParentId={item.referenceId}
+        lockParent={true}
+        key={`create-child-${item.referenceId}`}
+      />,
     );
   };
 
@@ -142,12 +156,14 @@ export function OrganizationUnitPage() {
   return (
     <div className="py-4">
       <div className="flex items-center justify-between mb-6 px-4">
-        <h2 className="text-2xl font-bold tracking-tight">Organization Units</h2>
+        <h2 className="text-2xl font-bold tracking-tight">
+          Organization Units
+        </h2>
         <div className="flex gap-2">
           <AppbarSlotContext>
-            <Button onClick={handleAddTopLevel} >
-                <Plus className="h-4 w-4 " />
-                Add 
+            <Button onClick={handleAddTopLevel} className="group/addbtn">
+              <Plus className="h-4 w-4 " />
+              Add
             </Button>
           </AppbarSlotContext>
           <Button variant="outline" onClick={() => refetch()}>
@@ -162,7 +178,7 @@ export function OrganizationUnitPage() {
           isLoading={isLoading}
           onRowEdit={handleRowEdit}
           onRowDelete={handleRowDelete}
-          onRowAddChild={handleRowAddChild} 
+          onRowAddChild={handleRowAddChild}
         />
       </div>
     </div>
@@ -180,14 +196,16 @@ function OrganizationCreateContainer({
 }) {
   const { setPanelOpen, setSheetOpen } = useAppShell();
   const queryClient = useQueryClient();
-  const mutation = useMutation(createOrganizationUnitMutationOptions({client:apiClient}));
+  const mutation = useMutation(
+    createOrganizationUnitMutationOptions({ client: apiClient }),
+  );
 
   const handleSave = (formData: CreateOrganizationUnitCommand) => {
     mutation.mutate(
       {
         body: {
           ...formData,
-          organizationId: null, 
+          organizationId: null,
         },
       },
       {
@@ -198,7 +216,7 @@ function OrganizationCreateContainer({
             queryKey: getAllDefaultOrganizationUnitQueryKey(),
           });
         },
-      }
+      },
     );
   };
 
@@ -219,42 +237,85 @@ function OrganizationCreateContainer({
   );
 }
 
-function OrganizationDetailContainer({ data, isEditable }: { data: OrganizationUnitDto; isEditable: boolean }) {
+function OrganizationDetailContainer({
+  data,
+  isEditable,
+}: {
+  data: OrganizationUnitDto;
+  isEditable: boolean;
+}) {
   const { setPanelOpen, setSheetOpen } = useAppShell();
   const queryClient = useQueryClient();
-  const mutation = useMutation(updateOrganizationUnitMutationOptions({client:apiClient}));
+  const mutation = useMutation(
+    updateOrganizationUnitMutationOptions({ client: apiClient }),
+  );
 
   const handleSave = (formData: FormValues) => {
-    mutation.mutate({ body: formData, path: { organizationUnitId: data.referenceId! } }, {
-      onSuccess: () => {
-        setPanelOpen(false); setSheetOpen(false);
-        queryClient.invalidateQueries({ queryKey: getAllDefaultOrganizationUnitQueryKey() });
+    mutation.mutate(
+      { body: formData, path: { organizationUnitId: data.referenceId! } },
+      {
+        onSuccess: () => {
+          setPanelOpen(false);
+          setSheetOpen(false);
+          queryClient.invalidateQueries({
+            queryKey: getAllDefaultOrganizationUnitQueryKey(),
+          });
+        },
       },
-    });
+    );
   };
 
-  const handleCancel = () => { setPanelOpen(false); setSheetOpen(false); };
+  const handleCancel = () => {
+    setPanelOpen(false);
+    setSheetOpen(false);
+  };
 
-  return <DetailPanel data={data} isEditable={isEditable} isSaving={mutation.isPending} onSave={handleSave} onCancel={handleCancel} />;
+  return (
+    <DetailPanel
+      data={data}
+      isEditable={isEditable}
+      isSaving={mutation.isPending}
+      onSave={handleSave}
+      onCancel={handleCancel}
+    />
+  );
 }
 
 function OrganizationDeleteContainer({ data }: { data: OrganizationUnitDto }) {
   const { setPanelOpen, setSheetOpen } = useAppShell();
   const queryClient = useQueryClient();
-  const mutation = useMutation(deleteOrganizationUnitMutationOptions({client:apiClient}));
+  const mutation = useMutation(
+    deleteOrganizationUnitMutationOptions({ client: apiClient }),
+  );
 
   const handleConfirm = () => {
-    mutation.mutate({ path: { organizationUnitId: data.referenceId! } }, {
-      onSuccess: () => {
-        setPanelOpen(false); setSheetOpen(false);
-        queryClient.invalidateQueries({ queryKey: getAllDefaultOrganizationUnitQueryKey() });
-      }
-    });
+    mutation.mutate(
+      { path: { organizationUnitId: data.referenceId! } },
+      {
+        onSuccess: () => {
+          setPanelOpen(false);
+          setSheetOpen(false);
+          queryClient.invalidateQueries({
+            queryKey: getAllDefaultOrganizationUnitQueryKey(),
+          });
+        },
+      },
+    );
   };
 
-  const handleCancel = () => { setPanelOpen(false); setSheetOpen(false); };
+  const handleCancel = () => {
+    setPanelOpen(false);
+    setSheetOpen(false);
+  };
 
-  return <DeleteConfirmationPanel data={data} isDeleting={mutation.isPending} onConfirm={handleConfirm} onCancel={handleCancel} />;
+  return (
+    <DeleteConfirmationPanel
+      data={data}
+      isDeleting={mutation.isPending}
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
+    />
+  );
 }
 
 /* =========================================================================
@@ -288,9 +349,20 @@ function OrganizationTable({
         </TableHeader>
         <TableBody>
           {isLoading ? (
-            <TableRow><TableCell colSpan={5}><Skeleton className="h-24 w-full" /></TableCell></TableRow>
+            <TableRow>
+              <TableCell colSpan={5}>
+                <Skeleton className="h-24 w-full" />
+              </TableCell>
+            </TableRow>
           ) : !data || data.length === 0 ? (
-            <TableRow><TableCell colSpan={5} className="h-24 text-center text-muted-foreground">No organization units found.</TableCell></TableRow>
+            <TableRow>
+              <TableCell
+                colSpan={5}
+                className="h-24 text-center text-muted-foreground"
+              >
+                No organization units found.
+              </TableCell>
+            </TableRow>
           ) : (
             data.map((item) => (
               <OrgUnitTableRow
@@ -328,44 +400,74 @@ function OrgUnitTableRow({
     <Fragment>
       <TableRow className={depth === 0 ? "bg-muted/20 hover:bg-muted/40" : ""}>
         <TableCell>
-          <div className="flex items-center gap-2" style={{ paddingLeft: `${depth * 1.5}rem` }}>
+          <div
+            className="flex items-center gap-2"
+            style={{ paddingLeft: `${depth * 1.5}rem` }}
+          >
             {hasChildren ? (
-              <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0 p-0 hover:bg-muted" onClick={() => setIsOpen(!isOpen)}>
-                {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 shrink-0 p-0 hover:bg-muted"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                {isOpen ? (
+                  <ChevronDown className="h-4 w-4" />
+                ) : (
+                  <ChevronRight className="h-4 w-4" />
+                )}
               </Button>
-            ) : <div className="h-6 w-6 shrink-0" />}
-            {depth === 0 ? <Building2 className="h-4 w-4 text-primary shrink-0" /> : hasChildren ? <Folder className="h-4 w-4 text-blue-500 shrink-0" /> : <File className="h-4 w-4 text-muted-foreground shrink-0" />}
-            <span onClick={() => onRowEditing(item)} className="font-medium whitespace-nowrap cursor-pointer hover:underline">
+            ) : (
+              <div className="h-6 w-6 shrink-0" />
+            )}
+            {depth === 0 ? (
+              <Building2 className="h-4 w-4 text-primary shrink-0" />
+            ) : hasChildren ? (
+              <Folder className="h-4 w-4 text-blue-500 shrink-0" />
+            ) : (
+              <File className="h-4 w-4 text-muted-foreground shrink-0" />
+            )}
+            <span
+              onClick={() => onRowEditing(item)}
+              className="font-medium whitespace-nowrap cursor-pointer hover:underline"
+            >
               {item.name || "-"}
             </span>
           </div>
         </TableCell>
         <TableCell className="font-mono text-xs">{item.code || "-"}</TableCell>
-        <TableCell className="max-w-62.5 truncate text-muted-foreground" title={item.description || ""}>{item.description || "-"}</TableCell>
-        <TableCell className="whitespace-nowrap">{item.referenceId ? item.referenceId : "-"}</TableCell>
-        
+        <TableCell
+          className="max-w-62.5 truncate text-muted-foreground"
+          title={item.description || ""}
+        >
+          {item.description || "-"}
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          {item.referenceId ? item.referenceId : "-"}
+        </TableCell>
+
         <TableCell className="text-center">
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="h-8 w-8 text-green-600 hover:text-green-900 hover:bg-green-600/10"
             onClick={() => onRowAddChild(item)}
             title="Add Child Unit"
           >
             <Plus className="h-4 w-4" />
           </Button>
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="h-8 w-8 text-blue-600 hover:text-blue-900 hover:bg-blue-600/10"
             onClick={() => onRowEditing(item)}
             title="Edit Organization Unit"
           >
             <Pen className="h-4 w-4" />
           </Button>
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
             onClick={() => onRowDelete(item)}
             title="Delete Organization Unit"
@@ -374,17 +476,31 @@ function OrgUnitTableRow({
           </Button>
         </TableCell>
       </TableRow>
-      {isOpen && hasChildren && item.children!.map((child) => (
-        <OrgUnitTableRow key={child.referenceId || child.code || child.name} item={child} depth={depth + 1} onRowEditing={onRowEditing} onRowDelete={onRowDelete} onRowAddChild={onRowAddChild} />
-      ))}
+      {isOpen &&
+        hasChildren &&
+        item.children!.map((child) => (
+          <OrgUnitTableRow
+            key={child.referenceId || child.code || child.name}
+            item={child}
+            depth={depth + 1}
+            onRowEditing={onRowEditing}
+            onRowDelete={onRowDelete}
+            onRowAddChild={onRowAddChild}
+          />
+        ))}
     </Fragment>
   );
 }
 
-function flattenOrgUnits(units: OrganizationUnitDto[], parentPath = ""): { value: string; label: string }[] {
+function flattenOrgUnits(
+  units: OrganizationUnitDto[],
+  parentPath = "",
+): { value: string; label: string }[] {
   let result: { value: string; label: string }[] = [];
   units.forEach((u) => {
-    const currentLabel = parentPath ? `${parentPath} > ${u.name}` : u.name || "Unknown";
+    const currentLabel = parentPath
+      ? `${parentPath} > ${u.name}`
+      : u.name || "Unknown";
     if (u.referenceId) {
       result.push({ value: u.referenceId, label: currentLabel });
     }
@@ -414,34 +530,80 @@ function CreatePanel({
 
   const parentOptions = useMemo(() => flattenOrgUnits(allUnits), [allUnits]);
 
-  const { register, handleSubmit, setValue, watch } = useForm<CreateOrganizationUnitCommand>({
-    defaultValues: {
-      name: "",
-      code: "",
-      description: "",
-      parentId: initialParentId || null,
-      organizationId: null,
-    },
-  });
+  const { register, handleSubmit, setValue, watch, setFocus } =
+    useForm<CreateOrganizationUnitCommand>({
+      defaultValues: {
+        name: "",
+        code: "",
+        description: "",
+        parentId: initialParentId || null,
+        organizationId: null,
+      },
+    });
 
   const watchParentId = watch("parentId");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFocus("name");
+    }, 400);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        clearTimeout(timer);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setFocus]);
+
+  useHotkeys(
+    "ctrl+s, meta+s",
+    (e) => {
+      e.preventDefault();
+      handleSubmit(onSave)();
+    },
+    { enableOnFormTags: true },
+  );
 
   return (
     <>
       <SidebarHeader className="font-semibold text-lg border-b pb-4">
-        {lockParent ? "Add Child Organization Unit" : "Create Organization Unit"}
+        {lockParent
+          ? "Add Child Organization Unit"
+          : "Create Organization Unit"}
       </SidebarHeader>
 
       <SidebarContent className="p-4 overflow-y-auto">
         <div className="flex flex-col gap-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Name <span className="text-destructive">*</span></Label>
-            <Input id="name" placeholder="e.g. Engineering Department" disabled={isSaving} required {...register("name")} />
+            <Label htmlFor="name">
+              Name <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              autoComplete="off"
+              id="name"
+              placeholder="Engineering Department"
+              disabled={isSaving}
+              required
+              {...register("name")}
+            />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="code">Code <span className="text-destructive">*</span></Label>
-            <Input id="code" placeholder="e.g. OU-ENG" disabled={isSaving} required {...register("code")} />
+            <Label htmlFor="code">
+              Code <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              autoComplete="off"
+              id="code"
+              placeholder="OU-ENG"
+              disabled={isSaving}
+              required
+              {...register("code")}
+            />
           </div>
 
           <div className="space-y-2 flex flex-col">
@@ -452,11 +614,12 @@ function CreatePanel({
                   variant="outline"
                   role="combobox"
                   aria-expanded={openCombobox}
-                  disabled={lockParent || isSaving} 
+                  disabled={lockParent || isSaving}
                   className="w-full justify-between font-normal text-left truncate"
                 >
                   {watchParentId
-                    ? parentOptions.find((o) => o.value === watchParentId)?.label
+                    ? parentOptions.find((o) => o.value === watchParentId)
+                        ?.label
                     : "None (Top Level)"}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
@@ -474,19 +637,23 @@ function CreatePanel({
                           setOpenCombobox(false);
                         }}
                       >
-                        <Check className={`mr-2 h-4 w-4 ${!watchParentId ? "opacity-100" : "opacity-0"}`} />
+                        <Check
+                          className={`mr-2 h-4 w-4 ${!watchParentId ? "opacity-100" : "opacity-0"}`}
+                        />
                         None (Top Level)
                       </CommandItem>
                       {parentOptions.map((option) => (
                         <CommandItem
                           key={option.value}
-                          value={option.label} 
+                          value={option.label}
                           onSelect={() => {
                             setValue("parentId", option.value);
                             setOpenCombobox(false);
                           }}
                         >
-                          <Check className={`mr-2 h-4 w-4 ${watchParentId === option.value ? "opacity-100" : "opacity-0"}`} />
+                          <Check
+                            className={`mr-2 h-4 w-4 ${watchParentId === option.value ? "opacity-100" : "opacity-0"}`}
+                          />
                           {option.label}
                         </CommandItem>
                       ))}
@@ -499,18 +666,38 @@ function CreatePanel({
 
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <Textarea id="description" placeholder="Add details about this unit..." className="resize-none h-24" disabled={isSaving} {...register("description")} />
+            <Textarea
+              id="description"
+              placeholder="Add details about this unit..."
+              className="resize-none h-24"
+              disabled={isSaving}
+              {...register("description")}
+            />
           </div>
         </div>
       </SidebarContent>
 
       <SidebarFooter className="border-t pt-4 mt-auto">
         <div className="flex w-full gap-2">
-          <Button onClick={handleSubmit(onSave)} className="flex-1" disabled={isSaving}>
-            {isSaving ? "Creating..." : "Create"}
+          <Button
+            onClick={handleSubmit(onSave)}
+            className="flex-1"
+            disabled={isSaving}
+          >
+            {isSaving ? "Creating..." : "Create"}{" "}
+            {!isSaving && (
+              <Kbd className="bg-background/10 text-primary-foreground">
+                ctl+s
+              </Kbd>
+            )}
           </Button>
-          <Button variant="secondary" className="flex-1" onClick={onCancel} disabled={isSaving}>
-            Cancel
+          <Button
+            variant="secondary"
+            className="flex-1"
+            onClick={onCancel}
+            disabled={isSaving}
+          >
+            Cancel<Kbd className="bg-background/10">esc</Kbd>
           </Button>
         </div>
       </SidebarFooter>
@@ -529,6 +716,15 @@ function DeleteConfirmationPanel({
   onConfirm: () => void;
   onCancel: () => void;
 }) {
+  useHotkeys(
+    "enter",
+    (e) => {
+      e.preventDefault();
+      onConfirm();
+    },
+    { enableOnFormTags: true },
+  );
+
   return (
     <>
       <SidebarHeader className="font-semibold text-lg border-b pb-4 text-destructive">
@@ -538,9 +734,10 @@ function DeleteConfirmationPanel({
       <SidebarContent className="p-4 overflow-y-auto">
         <div className="flex flex-col gap-4">
           <p className="text-sm">
-            Are you sure you want to delete the following organization unit? This action cannot be undone.
+            Are you sure you want to delete the following organization unit?
+            This action cannot be undone.
           </p>
-          
+
           <div className="bg-muted p-4 rounded-md space-y-2 mt-2 border">
             <div className="grid grid-cols-3 gap-1 text-sm">
               <span className="font-medium text-muted-foreground">Name:</span>
@@ -551,10 +748,11 @@ function DeleteConfirmationPanel({
               <span className="col-span-2">{data.code || "-"}</span>
             </div>
           </div>
-          
+
           {data.children && data.children.length > 0 && (
             <p className="text-sm text-destructive font-medium mt-2">
-              Warning: This unit contains {data.children.length} child unit(s). Deleting it might affect them.
+              Warning: This unit contains {data.children.length} child unit(s).
+              Deleting it might affect them.
             </p>
           )}
         </div>
@@ -562,21 +760,24 @@ function DeleteConfirmationPanel({
 
       <SidebarFooter className="border-t pt-4 mt-auto">
         <div className="flex w-full gap-2">
-          <Button 
-            variant="destructive" 
-            onClick={onConfirm} 
-            className="flex-1" 
+          <Button
+            variant="destructive"
+            onClick={onConfirm}
+            className="flex-1"
             disabled={isDeleting}
           >
             {isDeleting ? "Deleting..." : "Delete"}
+            {!isDeleting && (
+              <Kbd className="bg-primary/10 text-destructive-foreground">↵</Kbd>
+            )}
           </Button>
-          <Button 
-            variant="secondary" 
-            className="flex-1" 
-            onClick={onCancel} 
+          <Button
+            variant="secondary"
+            className="flex-1"
+            onClick={onCancel}
             disabled={isDeleting}
           >
-            Cancel
+            Cancel<kbd className="bg-background/20">esc</kbd>
           </Button>
         </div>
       </SidebarFooter>
@@ -605,6 +806,16 @@ function DetailPanel({
     },
   });
 
+  useHotkeys(
+    "ctrl+s, meta+s",
+    (e) => {
+      if (!isEditable) return;
+      e.preventDefault();
+      handleSubmit(onSave)();
+      console.log(onSave);
+    },
+    { enableOnFormTags: true },
+  );
 
   return (
     <>
@@ -619,12 +830,15 @@ function DetailPanel({
             {isEditable ? (
               <Input
                 id="name"
-                placeholder="e.g. Engineering Department"
+                placeholder="Engineering Department"
                 disabled={isSaving}
+                autoComplete="off"
                 {...register("name")}
               />
             ) : (
-              <div className="text-sm py-1.5 font-medium">{data.name || "-"}</div>
+              <div className="text-sm py-1.5 font-medium">
+                {data.name || "-"}
+              </div>
             )}
           </div>
 
@@ -633,8 +847,9 @@ function DetailPanel({
             {isEditable ? (
               <Input
                 id="code"
-                placeholder="e.g. OU-ENG"
+                placeholder="OU-ENG"
                 disabled={isSaving}
+                autoComplete="off"
                 {...register("code")}
               />
             ) : (
@@ -660,7 +875,9 @@ function DetailPanel({
           </div>
 
           <div className="mt-6 pt-4 border-t space-y-1 text-xs text-muted-foreground">
-            <p className="font-medium text-foreground mb-2">System Information</p>
+            <p className="font-medium text-foreground mb-2">
+              System Information
+            </p>
             <div className="grid grid-cols-3 gap-1">
               <span className="font-medium">Path:</span>
               <span className="col-span-2 truncate" title={data.path}>
@@ -676,13 +893,17 @@ function DetailPanel({
             <div className="grid grid-cols-3 gap-1">
               <span className="font-medium">Created:</span>
               <span className="col-span-2">
-                {data.createdOnUtc ? new Date(data.createdOnUtc).toLocaleString() : "-"}
+                {data.createdOnUtc
+                  ? new Date(data.createdOnUtc).toLocaleString()
+                  : "-"}
               </span>
             </div>
             <div className="grid grid-cols-3 gap-1">
               <span className="font-medium">Modified:</span>
               <span className="col-span-2">
-                {data.lastModifiedOnUtc ? new Date(data.lastModifiedOnUtc).toLocaleString() : "-"}
+                {data.lastModifiedOnUtc
+                  ? new Date(data.lastModifiedOnUtc).toLocaleString()
+                  : "-"}
               </span>
             </div>
           </div>
@@ -693,16 +914,30 @@ function DetailPanel({
         <div className="flex w-full gap-2">
           {isEditable ? (
             <>
-              <Button onClick={handleSubmit(onSave)} className="flex-1" disabled={isSaving}>
-                {isSaving ? "Saving..." : "Save"}
+              <Button
+                onClick={handleSubmit(onSave)}
+                className="flex-1"
+                disabled={isSaving}
+              >
+                {isSaving ? "Saving..." : "Save"}{" "}
+                {!isSaving && (
+                  <kbd className="bg-background/10 text-primary-foreground">
+                    ctl+s
+                  </kbd>
+                )}
               </Button>
-              <Button variant="secondary" className="flex-1" onClick={onCancel} disabled={isSaving}>
-                Cancel
+              <Button
+                variant="secondary"
+                className="flex-1"
+                onClick={onCancel}
+                disabled={isSaving}
+              >
+                Cancel <Kbd>esc</Kbd>
               </Button>
             </>
           ) : (
             <Button variant="secondary" className="flex-1" onClick={onCancel}>
-              Close
+              Close <Kbd>esc</Kbd>
             </Button>
           )}
         </div>
