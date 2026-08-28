@@ -349,11 +349,17 @@ function OrganizationTable({
         </TableHeader>
         <TableBody>
           {isLoading ? (
-            <TableRow>
-              <TableCell colSpan={5}>
-                <Skeleton className="h-24 w-full" />
-              </TableCell>
-            </TableRow>
+            <>
+              {Array.from({ length: 10 }).map((_, row) => (
+                <TableRow key={row}>
+                  {Array.from({ length: 5 }).map((_, col) => (
+                    <TableCell key={col}>
+                      <Skeleton className="h-3 w-full" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </>
           ) : !data || data.length === 0 ? (
             <TableRow>
               <TableCell
