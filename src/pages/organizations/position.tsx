@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { RefreshCcw, Trash2, Pen, Plus, Briefcase } from "lucide-react";
+import { RefreshCcw, Trash2, Pen, Plus, Briefcase, MoreVertical } from "lucide-react";
 
 import {
   Table,
@@ -34,6 +34,7 @@ import {
   getAllDefaultPositionsQueryOptions,
 } from "@/api/hooks/organizations/useGetAllDefaultPositions";
 import AppbarSlotContext from "@/app-shell/use-appbarSlot";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 
 export type CreatePositionCommand = {
   code: string;
@@ -127,8 +128,16 @@ export function PositionPage() {
         </div>
       </div>
 
-      <div className="md:px-4">
+      <div className="hidden sm:block">
         <PositionTable
+          data={data || []}
+          isLoading={isLoading}
+          onRowEdit={handleRowEdit}
+          onRowDelete={handleRowDelete}
+        />
+      </div>
+      <div className="sm:hidden px-2">
+        <PositionList
           data={data || []}
           isLoading={isLoading}
           onRowEdit={handleRowEdit}
@@ -364,6 +373,117 @@ function PositionTable({
           )}
         </TableBody>
       </Table>
+    </div>
+  );
+}
+
+function PositionList({
+  data,
+  isLoading,
+  onRowEdit,
+  onRowDelete,
+}: {
+  data: PositionDto[];
+  isLoading: boolean;
+  onRowEdit: (item: PositionDto) => void;
+  onRowDelete: (item: PositionDto) => void;
+}) {
+  return (
+    <>
+      {isLoading ? (
+        <div className="space-y-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-3 w-3/4" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : !data || data.length === 0 ? (
+        <div className="rounded-lg border bg-card p-8 text-center text-muted-foreground shadow-sm">
+          No positions found.
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {data.map((item) => (
+            <PositionListCardMobile
+              key={item.referenceId || item.code || item.name}
+              item={item}
+              onRowEdit={onRowEdit}
+              onRowDelete={onRowDelete}
+            />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
+function PositionListCardMobile({
+  item,
+  onRowEdit,
+  onRowDelete,
+}: {
+  item: PositionDto;
+  onRowEdit: (item: PositionDto) => void;
+  onRowDelete: (item: PositionDto) => void;
+}) {
+  return (
+    <div className="flex items-start justify-between rounded-lg border border-l-4 border-l-primary bg-card p-3 shadow-sm relative">
+      {/* Left Side: Icon + Text Data */}
+      <div className="flex items-start gap-3 overflow-hidden w-full pr-2">
+        
+        {/* Node Icon */}
+        <div className="mt-0.5 shrink-0">
+          <Briefcase className="h-4 w-4 text-primary" />
+        </div>
+
+        {/* Text Information (Name, Code, Description) */}
+        <div className="flex flex-col overflow-hidden">
+          <span
+            onClick={() => onRowEdit(item)}
+            className="font-medium text-sm truncate cursor-pointer hover:underline"
+          >
+            {item.name || "-"} {item.code && <span className="text-muted-foreground font-normal">({item.code})</span>}
+          </span>
+          
+          {item.description && (
+            <span className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+              {item.description}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Right Side: Action Menu (Dropdown) */}
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 -mr-1 text-muted-foreground hover:text-foreground">
+            <MoreVertical className="h-4 w-4" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-40">
+          
+          <DropdownMenuItem onClick={() => onRowEdit(item)}>
+            <Pen className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-500" />
+            <span>Edit</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuSeparator />
+          
+          <DropdownMenuItem 
+            onClick={() => onRowDelete(item)} 
+            className="text-destructive focus:text-destructive focus:bg-destructive/10"
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            <span>Delete</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

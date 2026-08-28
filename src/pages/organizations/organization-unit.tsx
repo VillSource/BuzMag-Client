@@ -9,6 +9,8 @@ import { createOrganizationUnitMutationOptions } from "@/api/hooks/organizations
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, Fragment, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { useSessionStorage } from 'usehooks-ts'
+import { useScrollRestoration } from "@/hooks/use-scrollRestoration";
 import {
   ChevronRight,
   ChevronDown,
@@ -85,6 +87,8 @@ export function OrganizationUnitPage() {
   const { data, isLoading, isError, refetch } = useQuery(
     getAllDefaultOrganizationUnitQueryOptions({ client: apiClient }),
   );
+
+  useScrollRestoration("org-unit-scroll", !isLoading && data !== undefined);
 
   const { setPanelContent, setPanelOpen, setSheetContent, setSheetOpen } =
     useAppShell();
@@ -509,7 +513,7 @@ function OrgUnitTableRow({
   );
 }
 
-export function OrganizationList({
+function OrganizationList({
   data,
   isLoading,
   onRowEdit,
@@ -570,7 +574,7 @@ function OrgUnitListCardMobile({
   onRowDelete: (item: OrganizationUnitDto) => void;
   onRowAddChild: (item: OrganizationUnitDto) => void;
 }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useSessionStorage( `org-unit-list-node-explans:${item.referenceId}`, false);
   const hasChildren = item.children && item.children.length > 0;
 
   return (
