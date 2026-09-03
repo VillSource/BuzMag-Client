@@ -157,4 +157,29 @@
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
     }
+
+    /* สำหรับ Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+
+  /* สำหรับ Chrome, Edge, Safari */
+  *::-webkit-scrollbar {
+    width: 6px;  /* ความกว้างของ scrollbar แนวตั้ง */
+    height: 6px; /* ความสูงของ scrollbar แนวนอน */
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent; /* ให้พื้นหลังโปร่งใส */
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border)); /* สีเริ่มต้น */
+    border-radius: 10px; /* ทำให้ขอบมน */
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground)); /* สีเข้มขึ้นเมื่อเอาเมาส์ชี้ */
+  }
 }
